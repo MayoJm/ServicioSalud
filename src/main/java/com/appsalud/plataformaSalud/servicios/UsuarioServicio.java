@@ -17,23 +17,21 @@ public class UsuarioServicio {
     private UsuarioRepositorio usuarioRepositorio;
 
     @Transactional
-    public void crearUsuario(String nombre, String email, String password, String password2, String dni, String direccion, String telefono) throws MiException {
+    public void crearUsuario(String nombre, String apellido, String email, String password, String password2) throws MiException {
         Usuario usuario = new Usuario();
-        validar(nombre, email, password, password2, dni, direccion, telefono);
+        validar(nombre, apellido, email, password, password2);
         usuario.setNombre(nombre);
+        usuario.setApellido(apellido);
         usuario.setEmail(email);
         usuario.setPassword(new BCryptPasswordEncoder().encode(password));
-        usuario.setDni(dni);
-        usuario.setDireccion(direccion);
-        usuario.setTelefono(telefono);
-        usuario.setRol(Rol.PACIENTE);
+        usuario.setRol(Rol.USUARIO);
 
         usuarioRepositorio.save(usuario);
     }
 
     @Transactional
-    public void modificar(String nombre, String email, String password, String password2, String dni, String direccion, String telefono) throws MiException {
-        validar(nombre, email, password, password2, dni, direccion, telefono);
+    public void modificar(String nombre, String apellido, String email, String password, String password2) throws MiException {
+        validar(nombre, apellido, email, password, password2);
 
         Optional<Usuario> respuesta = usuarioRepositorio.findById(email);
 
@@ -42,11 +40,10 @@ public class UsuarioServicio {
             Usuario usuario = respuesta.get();
 
             usuario.setNombre(nombre);
+            usuario.setApellido(apellido);
             usuario.setEmail(email);
             usuario.setPassword(new BCryptPasswordEncoder().encode(password));
-            usuario.setDni(dni);
-            usuario.setDireccion(direccion);
-            usuario.setTelefono(telefono);
+
             
             usuarioRepositorio.save(usuario);
         }
@@ -61,9 +58,12 @@ public class UsuarioServicio {
 
     }
 
-    public void validar(String nombre, String email, String password, String password2, String dni, String direccion, String telefono) throws MiException {
+    public void validar(String nombre, String apellido, String email, String password, String password2) throws MiException {
         if (nombre == null || nombre.isEmpty()) {
             throw new MiException("El nombre no puede ser nulo ni vacio");
+        }
+        if (apellido == null || apellido.isEmpty()) {
+            throw new MiException("El apellido no puede ser nulo ni vacio");
         }
         if (email == null || email.isEmpty()) {
             throw new MiException("El email no puede ser nulo ni vacio");
@@ -74,15 +74,7 @@ public class UsuarioServicio {
         if (!password.equals(password2)) {
             throw new MiException("Los passwords deben ser iguales");
         }
-        if (dni == null || dni.isEmpty()) {
-            throw new MiException("El dni no puede ser nulo ni vacio");
-        }
-        if (direccion == null || direccion.isEmpty()) {
-            throw new MiException("La direccion no puede ser nula ni vacia");
-        }
-        if (telefono == null || telefono.isEmpty()) {
-            throw new MiException("El telefono no puede ser nulo ni vacio");
-        }
+
     }
 
 }

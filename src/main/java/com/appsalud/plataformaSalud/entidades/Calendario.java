@@ -1,39 +1,30 @@
 package com.appsalud.plataformaSalud.entidades;
 
-import com.appsalud.plataformaSalud.enumeraciones.Rol;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-
-public class Usuario {
+@AllArgsConstructor
+public class Calendario {
 
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
-    private String nombre;
-    private String apellido;
-    private String email;
-    private String password;
+    @OneToMany
+    private List<Turno> turnos;
 
-
-
-    @Enumerated(EnumType.STRING)
-    private Rol rol;
-
-}
+ }
