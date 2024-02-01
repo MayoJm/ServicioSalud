@@ -48,10 +48,10 @@ public class UsuarioControlador {
     }
     
      @PostMapping("/registro")
-    public String registro(@RequestParam String nombre, String email, String password, String password2, String dni, String direccion, String telefono, ModelMap modelo) {
+    public String registro(@RequestParam String nombre, String apellido, String email, String password, String password2, ModelMap modelo) {
 
         try {
-            usuarioServicio.crearUsuario(nombre, email, password, password2, dni, direccion, telefono);
+            usuarioServicio.crearUsuario(nombre, apellido,  email, password, password2);
 
             modelo.put("exito", "El Usuario fue registrado correctamente!");
         } catch (MiException ex) {
