@@ -52,22 +52,6 @@ public class UsuarioServicio {
         }
 
     }
-
-    @Transactional
-    public void modificarEstado(String id) {
-        Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
-        
-        if (respuesta.isPresent()) {
-            
-            Usuario usuario = respuesta.get();
-            
-            if (usuario.getEstado()) {
-                usuario.setEstado(false);
-            }else {
-                usuario.setEstado(true);
-            }
-        }
-    }
     
     @Transactional(readOnly = true)
     public List<Usuario> listarUsuarios() {

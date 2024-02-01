@@ -29,10 +29,10 @@ public class UsuarioControlador {
     }
     
     @PostMapping("/modificar/{email}")
-    public String modificarUsuario(@PathVariable String email, String nombre, String password, String dni, String direccion, String telefono, ModelMap modelo) {
+    public String modificarUsuario(@PathVariable String email, String nombre, String apellido, String password, String password2, ModelMap modelo) {
         try{
          
-            usuarioServicio.modificar(nombre, email, password, password, dni, direccion, telefono);
+            usuarioServicio.modificar(nombre, apellido, email, password, password2);
          
             return "inicio.html"; //luego de modificacion exitosa redirige a la vista de inicio
         } catch(MiException ex) {
