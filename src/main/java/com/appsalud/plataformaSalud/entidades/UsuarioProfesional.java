@@ -6,12 +6,18 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import java.util.ArrayList;
+
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Entity
 @Setter
 @Getter
-@Entity
+@AllArgsConstructor
+@NoArgsConstructor
+
 public class UsuarioProfesional extends Usuario {
     @Enumerated(EnumType.STRING)
     private Especialidad especialidad;
@@ -20,8 +26,5 @@ public class UsuarioProfesional extends Usuario {
     private Integer valorConsulta;
     private String matricula;
     private ArrayList<ObraSocial> obrasSociales;
-
-    public UsuarioProfesional() {
-    }
 
 }

@@ -12,7 +12,7 @@
 	<artifactId>plataformaSalud</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>plataformaSalud</name>
-	<description>Proyecto para instuto Egg &quot;plataforma de servicios de salud&quot;.</description>
+	<description>Proyecto para instituto Egg &quot;plataforma de servicios de salud</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
