@@ -7,6 +7,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import java.util.ArrayList;
 
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,6 +26,15 @@ public class UsuarioProfesional extends Usuario {
     private Integer reputacion;
     private Integer valorConsulta;
     private String matricula;
+    private String dni;
+    private String direccion;
+    private String telefono;
+    private Boolean estado;
     private ArrayList<ObraSocial> obrasSociales;
+    @OneToOne
+    private Calendario calendario;
+
+    //@OneToOne
+    //private Imagen imagen;
 
 }
