@@ -1,7 +1,9 @@
 package com.appsalud.plataformaSalud.controladores;
 
+import com.appsalud.plataformaSalud.entidades.Usuario;
 import com.appsalud.plataformaSalud.excepciones.MiException;
 import com.appsalud.plataformaSalud.servicios.UsuarioServicio;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -19,8 +21,25 @@ public class UsuarioControlador {
     UsuarioServicio usuarioServicio;
     
     @GetMapping("/modificar/{email}")
-    public String modificarUsuario(@PathVariable String email){
-        return ""; //vista de modificar_usuario.html (pendiente)
+    public String modificarUsuario(@PathVariable String email, ModelMap modelo){
+        
+        modelo.put("usuario", usuarioServicio.getOne(email));
+        
+        return "modificar_usuario.html"; //vista de modificar_usuario.html (pendiente)
+    }
+    
+    @PostMapping("/modificar/{email}")
+    public String modificarUsuario(@PathVariable String email, String nombre, String apellido, String password, String password2, ModelMap modelo) {
+        try{
+         
+            usuarioServicio.modificar(nombre, apellido, email, password, password2);
+         
+            return "inicio.html"; //luego de modificacion exitosa redirige a la vista de inicio
+        } catch(MiException ex) {
+            modelo.put("error", ex.getMessage());
+            
+            return "modificar_usuario.html";
+        }
     }
     
     @GetMapping("/registrar")
@@ -43,4 +62,14 @@ public class UsuarioControlador {
 
         return "inicio.html"; //html pendiente
     }
+    
+    @GetMapping("/lista")
+    public String listarUsuarios(ModelMap modelo) {
+        List<Usuario> usuarios = usuarioServicio.listarUsuarios();
+        modelo.addAttribute("usuarios",usuarios);
+        
+        return "usuario_list.html"; //pendiente
+    }
+    
+    
 }

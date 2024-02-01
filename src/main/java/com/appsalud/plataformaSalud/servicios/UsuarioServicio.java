@@ -4,11 +4,14 @@ import com.appsalud.plataformaSalud.entidades.Usuario;
 import com.appsalud.plataformaSalud.enumeraciones.Rol;
 import com.appsalud.plataformaSalud.excepciones.MiException;
 import com.appsalud.plataformaSalud.repositorios.UsuarioRepositorio;
-import jakarta.transaction.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UsuarioServicio {
@@ -49,13 +52,25 @@ public class UsuarioServicio {
         }
 
     }
-
-    public void modificarEstado() {
+    
+    @Transactional(readOnly = true)
+    public List<Usuario> listarUsuarios() {
         
+        List<Usuario> usuarios = new ArrayList();
+        
+        usuarios = usuarioRepositorio.findAll();
+        
+        return usuarios;
+
     }
-
-    public void listarUsuarios() {
-
+    
+    public Usuario getOne(String email) {
+        return usuarioRepositorio.getReferenceById(email);
+    }
+    
+    @Transactional
+    public Usuario buscarPorId(String id) {
+        return usuarioRepositorio.getReferenceById(id);
     }
 
     public void validar(String nombre, String apellido, String email, String password, String password2) throws MiException {
