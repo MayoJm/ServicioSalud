@@ -13,11 +13,6 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SeguridadWeb {
 
-    /**
-     * @param http
-     * @return
-     * @throws Exception
-     */
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http

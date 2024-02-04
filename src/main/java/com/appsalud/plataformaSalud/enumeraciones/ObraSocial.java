@@ -4,10 +4,6 @@
  */
 package com.appsalud.plataformaSalud.enumeraciones;
 
-/**
- *
- * @author Sol
- */
 public enum ObraSocial {
     PARTICULAR,
     MEDICUS,
