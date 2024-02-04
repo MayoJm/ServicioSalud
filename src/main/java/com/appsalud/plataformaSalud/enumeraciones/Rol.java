@@ -9,7 +9,10 @@ package com.appsalud.plataformaSalud.enumeraciones;
  * @author santi
  */
 public enum Rol {
+    USUARIO,
     ADMIN,
     PROFESIONAL,
     PACIENTE;
+
+
 }
