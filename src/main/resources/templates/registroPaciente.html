@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Paciente</title>
+    <link rel="stylesheet" href="/ServicioSalud/src/main/resources/static/css/registro.css">
+</head>
+
+<!-- <body>
+
+    <div class="form-box register">
+        <h2>Registro de Paciente</h2>
+        <form action="#" method="post" >
+
+            <div class="input-box">
+                <input type="text" id="nombre" name="nombre" placeholder="Ingresar Nombre" th:value="${nombre}" required>
+            </div>
+
+            <div class="input-box">
+                <input type="text" id="apellido" name="apellido" placeholder="Ingresar Apellido" th:value="${apellido}" required>
+            </div>
+            
+            <div class="input-box">
+                <input type="email" id="email" name="email" placeholder="Ingresar Correo Electronico" th:value="${email}" required>
+              </div>
+
+              
+              <div class="input-box">
+                <input type="password" id="contrasena" name="contrasena" placeholder="Ingresar Contraseña" th:value="${password}" required>
+            </div>
+
+            <div class="input-box">
+                <input type="password" id="contrasena2" name="contrasena2" placeholder="Repetir Contraseña" th:value="${password2}" required>
+            </div>
+
+            <div class="input-box">
+                <select id="obrasocial" name="obrasocial" required>
+                    <option th:each="${obraSocial == null}" selected disabled>Seleccione Obra Social</option>
+                    <option th:value="PARTICULAR" th:selected="${obraSocial == 'PARTICULAR'}">PARTICULAR</option>
+                    <option th:value="MEDICUS" th:selected="${obraSocial == 'MEDICUS'}">MEDICUS</option>
+                    <option th:value="OSDE" th:selected="${obraSocial == 'OSDE'}">OSDE</option>
+                    <option th:value="SWISS_MEDICAL" th:selected="${obraSocial == 'SWISS_MEDICAL'}">SWISS_MEDICAL</option>
+                    <option th:value="MEDIFE" th:selected="${obraSocial == 'MEDIFE}">MEDIFE</option>
+                    <option th:value="GALENO" th:selected="${obraSocial == 'GALENO'}">GALENO</option>
+                    <option th:value="OMINT" th:selected="${obraSocial == 'OMINT}">OMINT</option>
+                    <option th:value="IOMA" th:selected="${obraSocial == 'IOMA}">IOMA</option>
+                    <option th:value="LITERAL" th:selected="${obraSocial == 'LITERAL'}">LITERAL</option>
+                    <option th:value="LUIS_PASTEUR" th:selected="${obraSocial == 'LUIS_PASTEUR'}">LUIS_PASTEUR</option>
+                    <option th:value="SANCOR_SALUD" th:selected="${obraSocial == 'SANCOR_SALUD}">SANCOR_SALUD</option>
+                    <option th:value="ACCORD_SALUD" th:selected="${obraSocial == 'ACCORD_SALUD}">ACCORD_SALUD</option>
+                    <option th:value="FEDERADA_SALUD" th:selected="${obraSocial == 'FEDERADA_SALUD}">FEDERADA_SALUD</option>
+                    <option th:value="UNION_PERSONAL" th:selected="${obraSocial == 'UNION_PERSONAL'}">UNION_PERSONAL</option>
+                    <option th:value="OSDEPYM" th:selected="${obraSocial == 'OSDEPYM}"> OSDEPYM</option>
+                    <option th:value="OSPACP" th:selected="${obraSocial == 'OSPACP}">OSPACP</option>
+                    <option th:value="OBSBA" th:selected="${obraSocial == 'OBSBA}">OBSBA</option>
+                    <option th:value="OSUTHGRA" th:selected="${obraSocial == 'OSUTHGRA'}">OSUTHGRA</option>
+                    <option th:value="HOSPITAL_ITALIANO" th:selected="${obraSocial =='HOSPITAL_ITALIANO'}"> HOSPITAL_ITALIANO</option>
+                    <option th:value="OSECAC" th:selected="${obraSocial == 'OSECAC}"> OSECAC</option>
+                    <option th:value="PREVENCION_SALUD" th:selected="${obraSocial == 'PREVENCION_SALUD}">PREVENCION_SALUD</option>
+                    <option th:value="OSITAC" th:selected="${obraSocial == 'OSITAC'}">OSITAC</option>
+                    <option th:value="OSCAR" th:selected="${obraSocial == 'OSCAR}">OSCAR</option>
+                </select>
+            </div>
+
+            <div class="input-box">
+                <input type="text" id="dni" name="dni" placeholder="Ingresar DNI" th:value="${dni}" required>
+            </div>
+
+            <div class="input-box">
+                <input type="text" id="direccion" name="direccion" placeholder="Ingresar Direccion" th:value="${direccion}" required>
+            </div>
+
+            <div class="input-box">
+                <input type="text" id="telefono" name="telefono" placeholder="Ingresar Telefono" th:value="${telefono}" required>
+            </div>
+
+            <div class="input-box">
+                <input type="checkbox" id="aceptoTerminos" name="aceptoTerminos" required>
+                <label for="aceptoTerminos">Acepto los términos y condiciones</label>
+            </div>
+            
+            <button type="submit">Registrarse</button>
+            
+            <div class="login-register">
+                <p>¿Ya tienes una cuenta? <a href="iniciarSesion.html">Iniciar Sesión</a></p>
+            </div>
+        </form>
+    </div>
+
+</body> -->
+
+<body>
+
+    <section class="form-box register">
+        <h2>Registro de Paciente</h2>
+        <form action="#" method="post">
+
+            <div class="input-box">
+                <input type="text" id="nombre" name="nombre" placeholder="Ingresar Nombre" th:value="${nombre}" required>
+            </div>
+
+            <div class="input-box">
+                <input type="text" id="apellido" name="apellido" placeholder="Ingresar Apellido" th:value="${apellido}" required>
+            </div>
+            
+            <div class="input-box">
+                <input type="email" id="email" name="email" placeholder="Ingresar Correo Electrónico" th:value="${email}" required>
+            </div>
+
+            <div class="input-box">
+                <input type="password" id="contrasena" name="contrasena" placeholder="Ingresar Contraseña" th:value="${password}" required>
+            </div>
+
+            <div class="input-box">
+                <input type="password" id="contrasena2" name="contrasena2" placeholder="Repetir Contraseña" th:value="${password2}" required>
+            </div>
+
+            <div class="input-box">
+                <select id="obrasocial" name="obrasocial" required>
+                    <option selected disabled>Seleccione Obra Social</option>
+                    <option th:each="obraSocial : ${T(com.appsalud.plataformaSalud.enumeraciones.ObraSocial).values()}"
+                            th:value="${obraSocial}" 
+                            th:text="${obraSocial}">
+                    </option>
+                </select>
+            </div>
+            
+
+            <div class="input-box">
+                <input type="text" id="dni" name="dni" placeholder="Ingresar DNI" th:value="${dni}" required>
+            </div>
+
+            <div class="input-box">
+                <input type="text" id="direccion" name="direccion" placeholder="Ingresar Dirección" th:value="${direccion}" required>
+            </div>
+
+            <div class="input-box">
+                <input type="text" id="telefono" name="telefono" placeholder="Ingresar Teléfono" th:value="${telefono}" required>
+            </div>
+
+            <div class="input-box">
+                <input type="checkbox" id="aceptoTerminos" name="aceptoTerminos" required>
+                <label for="aceptoTerminos">Acepto los términos y condiciones</label>
+            </div>
+            
+            <button type="submit">Registrarse</button>
+            
+            <div class="login-register">
+                <p>¿Ya tienes una cuenta? <a href="iniciarSesion.html">Iniciar Sesión</a></p>
+            </div>
+        </form>
+    </section>
+</body>
+
+</html>
+

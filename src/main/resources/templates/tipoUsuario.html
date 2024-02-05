@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/ServicioSalud/src/main/resources/static/css/iniciarSesion.css" />
+</head>
+
+<body>
+    <div id="register-box" class="form-box register">
+        <h2>Registrate</h2>
+        <section class="form-login">
+            <h5>Seleccionar rol de la cuenta:</h5>
+            <input type="radio" class="form-check-input" id="pacienteRadio" name="tipoUsuario" value="paciente" />
+            <label class="form-check-label" for="pacienteRadio">Paciente</label> <br>
+            <input type="radio" class="form-check-input" id="profesionalRadio" name="tipoUsuario" value="profesional" />
+            <label class="form-check-label" for="profesionalRadio">Profesional</label>
+            <input class="buttons" type="button" id="continuarBtn" value="Continuar" onclick="continuar()" />
+            <p><a href="/ServicioSalud/src/main/resources/templates/iniciarSesion.html">¿Ya tengo Cuenta?</a></p>
+        </section>
+    </div>
+    <script src="/ServicioSalud/src/main/resources/static/js/iniciarSesion.js"></script>
+</body>
+
+
+</html>
