@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/ServicioSalud/src/main/resources/static/css/paciente.css">
+
+</head>
+
+<body>
+    <header>
+        <h2 class="logo">Logo</h2>
+        <nav class="navigation">
+            <a href="#" onclick="showSection('home')" id="home-link">Home</a>
+            <a href="#" onclick="showSection('about')">Sobre nosotros</a>
+            <a href="#" onclick="showSection('services')">Servicios</a>
+            <a href="#" onclick="showSection('contact')">Contáctanos</a>
+        </nav>
+        <div class="profile-menu">
+            <div class="profile-button" onclick="toggleDropdown()">
+                <img id="profile-picture" src="/ServicioSalud/src/main/resources/img/predeterminado.jpg" alt="Foto de perfil">
+            </div>
+            <div id="profile-dropdown" class="dropdown-content">
+                <a href="#" onclick="showAvatarOptions()">Editar foto de perfil</a>
+                <a href="#">Cambiar datos</a>
+                <a href="index.html">Cerrar sesión</a>
+            </div>
+        </div>
+    </header>
+    
+    <section id="avatar-options" style="display: none;" class="avatar-options">
+        <h2>Selecciona tu avatar</h2>
+        <img src="/ServicioSalud/src/main/resources/img/3d-ilustracion-persona-gafas-sol_23-2149436200.jpg" onclick="selectAvatar('/ServicioSalud/src/main/resources/img/avatarmasculino.jpg')">
+        <img src="/ServicioSalud/src/main/resources/img/7294787.jpg"  onclick="selectAvatar('/ServicioSalud/src/main/resources/img/7294787.jpg')">
+        <img src="/ServicioSalud/src/main/resources/img/7294794.jpg"  onclick="selectAvatar('/ServicioSalud/src/main/resources/img/7294794.jpg')">
+        <img src="/ServicioSalud/src/main/resources/img/7309667.jpg"  onclick="selectAvatar('/ServicioSalud/src/main/resources/img/7309667.jpg')">
+        <img src="/ServicioSalud/src/main/resources/img/7309673.jpg"  onclick="selectAvatar('/ServicioSalud/src/main/resources/img/7309673.jpg')">
+        <img src="/ServicioSalud/src/main/resources/img/7309681.jpg"  onclick="selectAvatar('/ServicioSalud/src/main/resources/img/7309681.jpg')">
+        <img src="/ServicioSalud/src/main/resources/img/7309685.jpg"  onclick="selectAvatar('/ServicioSalud/src/main/resources/img/7309685.jpg')">
+        <img src="/ServicioSalud/src/main/resources/img/7309689.jpg"  onclick="selectAvatar('/ServicioSalud/src/main/resources/img/7309689.jpg')">
+        <img src="/ServicioSalud/src/main/resources/img/7309693.jpg"  onclick="selectAvatar('/ServicioSalud/src/main/resources/img/7309693.jpg')">
+        <img src="/ServicioSalud/src/main/resources/img/7309707.jpg"  onclick="selectAvatar('/ServicioSalud/src/main/resources/img/7309707.jpg')">
+        <img src="/ServicioSalud/src/main/resources/img/avatarfemenino.jpg"  onclick="selectAvatar('/ServicioSalud/src/main/resources/img/avatarfemenino.jpg')">
+        <img src="/ServicioSalud/src/main/resources/img/avatarmasculino.jpg"  onclick="selectAvatar('/ServicioSalud/src/main/resources/img/avatarmasculino.jpg')">
+        <br>
+        <h2>Subir nueva foto de perfil</h2>
+        <input type="file" accept="image/*" onchange="uploadProfilePicture(event)">
+    </section>
+    
+    <section id="home">
+        <h2>Bienvenido [Nombre del Paciente]</h2>
+        <p>Otra información del perfil del paciente.</p>
+        <a href="index.html">volver</a>
+    </section>
+
+    <section id="about">
+        <h2>Sobre Nosotros</h2>
+        <p>Información sobre nuestra empresa u organización.</p>
+    </section>
+
+    <section id="services">
+        <h2>Nuestros Servicios</h2>
+        <p>Lista de servicios que ofrecemos.</p>
+    </section>
+
+    <section id="contact">
+        <h2>Contactanos</h2>
+        <p>Información de contacto y formulario de contacto.</p>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Tu Empresa. Todos los derechos reservados.</p>
+    </footer>
+    <script src="/ServicioSalud/src/main/resources/static/js/paciente.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>
