@@ -55,16 +55,7 @@ public class UsuarioServicio {
 
     }
 
-    @Transactional(readOnly = true)
-    public List<Usuario> listarUsuariosProfesional() {
 
-        List<Usuario> usuariosProfesional = new ArrayList<>();
-
-        usuariosProfesional = usuarioRepositorio.findAll();
-
-        return usuariosProfesional;
-
-    }
 
     public Usuario getOne(String email) {
         return usuarioRepositorio.getReferenceById(email);

@@ -138,6 +138,16 @@ public class UsuarioProfesionalServicio {
             throw new MiException("La lista de obras sociales no puede ser nula o vacía");
         }
     }
+    @Transactional(readOnly = true)
+    public List<Usuario> listarUsuariosProfesional() {
+
+        List<Usuario> usuariosProfesional = new ArrayList<>();
+
+        usuariosProfesional = usuarioRepositorio.findAll();
+
+        return usuariosProfesional;
+
+    }
     @Transactional
     public void crearTurno(Date hora, Date fecha, String descripcion, UsuarioPaciente usuarioPaciente, UsuarioProfesional usuarioProfesional) {
         Turno turno = new Turno();
