@@ -26,6 +26,11 @@ public class UsuarioProfesionalControlador {
     @Autowired
     private UsuarioProfesionalServicio usuarioProfesionalServicio;
 
+    @GetMapping("/home")
+    public String profesionalHome() {
+        return "profesional.html";
+    }
+    
     @GetMapping("/registrarProfesional")
     public String registroProfesional(Model model) {
         List<Especialidad> listaEspecialidades = Arrays.stream(Especialidad.values()).collect(Collectors.toList());
