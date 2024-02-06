@@ -14,6 +14,7 @@ import com.appsalud.plataformaSalud.servicios.UsuarioServicio;
 @Controller
 @RequestMapping("/")
 public class PortalControlador {
+
     @Autowired
     UsuarioServicio usuarioServicio;
 
@@ -22,9 +23,8 @@ public class PortalControlador {
         return "index.html";
     }
 
-
-   @GetMapping("/login")
-    public String login(@RequestParam(required = false) String error, ModelMap modelo ) {
+    @GetMapping("/login")
+    public String login(@RequestParam(required = false) String error, ModelMap modelo) {
 
         if (error != null) {
             modelo.put("error", "Usuario o Contraseña invalidos!");
@@ -33,4 +33,26 @@ public class PortalControlador {
         return "index.html";
     }
 
+    @GetMapping("/loginPage")
+    public String loginPage() {
+        return "iniciarSesion.html";
+    }
+
+    @GetMapping("/tipoUsuario")
+    public String tipoUsuario() {
+        return "tipoUsuario.html";
+    }
+
+    @PostMapping("/tipoUsuario")
+    public String tipoUsuario(@RequestParam("tipoUsuario") String tipoUsuario) {
+
+        switch (tipoUsuario) {
+            case "paciente":
+                return "redirect:/paciente/registrar"; //pendiente controladores paciente
+            case "profesional":
+                return "redirect:/profesional/registrarProfesional";
+            default:
+                return "redirect:/tipoUsuario";
+        }
+    }
 }

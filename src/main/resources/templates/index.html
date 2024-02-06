@@ -17,15 +17,15 @@
             <a href="#" onclick="showSection('about')">Sobre nosotros</a>
             <a href="#" onclick="showSection('services')">Servicios</a>
             <a href="#" onclick="showSection('contact')">Contáctanos</a>
-            <button class="btnLogin-popup" id="ingresarBtn">Ingresar</button>
+            <button class="btnLogin-popup" id="ingresarBtn"><a th:href="@{/loginPage}">Ingresar</a></button>
         </nav>
     </header>
 
     <section id="home">
         <h2>Bienvenido a Nuestra Página Principal</h2>
         <p>Contenido del Home. Puedes agregar más información aquí.</p>
-        <a href="paciente.html">paciente</a> <br>
-        <a href="profesional.html">profesional </a>
+        <a th:href="@{/paciente/home}">paciente</a> <br>
+        <a th:href="@{/profesional/home}">profesional </a>
     </section>
 
     <section id="about">
