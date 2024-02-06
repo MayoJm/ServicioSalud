@@ -24,11 +24,15 @@ public class UsuarioServicio {
     private UsuarioRepositorio usuarioRepositorio;
 
     @Transactional
-    public void crearUsuarioProfesional(String nombre,String apellido,String email,String password,String password2,Especialidad especialidad,String descripcionEspecialidad,Integer reputacion,Integer valorConsulta,String matricula
-            ,String dni,String direccion,String telefono,ArrayList<ObraSocial> obrasSociales) throws MiException {
+    public void crearUsuarioProfesional(String nombre, String apellido, String email, String password, String password2,
+                                        Especialidad especialidad, String descripcionEspecialidad,
+                                        Integer valorConsulta, String matricula, String dni, String direccion,
+                                        String telefono, List<ObraSocial> obrasSociales) throws MiException {
         UsuarioProfesional usuarioProfesional = new UsuarioProfesional();
 
-        validarProfesional( nombre, apellido, email, password, password2, especialidad, descripcionEspecialidad, reputacion, valorConsulta, matricula, dni, direccion, telefono, obrasSociales);
+        validarProfesional(nombre, apellido, email, password, password2, especialidad, descripcionEspecialidad,
+                valorConsulta, matricula, dni, direccion, telefono, obrasSociales);
+
         usuarioProfesional.setNombre(nombre);
         usuarioProfesional.setApellido(apellido);
         usuarioProfesional.setEmail(email);
@@ -36,19 +40,21 @@ public class UsuarioServicio {
         usuarioProfesional.setRol(Rol.PROFESIONAL);
         usuarioProfesional.setEspecialidad(especialidad);
         usuarioProfesional.setDescripcionEspecialidad(descripcionEspecialidad);
-        usuarioProfesional.setReputacion(reputacion);
         usuarioProfesional.setValorConsulta(valorConsulta);
         usuarioProfesional.setMatricula(matricula);
         usuarioProfesional.setDni(dni);
         usuarioProfesional.setDireccion(direccion);
         usuarioProfesional.setTelefono(telefono);
         usuarioProfesional.setEstado(true);
-        usuarioProfesional.setObrasSociales(obrasSociales);
-
+        usuarioProfesional.setObrasSociales((ArrayList<ObraSocial>) obrasSociales);
+        usuarioProfesional.setReputacion(null);
         usuarioRepositorio.save(usuarioProfesional);
-    }    public void crearUsuarioPaciente(String nombre, String apellido, String email, String password, String password2,ObraSocial obraSocial, String dni, String direccion, String telefono) throws MiException {
+    }
 
-        UsuarioPaciente usuarioPaciente =new UsuarioPaciente();
+    public void crearUsuarioPaciente(String nombre, String apellido, String email, String password, String password2,
+                                     ObraSocial obraSocial, String dni, String direccion, String telefono) throws MiException {
+
+        UsuarioPaciente usuarioPaciente = new UsuarioPaciente();
         validarPaciente(nombre, apellido, email, password, password2, obraSocial, dni, direccion, telefono);
         usuarioPaciente.setNombre(nombre);
         usuarioPaciente.setApellido(apellido);
@@ -63,10 +69,13 @@ public class UsuarioServicio {
         usuarioRepositorio.save(usuarioPaciente);
     }
 
-
     @Transactional
-    public void modificarProfesional(String nombre, String apellido, String email, String password, String password2, Especialidad especialidad, String descripcionEspecialidad, Integer reputacion, Integer valorConsulta, String matricula, String dni, String direccion, String telefono, Boolean estado, ArrayList<ObraSocial> obrasSociales) throws MiException {
-        validarProfesional(nombre, apellido, email, password, password2, especialidad, descripcionEspecialidad, reputacion, valorConsulta, matricula, dni, direccion, telefono, obrasSociales);
+    public void modificarProfesional(String nombre, String apellido, String email, String password, String password2,
+                                     Especialidad especialidad, String descripcionEspecialidad, Integer reputacion, Integer valorConsulta,
+                                     String matricula, String dni, String direccion, String telefono, Boolean estado,
+                                     ArrayList<ObraSocial> obrasSociales) throws MiException {
+        validarProfesional(nombre, apellido, email, password, password2, especialidad, descripcionEspecialidad,
+                valorConsulta, matricula, dni, direccion, telefono, obrasSociales);
 
         Optional<UsuarioProfesional> respuesta = usuarioRepositorio.buscarPorEmail(email);
 
@@ -95,23 +104,23 @@ public class UsuarioServicio {
     @Transactional(readOnly = true)
     public List<Usuario> listarUsuariosPaciente() {
 
-        List<Usuario> usuariosPaciente = new ArrayList();
+        List<Usuario> usuariosPaciente = new ArrayList<>();
         usuariosPaciente = usuarioRepositorio.findAll();
 
         return usuariosPaciente;
 
     }
+
     @Transactional(readOnly = true)
     public List<Usuario> listarUsuariosProfesional() {
 
-        List<Usuario> usuariosProfesional = new ArrayList();
+        List<Usuario> usuariosProfesional = new ArrayList<>();
 
         usuariosProfesional = usuarioRepositorio.findAll();
 
         return usuariosProfesional;
 
     }
-
 
     public Usuario getOne(String email) {
         return usuarioRepositorio.getReferenceById(email);
@@ -122,7 +131,10 @@ public class UsuarioServicio {
         return usuarioRepositorio.getReferenceById(id);
     }
 
-    public void validarProfesional(String nombre, String apellido, String email, String password, String password2, Especialidad especialidad, String descripcionEspecialidad, Integer reputacion, Integer valorConsulta, String matricula, String dni, String direccion, String telefono, ArrayList<ObraSocial> obrasSociales) throws MiException {
+    public void validarProfesional(String nombre, String apellido, String email, String password, String password2,
+                                   Especialidad especialidad, String descripcionEspecialidad, Integer valorConsulta,
+                                   String matricula, String dni, String direccion, String telefono, List<ObraSocial> obrasSociales)
+            throws MiException {
         if (nombre == null || nombre.isEmpty()) {
             throw new MiException("El nombre no puede ser nulo ni vacío");
         }
@@ -144,9 +156,7 @@ public class UsuarioServicio {
         if (descripcionEspecialidad == null || descripcionEspecialidad.isEmpty()) {
             throw new MiException("La descripción de la especialidad no puede ser nula ni vacía");
         }
-        if (reputacion == null || reputacion < 0) {
-            throw new MiException("La reputación debe ser un número entero positivo");
-        }
+
         if (valorConsulta == null || valorConsulta < 0) {
             throw new MiException("El valor de consulta debe ser un número entero positivo");
         }
@@ -166,7 +176,9 @@ public class UsuarioServicio {
             throw new MiException("La lista de obras sociales no puede ser nula o vacía");
         }
     }
-    public void validarPaciente(String nombre, String apellido, String email, String password, String password2, ObraSocial obraSocial, String dni, String direccion, String telefono) throws MiException {
+
+    public void validarPaciente(String nombre, String apellido, String email, String password, String password2,
+                                ObraSocial obraSocial, String dni, String direccion, String telefono) throws MiException {
         if (nombre == null || nombre.isEmpty()) {
             throw new MiException("El nombre no puede ser nulo ni vacio");
         }

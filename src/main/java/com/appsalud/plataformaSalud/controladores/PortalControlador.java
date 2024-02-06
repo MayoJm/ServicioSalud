@@ -33,26 +33,4 @@ public class PortalControlador {
         return "index.html";
     }
 
-
-    @GetMapping("/registrar")
-    public String registrar() {
-        return "index.html"; // pendiente
-    }
-
-    @PostMapping("/registro")
-    public String registro(@RequestParam String nombre, String apellido, String email, String password,
-            String password2, ModelMap modelo) {
-
-        try {
-            usuarioServicio.crearUsuario(nombre, apellido, email, password, password2);
-
-            modelo.put("exito", "El Usuario fue registrado correctamente!");
-        } catch (MiException ex) {
-
-            modelo.put("error", ex.getMessage());
-            return "index.html";
-        }
-
-        return "index.html"; // html pendiente
-    }
 }
