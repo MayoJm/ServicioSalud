@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.appsalud.plataformaSalud.servicios.UsuarioProfesionalServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,8 +24,8 @@ import com.appsalud.plataformaSalud.servicios.UsuarioServicio;
 public class UsuarioProfesionalControlador {
 
     @Autowired
-    private UsuarioServicio usuarioServicio;
-  
+    private UsuarioProfesionalServicio usuarioProfesionalServicio;
+
     @GetMapping("/registrarProfesional")
     public String registroProfesional(Model model) {
         List<Especialidad> listaEspecialidades = Arrays.stream(Especialidad.values()).collect(Collectors.toList());
@@ -50,7 +51,7 @@ public class UsuarioProfesionalControlador {
                                       @RequestParam List<ObraSocial> obrasSociales,
                                       RedirectAttributes redirectAttributes) {
         try {
-            usuarioServicio.crearUsuarioProfesional(nombre, apellido, email, password, password2, especialidad,
+            usuarioProfesionalServicio.crearUsuarioProfesional(nombre, apellido, email, password, password2, especialidad,
                     descripcionEspecialidad, valorConsulta, matricula, dni, direccion, telefono,
                     obrasSociales);
             redirectAttributes.addFlashAttribute("exito", "El Usuario fue registrado correctamente!");
