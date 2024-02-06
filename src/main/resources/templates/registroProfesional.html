@@ -5,90 +5,93 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Doctor</title>
-    <link rel="stylesheet" href="/ServicioSalud/src/main/resources/static/css/registro.css">
 </head>
 
 <body>
 
-    <div class="form-box register">
-        <h2>Registro de Profesional</h2>
-        <form action="/registroProfesional" method="post">
+<div class="form-box register">
+    <h2>Registro de Profesional</h2>
+    <form th:action="@{/profesional/registroProfesional}" method="POST">
 
-            <div class="input-box">
-                <input type="text" id="nombre" name="nombre" placeholder="Ingresar Nombre" th:value="${nombre}" required>
-            </div>
+        <div class="input-box">
+            <input type="text" id="nombre" name="nombre" placeholder="Ingresar Nombre" th:value="${nombre}"
+                   required>
+        </div>
 
-            <div class="input-box">
-                <input type="text" id="apellido" name="apellido" placeholder="Ingresar Apellido" th:value="${apellido}" required>
-            </div>
-            
-            <div class="input-box">
-                <input type="email" id="email" name="email" placeholder="Ingresar Correo Electronico" th:value="${email}" required>
-              </div>
+        <div class="input-box">
+            <input type="text" id="apellido" name="apellido" placeholder="Ingresar Apellido" th:value="${apellido}"
+                   required>
+        </div>
 
-              
-              <div class="input-box">
-                <input type="password" id="contrasena" name="contrasena" placeholder="Ingresar Contraseña" th:value="${password}" required>
-            </div>
+        <div class="input-box">
+            <input type="email" id="email" name="email" placeholder="Ingresar Correo Electronico"
+                   th:value="${email}" required>
+        </div>
 
-            <div class="input-box">
-                <input type="password" id="contrasena2" name="contrasena2" placeholder="Repetir Contraseña" th:value="${password2}" required>
-            </div>
-            
-            <div class="input-box">
-                <select id="especialidad" name="especialidad" required>
-                    <option selected disabled>Seleccione Su Especialidad</option>
-                    <option th:each="especialidad : ${especialidades}" th:value="${especialidad}" th:text="${especialidad}">
-                    </option>
-                </select>
-            </div>
-            
-            <div class="input-box">
-                <input type="text" id="edescripcionEspecialidad" name="descripcionEspecialidad" placeholder="Describa su Especialidad" th:value="${descripcionEspecialidad}" required>
-            </div>
-            
-            <div class="input-box">
-                <input type="text" id="valorConsulta" name="valorConsulta" placeholder="Ingresar Valor de la consulta" th:value="${valorConsulta}" required>
-            </div>
-            
-            <div class="input-box">
-                <input type="text" id="matricula" name="matricula" placeholder="Ingresar Matricula" th:value="${matricula}" required>
-            </div>
-            
-            <div class="input-box">
-                <input type="text" id="dni" name="dni" placeholder="Ingresar DNI" th:value="${dni}" required>
-            </div>
 
-            <div class="input-box">
-                <input type="text" id="direccion" name="direccion" placeholder="Ingresar Direccion" th:value="${direccion}" required>
-            </div>
+        <div class="input-box">
+            <input type="password" id="password" name="password" placeholder="Ingresar Contraseña"
+                   th:value="${password}" required>
+        </div>
 
-            <div class="input-box">
-                <input type="text" id="telefono" name="telefono" placeholder="Ingresar Telefono" th:value="${telefono}" required>
-            </div>
-            
-            <div class="input-box">
-                <label>Seleccione Obras Sociales:</label>
-                <fieldset>
-                    <legend>Obras Sociales</legend>
-            
-                    <div th:each="obraSocial : ${T(com.appsalud.plataformaSalud.enumeraciones.ObraSocial).values()}">
-                        <input type="checkbox" th:id="${obraSocial}" th:name="obrasociales" th:value="${obraSocial}" />
-                        <label th:for="${obraSocial}" th:text="${obraSocial}"></label><br>
-                    </div>
-            
-                </fieldset>
-            </div> 
+        <div class="input-box">
+            <input type="password" id="password2" name="password2" placeholder="Repetir Contraseña"
+                   th:value="${password2}" required>
+        </div>
 
-            <button type="submit" class="btn">Registrarse</button>
-            
-            <div class="login-register">
-                <p>¿Ya tienes una cuenta? <a href="iniciarSesion.html">Iniciar Sesión</a></p>
+        <div class="input-box">
+            <label for="especialidad">Especialidad:</label>
+            <select id="especialidad" name="especialidad">
+                <option th:each="esp : ${listaEspecialidades}" th:value="${esp}" th:text="${esp}"></option>
+            </select>
+        </div>
+
+        <div class="input-box">
+            <input type="text" id="edescripcionEspecialidad" name="descripcionEspecialidad"
+                   placeholder="Describa su Especialidad" th:value="${descripcionEspecialidad}" required>
+        </div>
+
+        <div class="input-box">
+            <input type="text" id="valorConsulta" name="valorConsulta" placeholder="Ingresar Valor de la consulta"
+                   th:value="${valorConsulta}" required>
+        </div>
+
+        <div class="input-box">
+            <input type="text" id="matricula" name="matricula" placeholder="Ingresar Matricula"
+                   th:value="${matricula}" required>
+        </div>
+
+        <div class="input-box">
+            <input type="text" id="dni" name="dni" placeholder="Ingresar DNI" th:value="${dni}" required>
+        </div>
+
+        <div class="input-box">
+            <input type="text" id="direccion" name="direccion" placeholder="Ingresar Direccion"
+                   th:value="${direccion}" required>
+        </div>
+
+        <div class="input-box">
+            <input type="text" id="telefono" name="telefono" placeholder="Ingresar Telefono" th:value="${telefono}"
+                   required>
+        </div>
+
+        <div class="input-box">
+            <label>Seleccione Obras Sociales:</label>
+            <div th:each="obra : ${listaObrasSociales}">
+                <input type="checkbox" th:id="'obra-' + ${obra}" name="obrasSociales" th:value="${obra}" />
+                <label th:for="'obra-' + ${obra}" th:text="${obra}"></label>
             </div>
-        </form>
-    </div>
+        </div>
+
+
+        <button type="submit" class="btn">Registrarse</button>
+
+        <div class="login-register">
+            <p>¿Ya tienes una cuenta? <a href="iniciarSesion.html">Iniciar Sesión</a></p>
+        </div>
+    </form>
+</div>
 
 </body>
-<script src="/ServicioSalud/src/main/resources/static/js/registroProfesional.js"></script>
 
 </html>
