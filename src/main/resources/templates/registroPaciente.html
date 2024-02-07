@@ -5,14 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Paciente</title>
-    <link rel="stylesheet" href="/ServicioSalud/src/main/resources/static/css/registro.css">
 </head>
 
 <body>
 
     <section class="form-box register">
         <h2>Registro de Paciente</h2>
-        <form action="/registroPaciente" method="post">
+        <form th:action="@{/paciente/registroPaciente}" method="post">
 
             <div class="input-box">
                 <input type="text" id="nombre" name="nombre" placeholder="Ingresar Nombre" th:value="${nombre}" required>
@@ -27,15 +26,15 @@
             </div>
 
             <div class="input-box">
-                <input type="password" id="contrasena" name="contrasena" placeholder="Ingresar Contraseña" th:value="${password}" required>
+                <input type="password" id="password" name="password" placeholder="Ingresar Contraseña" th:value="${password}" required>
             </div>
 
             <div class="input-box">
-                <input type="password" id="contrasena2" name="contrasena2" placeholder="Repetir Contraseña" th:value="${password2}" required>
+                <input type="password" id="password2" name="password2" placeholder="Repetir Contraseña" th:value="${password2}" required>
             </div>
 
             <div class="input-box">
-                <select id="obrasocial" name="obrasocial" required>
+                <select id="obrasocial" name="obraSocial" required>
                     <option selected disabled>Seleccione Obra Social</option>
                     <option th:each="obraSocial : ${T(com.appsalud.plataformaSalud.enumeraciones.ObraSocial).values()}"
                             th:value="${obraSocial}" 
