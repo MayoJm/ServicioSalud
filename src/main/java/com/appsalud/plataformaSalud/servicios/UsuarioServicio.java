@@ -24,39 +24,6 @@ public class UsuarioServicio {
     private UsuarioRepositorio usuarioRepositorio;
 
 
-
-    public void crearUsuarioPaciente(String nombre, String apellido, String email, String password, String password2,
-                                     ObraSocial obraSocial, String dni, String direccion, String telefono) throws MiException {
-
-        UsuarioPaciente usuarioPaciente = new UsuarioPaciente();
-        validarPaciente(nombre, apellido, email, password, password2, obraSocial, dni, direccion, telefono);
-        usuarioPaciente.setNombre(nombre);
-        usuarioPaciente.setApellido(apellido);
-        usuarioPaciente.setEmail(email);
-        usuarioPaciente.setPassword(new BCryptPasswordEncoder().encode(password));
-        usuarioPaciente.setRol(Rol.PACIENTE);
-        usuarioPaciente.setDni(dni);
-        usuarioPaciente.setObraSocial(obraSocial);
-        usuarioPaciente.setDireccion(direccion);
-        usuarioPaciente.setTelefono(telefono);
-        usuarioPaciente.setEstado(true);
-        usuarioRepositorio.save(usuarioPaciente);
-    }
-
-
-
-    @Transactional(readOnly = true)
-    public List<Usuario> listarUsuariosPaciente() {
-
-        List<Usuario> usuariosPaciente = new ArrayList<>();
-        usuariosPaciente = usuarioRepositorio.findAll();
-
-        return usuariosPaciente;
-
-    }
-
-
-
     public Usuario getOne(String email) {
         return usuarioRepositorio.getReferenceById(email);
     }
@@ -68,35 +35,5 @@ public class UsuarioServicio {
 
 
 
-    public void validarPaciente(String nombre, String apellido, String email, String password, String password2,
-                                ObraSocial obraSocial, String dni, String direccion, String telefono) throws MiException {
-        if (nombre == null || nombre.isEmpty()) {
-            throw new MiException("El nombre no puede ser nulo ni vacio");
-        }
-        if (apellido == null || apellido.isEmpty()) {
-            throw new MiException("El apellido no puede ser nulo ni vacio");
-        }
-        if (email == null || email.isEmpty()) {
-            throw new MiException("El email no puede ser nulo ni vacio");
-        }
-        if (password.isEmpty() || password == null || password.length() <= 5) {
-            throw new MiException("El password no puede ser nulo ni vacio, y debe contener mas de 5 caracteres");
-        }
-        if (!password.equals(password2)) {
-            throw new MiException("Los passwords deben ser iguales");
-        }
-        if (obraSocial == null) {
-            throw new MiException("La obra social no puede ser nula");
-        }
-        if (dni == null || dni.isEmpty()) {
-            throw new MiException("El DNI no puede ser nulo ni vacío");
-        }
-        if (direccion == null || direccion.isEmpty()) {
-            throw new MiException("La dirección no puede ser nula ni vacía");
-        }
-        if (telefono == null || telefono.isEmpty()) {
-            throw new MiException("El teléfono no puede ser nulo ni vacío");
-        }
 
-    }
 }
