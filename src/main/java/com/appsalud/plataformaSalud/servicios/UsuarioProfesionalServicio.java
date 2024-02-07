@@ -40,6 +40,11 @@ public class UsuarioProfesionalServicio implements UserDetailsService {
     public Usuario buscarProfesionalPorId(String id) {
         return usuarioRepositorio.buscarPorId(id);
     }
+    
+    @Transactional
+    public Optional<UsuarioProfesional> buscarProfesionalPorEmail(String mail) {
+        return usuarioRepositorio.buscarPorEmail(mail);
+    }
 
     @Transactional
     public void crearUsuarioProfesional(String nombre, String apellido, String email, String password, String password2,
@@ -174,6 +179,8 @@ public class UsuarioProfesionalServicio implements UserDetailsService {
         if (respuesta.isPresent()) {
             UsuarioProfesional usuarioProfesional = respuesta.get();
             usuarioProfesional.setEstado(false);
+            
+            usuarioRepositorio.save(usuarioProfesional);
         }
     }
 
