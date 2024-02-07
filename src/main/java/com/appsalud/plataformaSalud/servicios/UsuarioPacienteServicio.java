@@ -114,7 +114,10 @@ public class UsuarioPacienteServicio implements UserDetailsService {
         if (respuesta.isPresent()) {
             UsuarioPaciente usuarioPaciente = respuesta.get();
             usuarioPaciente.setEstado(false);
-        }
+            
+            usuarioRepositorio.save(usuarioPaciente);
+        } 
+        
     }
 
     @Override
