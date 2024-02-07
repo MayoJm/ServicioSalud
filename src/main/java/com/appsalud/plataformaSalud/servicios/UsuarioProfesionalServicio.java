@@ -43,7 +43,7 @@ public class UsuarioProfesionalServicio {
         UsuarioProfesional usuarioProfesional = new UsuarioProfesional();
 
         validarProfesional(nombre, apellido, email, password, password2, especialidad, descripcionEspecialidad,
-                valorConsulta, matricula, dni, direccion, telefono, obrasSociales);
+                valorConsulta, matricula, dni, direccion, telefono/* obrasSociales*/);
 
         usuarioProfesional.setNombre(nombre);
         usuarioProfesional.setApellido(apellido);
@@ -65,10 +65,10 @@ public class UsuarioProfesionalServicio {
     @Transactional
     public void modificarProfesional(String nombre, String apellido, String email, String password, String password2,
                                      Especialidad especialidad, String descripcionEspecialidad, Integer reputacion, Integer valorConsulta,
-                                     String matricula, String dni, String direccion, String telefono, Boolean estado,
-                                     ArrayList<ObraSocial> obrasSociales) throws MiException {
+                                     String matricula, String dni, String direccion, String telefono, Boolean estado
+                                     /*ArrayList<ObraSocial> obrasSociales*/) throws MiException {
         validarProfesional(nombre, apellido, email, password, password2, especialidad, descripcionEspecialidad,
-                valorConsulta, matricula, dni, direccion, telefono, obrasSociales);
+                valorConsulta, matricula, dni, direccion, telefono/* obrasSociales*/);
 
         Optional<UsuarioProfesional> respuesta = usuarioRepositorio.buscarPorEmail(email);
 
@@ -88,14 +88,14 @@ public class UsuarioProfesionalServicio {
             usuarioProfesional.setDireccion(direccion);
             usuarioProfesional.setTelefono(telefono);
             usuarioProfesional.setEstado(estado);
-            usuarioProfesional.setObrasSociales(obrasSociales);
+           // usuarioProfesional.setObrasSociales(obrasSociales);
 
             usuarioRepositorio.save(usuarioProfesional);
         }
     }
     public void validarProfesional(String nombre, String apellido, String email, String password, String password2,
                                    Especialidad especialidad, String descripcionEspecialidad, Integer valorConsulta,
-                                   String matricula, String dni, String direccion, String telefono, List<ObraSocial> obrasSociales)
+                                   String matricula, String dni, String direccion, String telefono/* List<ObraSocial> obrasSociales*/)
             throws MiException {
         if (nombre == null || nombre.isEmpty()) {
             throw new MiException("El nombre no puede ser nulo ni vacío");
@@ -134,9 +134,9 @@ public class UsuarioProfesionalServicio {
         if (telefono == null || telefono.isEmpty()) {
             throw new MiException("El teléfono no puede ser nulo ni vacío");
         }
-        if (obrasSociales == null || obrasSociales.isEmpty()) {
-            throw new MiException("La lista de obras sociales no puede ser nula o vacía");
-        }
+//        if (obrasSociales == null || obrasSociales.isEmpty()) {
+//            throw new MiException("La lista de obras sociales no puede ser nula o vacía");
+//        }
     }
     @Transactional(readOnly = true)
     public List<Usuario> listarUsuariosProfesional() {
@@ -159,4 +159,14 @@ public class UsuarioProfesionalServicio {
         
         turnoRepositorio.save(turno);        
     }
+    @Transactional
+    public void anularProfesional(String email){
+        Optional<UsuarioProfesional> respuesta = usuarioRepositorio.buscarPorEmail(email);
+
+        if (respuesta.isPresent()) {
+            UsuarioProfesional usuarioProfesional = respuesta.get();
+            usuarioProfesional.setEstado(false);
+        }
+    }
 }
+
