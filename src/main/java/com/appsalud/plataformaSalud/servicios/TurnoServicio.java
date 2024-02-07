@@ -1,10 +1,12 @@
 package com.appsalud.plataformaSalud.servicios;
 
 import com.appsalud.plataformaSalud.entidades.Turno;
+import com.appsalud.plataformaSalud.entidades.Usuario;
 import com.appsalud.plataformaSalud.entidades.UsuarioPaciente;
 import com.appsalud.plataformaSalud.entidades.UsuarioProfesional;
 import com.appsalud.plataformaSalud.excepciones.MiException;
 import com.appsalud.plataformaSalud.repositorios.TurnoRepositorio;
+import com.appsalud.plataformaSalud.repositorios.UsuarioRepositorio;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,6 +20,9 @@ public class TurnoServicio {
 
     @Autowired
     private TurnoRepositorio turnoRepositorio;
+    
+    @Autowired
+    private UsuarioRepositorio usuarioRepositorio;
 
     @Transactional
     public void crearTurno(Date hora, Date fecha, String descripcion, UsuarioPaciente usuarioPaciente, UsuarioProfesional usuarioProfesional) throws MiException {
@@ -68,18 +73,20 @@ public class TurnoServicio {
     }
     
     @Transactional(readOnly = true) 
-    public List<Turno> listarTurnosPorPaciente(String idPaciente) {
+    public List<Turno> listarTurnosPorPaciente(String email) {
+        Optional<UsuarioPaciente> respuesta = usuarioRepositorio.buscarPorEmailPaciente(email);
         List<Turno> turnosPaciente = new ArrayList<>();
-        
-        turnosPaciente = turnoRepositorio.buscarPorPaciente(idPaciente);
+        UsuarioPaciente paciente = respuesta.get();
+        turnosPaciente = turnoRepositorio.buscarPorPaciente(paciente);
         
         return turnosPaciente;
 }
      @Transactional(readOnly = true) 
-    public List<Turno> listarTurnosPorProfesional(String idProfesional) {
+    public List<Turno> listarTurnosPorProfesional(String email) {
+        Optional<UsuarioProfesional> respuesta = usuarioRepositorio.buscarPorEmail(email);
         List<Turno> turnosProfesional = new ArrayList<>();
-        
-        turnosProfesional = turnoRepositorio.buscarPorPaciente(idProfesional);
+        UsuarioProfesional profesional = respuesta.get();
+        turnosProfesional = turnoRepositorio.buscarPorProfesional(profesional);
         
         return turnosProfesional;
     }
