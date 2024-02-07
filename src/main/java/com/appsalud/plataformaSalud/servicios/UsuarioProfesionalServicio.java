@@ -58,7 +58,7 @@ public class UsuarioProfesionalServicio {
         usuarioProfesional.setDireccion(direccion);
         usuarioProfesional.setTelefono(telefono);
         usuarioProfesional.setEstado(true);
-        usuarioProfesional.setObrasSociales((ArrayList<ObraSocial>) obrasSociales);
+        usuarioProfesional.setObrasSociales((List<ObraSocial>) obrasSociales);
         usuarioProfesional.setReputacion(null);
         usuarioRepositorio.save(usuarioProfesional);
     }
@@ -93,6 +93,8 @@ public class UsuarioProfesionalServicio {
             usuarioRepositorio.save(usuarioProfesional);
         }
     }
+
+
     public void validarProfesional(String nombre, String apellido, String email, String password, String password2,
                                    Especialidad especialidad, String descripcionEspecialidad, Integer valorConsulta,
                                    String matricula, String dni, String direccion, String telefono, List<ObraSocial> obrasSociales)

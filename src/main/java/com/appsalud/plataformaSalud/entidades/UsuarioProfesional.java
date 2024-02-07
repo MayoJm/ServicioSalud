@@ -2,12 +2,11 @@ package com.appsalud.plataformaSalud.entidades;
 
 import com.appsalud.plataformaSalud.enumeraciones.Especialidad;
 import com.appsalud.plataformaSalud.enumeraciones.ObraSocial;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import java.util.ArrayList;
+import jakarta.persistence.*;
 
-import jakarta.persistence.OneToOne;
+import java.util.ArrayList;
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,7 +29,9 @@ public class UsuarioProfesional extends Usuario {
     private String direccion;
     private String telefono;
     private Boolean estado;
-    private ArrayList<ObraSocial> obrasSociales;
+    @ElementCollection
+    @Column(name = "obras_sociales")
+    private List<ObraSocial> obrasSociales;
     @OneToOne
     private Calendario calendario;
 
