@@ -25,7 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class UsuarioProfesionalServicio implements UserDetailsService {
+public class UsuarioProfesionalServicio  extends UsuarioServicio implements UserDetailsService {
 
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
@@ -168,18 +168,6 @@ public class UsuarioProfesionalServicio implements UserDetailsService {
         }
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UsuarioProfesional usuarioProfesional = usuarioRepositorio.buscarPorEmail(username).orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
 
-        if(usuarioProfesional != null){
-            List<GrantedAuthority> permisos = new ArrayList<>();
-            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + usuarioProfesional.getRol().toString());
-            permisos.add(p);
-        return new User(usuarioProfesional.getEmail(), usuarioProfesional.getPassword(), permisos);
-        }else {
-            return null;
-        }
-    }
 }
 

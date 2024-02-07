@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UsuarioPacienteServicio implements UserDetailsService {
+public class UsuarioPacienteServicio extends UsuarioServicio implements UserDetailsService {
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
 
@@ -120,18 +120,5 @@ public class UsuarioPacienteServicio implements UserDetailsService {
         
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UsuarioPaciente usuarioPaciente = usuarioRepositorio.buscarPorEmailPaciente(username).orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
 
-        if (usuarioPaciente != null) {
-            List<GrantedAuthority> permisos = new ArrayList<>();
-            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + usuarioPaciente.getRol().toString());
-            permisos.add(p);
-            return new User(usuarioPaciente.getEmail(), usuarioPaciente.getPassword(), permisos);
-        }else {
-            return null;
-        }
-
-    }
 }
