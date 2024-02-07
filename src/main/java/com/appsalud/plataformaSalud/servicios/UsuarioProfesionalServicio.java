@@ -1,8 +1,6 @@
 package com.appsalud.plataformaSalud.servicios;
 
-import com.appsalud.plataformaSalud.entidades.Turno;
 import com.appsalud.plataformaSalud.entidades.Usuario;
-import com.appsalud.plataformaSalud.entidades.UsuarioPaciente;
 import com.appsalud.plataformaSalud.entidades.UsuarioProfesional;
 import com.appsalud.plataformaSalud.enumeraciones.Especialidad;
 import com.appsalud.plataformaSalud.enumeraciones.ObraSocial;
@@ -12,7 +10,6 @@ import com.appsalud.plataformaSalud.repositorios.TurnoRepositorio;
 import com.appsalud.plataformaSalud.repositorios.UsuarioRepositorio;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,9 +29,6 @@ public class UsuarioProfesionalServicio implements UserDetailsService {
 
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
-    
-    @Autowired
-    private TurnoRepositorio turnoRepositorio;
 
     @Transactional
     public Usuario buscarProfesionalPorId(String id) {
@@ -161,17 +155,7 @@ public class UsuarioProfesionalServicio implements UserDetailsService {
         return usuariosProfesional;
 
     }
-    @Transactional
-    public void crearTurno(Date hora, Date fecha, String descripcion, UsuarioPaciente usuarioPaciente, UsuarioProfesional usuarioProfesional) {
-        Turno turno = new Turno();
-        turno.setHora(hora);
-        turno.setFecha(fecha);
-        turno.setDescripcion(descripcion);
-        turno.setUsuarioPaciente(usuarioPaciente);
-        turno.setUsuarioProfesional(usuarioProfesional);
-        
-        turnoRepositorio.save(turno);        
-    }
+
     @Transactional
     public void anularProfesional(String email){
         Optional<UsuarioProfesional> respuesta = usuarioRepositorio.buscarPorEmail(email);
