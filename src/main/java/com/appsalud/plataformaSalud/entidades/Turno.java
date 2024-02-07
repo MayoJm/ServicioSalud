@@ -35,4 +35,5 @@ public class Turno {
     @ManyToOne
     private UsuarioProfesional usuarioProfesional;
 
+    private Boolean alta; 
 }

@@ -54,4 +54,36 @@ public class PacienteControlador {
         }
         return "registroPaciente.html";
     }
+    
+    @PostMapping("/darBaja")
+    public String darBajaPaciente(@RequestParam("email") String email) {
+        try {
+        usuarioPacienteServicio.anularPaciente(email);
+        return "redirect:/dashboard-paciente";
+        } catch (Exception e) {
+            e.getMessage();
+            return "redirect:/dashboard-paciente";
+        }
+    }
+    
+    @PostMapping("/modificar")
+    public String modificarPaciente(@RequestParam String nombre,
+                                      @RequestParam String apellido,
+                                      @RequestParam String email,
+                                      @RequestParam String password,
+                                      @RequestParam String password2,
+                                      @RequestParam String dni,
+                                      @RequestParam String direccion,
+                                      @RequestParam String telefono,
+                                      @RequestParam ObraSocial obraSocial,
+                                      Model model) {
+        try {
+            usuarioPacienteServicio.modificarPaciente(nombre, apellido, email, password, password2, obraSocial, dni, direccion, telefono);
+        model.addAttribute("exito", "Paciente modificado con exito");
+            return "redirect:/dashboard-paciente";
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+        }
+        return ""; //aca redirigiria a la vista de modificar paciente.
+    }
 }

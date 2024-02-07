@@ -48,7 +48,7 @@ public class PortalControlador {
 
         switch (tipoUsuario) {
             case "paciente":
-                return "redirect:/paciente/registrar"; //pendiente controladores paciente
+                return "redirect:/paciente/registrarPaciente";
             case "profesional":
                 return "redirect:/profesional/registrarProfesional";
             default:
