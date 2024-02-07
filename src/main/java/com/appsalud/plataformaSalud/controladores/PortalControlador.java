@@ -30,13 +30,13 @@ public class PortalControlador {
             modelo.put("error", "Usuario o Contraseña invalidos!");
         }
 
-        return "index.html";
-    }
-
-    @GetMapping("/loginPage")
-    public String loginPage() {
         return "iniciarSesion.html";
     }
+
+//    @GetMapping("/loginPage")
+//    public String loginPage() {
+//        return "iniciarSesion.html";
+//    }
 
     @GetMapping("/tipoUsuario")
     public String tipoUsuario() {

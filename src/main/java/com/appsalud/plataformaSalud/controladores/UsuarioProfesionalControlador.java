@@ -8,6 +8,7 @@ import com.appsalud.plataformaSalud.servicios.UsuarioProfesionalServicio;
 import org.apache.catalina.filters.RemoteIpFilter;
 import org.hibernate.tool.schema.internal.exec.ScriptTargetOutputToFile;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,9 +29,10 @@ public class UsuarioProfesionalControlador {
     @Autowired
     private UsuarioProfesionalServicio usuarioProfesionalServicio;
 
-    @GetMapping("/home")
-    public String profesionalHome() {
-        return "profesional.html";
+    @PreAuthorize("hasRole('ROLE_PROFESIONAL')")
+    @GetMapping("/dashboard-profesional")
+    public String mostrarVistaProfesional() {
+        return "profesionalVista.html";
     }
     
     @GetMapping("/registrarProfesional")

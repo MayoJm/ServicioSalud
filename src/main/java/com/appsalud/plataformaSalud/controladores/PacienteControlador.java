@@ -5,6 +5,7 @@ import com.appsalud.plataformaSalud.enumeraciones.ObraSocial;
 import com.appsalud.plataformaSalud.servicios.UsuarioPacienteServicio;
 import com.appsalud.plataformaSalud.servicios.UsuarioProfesionalServicio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,9 +20,10 @@ import java.util.stream.Collectors;
 public class PacienteControlador {
     @Autowired
     private UsuarioPacienteServicio usuarioPacienteServicio;
-    @GetMapping("/home")
-    public String profesionalHome() {
-        return "paciente.html";
+    @PreAuthorize("hasRole('ROLE_PACIENTE')")
+    @GetMapping("/dashboard-paciente")
+    public String mostrarVistaPaciente() {
+        return "pacienteVista.html";
     }
 
     @GetMapping("/registrarPaciente")
