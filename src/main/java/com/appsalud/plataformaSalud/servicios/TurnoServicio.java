@@ -38,7 +38,7 @@ public class TurnoServicio {
         
         validarTurno(hora, fecha, descripcion, usuarioPaciente, usuarioProfesional);
         
-        Optional<Turno> respuesta = turnoRepositorio.buscarPorId(id);
+        Optional<Turno> respuesta = turnoRepositorio.findById(id);
         
         if(respuesta.isPresent()) {
             Turno turno = respuesta.get();
