@@ -7,6 +7,12 @@ import com.appsalud.plataformaSalud.enumeraciones.Rol;
 import com.appsalud.plataformaSalud.excepciones.MiException;
 import com.appsalud.plataformaSalud.repositorios.UsuarioRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UsuarioPacienteServicio {
+public class UsuarioPacienteServicio implements UserDetailsService {
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
 
@@ -109,5 +115,20 @@ public class UsuarioPacienteServicio {
             UsuarioPaciente usuarioPaciente = respuesta.get();
             usuarioPaciente.setEstado(false);
         }
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        UsuarioPaciente usuarioPaciente = usuarioRepositorio.buscarPorEmailPaciente(username).orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
+
+        if (usuarioPaciente != null) {
+            List<GrantedAuthority> permisos = new ArrayList<>();
+            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + usuarioPaciente.getRol().toString());
+            permisos.add(p);
+            return new User(usuarioPaciente.getEmail(), usuarioPaciente.getPassword(), permisos);
+        }else {
+            return null;
+        }
+
     }
 }

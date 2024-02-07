@@ -17,12 +17,18 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class UsuarioProfesionalServicio {
+public class UsuarioProfesionalServicio implements UserDetailsService {
 
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
@@ -58,7 +64,7 @@ public class UsuarioProfesionalServicio {
         usuarioProfesional.setDireccion(direccion);
         usuarioProfesional.setTelefono(telefono);
         usuarioProfesional.setEstado(true);
-        usuarioProfesional.setObrasSociales((ArrayList<ObraSocial>) obrasSociales);
+        usuarioProfesional.setObrasSociales((List<ObraSocial>) obrasSociales);
         usuarioProfesional.setReputacion(null);
         usuarioRepositorio.save(usuarioProfesional);
     }
@@ -93,6 +99,8 @@ public class UsuarioProfesionalServicio {
             usuarioRepositorio.save(usuarioProfesional);
         }
     }
+
+
     public void validarProfesional(String nombre, String apellido, String email, String password, String password2,
                                    Especialidad especialidad, String descripcionEspecialidad, Integer valorConsulta,
                                    String matricula, String dni, String direccion, String telefono/* List<ObraSocial> obrasSociales*/)
@@ -166,6 +174,20 @@ public class UsuarioProfesionalServicio {
         if (respuesta.isPresent()) {
             UsuarioProfesional usuarioProfesional = respuesta.get();
             usuarioProfesional.setEstado(false);
+        }
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        UsuarioProfesional usuarioProfesional = usuarioRepositorio.buscarPorEmail(username).orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
+
+        if(usuarioProfesional != null){
+            List<GrantedAuthority> permisos = new ArrayList<>();
+            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + usuarioProfesional.getRol().toString());
+            permisos.add(p);
+        return new User(usuarioProfesional.getEmail(), usuarioProfesional.getPassword(), permisos);
+        }else {
+            return null;
         }
     }
 }

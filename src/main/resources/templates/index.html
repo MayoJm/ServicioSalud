@@ -5,8 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="/ServicioSalud/src/main/resources/static/css/styles.css">
-
 </head>
 
 <body>
@@ -17,7 +15,7 @@
             <a href="#" onclick="showSection('about')">Sobre nosotros</a>
             <a href="#" onclick="showSection('services')">Servicios</a>
             <a href="#" onclick="showSection('contact')">Contáctanos</a>
-            <button class="btnLogin-popup" id="ingresarBtn"><a th:href="@{/loginPage}">Ingresar</a></button>
+            <button class="btnLogin-popup" id="ingresarBtn"><a th:href="@{/login}">Ingresar</a></button>
         </nav>
     </header>
 
@@ -46,7 +44,6 @@
     <footer>
         <p>&copy; 2024 Tu Empresa. Todos los derechos reservados.</p>
     </footer>
-    <script src="/ServicioSalud/src/main/resources/static/js/script.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>

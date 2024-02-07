@@ -5,7 +5,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.appsalud.plataformaSalud.servicios.UsuarioProfesionalServicio;
+import org.apache.catalina.filters.RemoteIpFilter;
+import org.hibernate.tool.schema.internal.exec.ScriptTargetOutputToFile;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,9 +29,10 @@ public class UsuarioProfesionalControlador {
     @Autowired
     private UsuarioProfesionalServicio usuarioProfesionalServicio;
 
-    @GetMapping("/home")
-    public String profesionalHome() {
-        return "profesional.html";
+    @PreAuthorize("hasRole('ROLE_PROFESIONAL')")
+    @GetMapping("/dashboard-profesional")
+    public String mostrarVistaProfesional() {
+        return "profesionalVista.html";
     }
     
     @GetMapping("/registrarProfesional")
@@ -59,7 +63,11 @@ public class UsuarioProfesionalControlador {
             usuarioProfesionalServicio.crearUsuarioProfesional(nombre, apellido, email, password, password2, especialidad,
                     descripcionEspecialidad, valorConsulta, matricula, dni, direccion, telefono,
                     obrasSociales);
+            for (ObraSocial obraSocial : obrasSociales) {
+                System.out.println(obraSocial);
+            }
             redirectAttributes.addFlashAttribute("exito", "El Usuario fue registrado correctamente!");
+
             return "redirect:/";
         } catch (MiException e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());

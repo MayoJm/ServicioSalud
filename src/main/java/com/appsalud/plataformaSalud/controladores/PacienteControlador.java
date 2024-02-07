@@ -5,10 +5,13 @@ import com.appsalud.plataformaSalud.enumeraciones.ObraSocial;
 import com.appsalud.plataformaSalud.servicios.UsuarioPacienteServicio;
 import com.appsalud.plataformaSalud.servicios.UsuarioProfesionalServicio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Arrays;
 import java.util.List;
@@ -19,15 +22,36 @@ import java.util.stream.Collectors;
 public class PacienteControlador {
     @Autowired
     private UsuarioPacienteServicio usuarioPacienteServicio;
-    @GetMapping("/home")
-    public String profesionalHome() {
-        return "paciente.html";
+    @PreAuthorize("hasRole('ROLE_PACIENTE')")
+    @GetMapping("/dashboard-paciente")
+    public String mostrarVistaPaciente() {
+        return "pacienteVista.html";
     }
 
     @GetMapping("/registrarPaciente")
-    public String registroProfesional(Model model) {
+    public String registrarPaciente(Model model) {
         List<ObraSocial> listaObrasSociales = Arrays.stream(ObraSocial.values()).collect(Collectors.toList());
         model.addAttribute("listaObrasSociales", listaObrasSociales);
-        return "registroProfesional.html";
+        return "registroPaciente.html";
+    }
+    @PostMapping("/registroPaciente")
+    public String registroPaciente(@RequestParam String nombre,
+                                      @RequestParam String apellido,
+                                      @RequestParam String email,
+                                      @RequestParam String password,
+                                      @RequestParam String password2,
+                                      @RequestParam String dni,
+                                      @RequestParam String direccion,
+                                      @RequestParam String telefono,
+                                      @RequestParam ObraSocial obraSocial,
+                                      Model model) {
+        try {
+            usuarioPacienteServicio.crearUsuarioPaciente(nombre, apellido, email, password, password2, obraSocial, dni, direccion, telefono);
+            model.addAttribute("exito", "Paciente registrado con exito");
+            return "redirect:/";
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+        }
+        return "registroPaciente.html";
     }
 }
