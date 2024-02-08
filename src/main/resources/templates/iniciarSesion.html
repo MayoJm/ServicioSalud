@@ -1,33 +1,34 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar Sesión</title>
+    <title>Document</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 
-<div class="container mt-5">
+<div class="container">
     <div class="row justify-content-center">
-        <div class="col-lg-6">
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
                     <h2 class="card-title text-center">Ingresar</h2>
                     <form th:action="@{/logincheck}" method="post">
                         <div class="form-group">
                             <div class="input-group">
-
-                                <input name="email" id="email" type="email" class="form-control" placeholder="Email"
-                                       required th:value="${email}"/>
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><ion-icon name="mail"></ion-icon></span>
+                                </div>
+                                <input name="email" id="email" type="email" class="form-control" placeholder="Email" required/>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="input-group">
-
-                                <input id="password" required name="password" type="password" class="form-control"
-                                       placeholder="Contraseña" required th:value="${password}"/>
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><ion-icon name="lock-closed"></ion-icon></span>
+                                </div>
+                                <input id="password" required name="password" type="password" class="form-control" placeholder="Contraseña"/>
                             </div>
                         </div>
                         <div class="form-group form-check">
@@ -36,8 +37,7 @@
                         </div>
                         <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
                         <div class="text-center mt-3">
-                            <p>No tienes una cuenta? <a th:href="@{/tipoUsuario}" class="register-link">Registrarse</a>
-                            </p>
+                            <p>No tienes una cuenta? <a th:href="@{/tipoUsuario}" class="register-link">Registrarse</a></p>
                             <p><a th:href="@{/}">Volver</a></p>
                         </div>
                     </form>
@@ -47,6 +47,11 @@
     </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </body>
 </html>
+
 

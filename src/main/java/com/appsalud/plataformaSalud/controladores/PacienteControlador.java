@@ -25,7 +25,7 @@ public class PacienteControlador {
     @PreAuthorize("hasRole('ROLE_PACIENTE')")
     @GetMapping("/dashboard-paciente")
     public String mostrarVistaPaciente() {
-        return "pacienteVista.html";
+        return "usuarioVista.html";
     }
 
     @GetMapping("/registrarPaciente")

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Dar de Baja Cuenta Profesional</title>
+</head>
+<body>
+<div>
+  <h5>¿Desea dar de baja su cuenta?</h5>
+  <form th:action="@{/profesional/darBaja}" method="post">
+    <button type="submit">Sí</button>
+    <a th:href="@{/profesional/dashboard-profesional}">No</a>
+  </form>
+</div>
+</body>
+</html>

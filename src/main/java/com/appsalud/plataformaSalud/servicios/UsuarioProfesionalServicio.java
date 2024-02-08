@@ -21,6 +21,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +30,9 @@ public class UsuarioProfesionalServicio  extends UsuarioServicio implements User
 
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
+//    @Autowired
+//    private BCryptPasswordEncoder passwordEncoder;
+
 
     @Transactional
     public Usuario buscarProfesionalPorId(String id) {
@@ -68,12 +72,11 @@ public class UsuarioProfesionalServicio  extends UsuarioServicio implements User
         usuarioRepositorio.save(usuarioProfesional);
     }
     @Transactional
-    public void modificarProfesional(String nombre, String apellido, String email, String password, String password2,
+    public void modificarProfesional(String nombre, String apellido, String email, String passwordActual, String nuevoPassword,
                                      Especialidad especialidad, String descripcionEspecialidad, Integer reputacion, Integer valorConsulta,
-                                     String matricula, String dni, String direccion, String telefono, Boolean estado
-                                     /*ArrayList<ObraSocial> obrasSociales*/) throws MiException {
-        validarProfesional(nombre, apellido, email, password, password2, especialidad, descripcionEspecialidad,
-                valorConsulta, matricula, dni, direccion, telefono/* obrasSociales*/);
+                                     String matricula, String dni, String direccion, String telefono, Boolean estado) throws MiException {
+        validarModificacionDeProfesional(nombre, apellido, email, passwordActual, nuevoPassword, especialidad, descripcionEspecialidad,
+                valorConsulta, dni, direccion, telefono);
 
         Optional<UsuarioProfesional> respuesta = usuarioRepositorio.buscarPorEmail(email);
 
@@ -83,7 +86,7 @@ public class UsuarioProfesionalServicio  extends UsuarioServicio implements User
             usuarioProfesional.setNombre(nombre);
             usuarioProfesional.setApellido(apellido);
             usuarioProfesional.setEmail(email);
-            usuarioProfesional.setPassword(new BCryptPasswordEncoder().encode(password));
+            usuarioProfesional.setPassword(new BCryptPasswordEncoder().encode(nuevoPassword));
             usuarioProfesional.setEspecialidad(especialidad);
             usuarioProfesional.setDescripcionEspecialidad(descripcionEspecialidad);
             usuarioProfesional.setReputacion(reputacion);
@@ -145,6 +148,47 @@ public class UsuarioProfesionalServicio  extends UsuarioServicio implements User
 //            throw new MiException("La lista de obras sociales no puede ser nula o vacía");
 //        }
     }
+
+    public void validarModificacionDeProfesional(String nombre, String apellido, String email, String password, String password2,
+                                   Especialidad especialidad, String descripcionEspecialidad, Integer valorConsulta, String dni, String direccion, String telefono/* List<ObraSocial> obrasSociales*/)
+            throws MiException {
+        if (nombre == null || nombre.isEmpty()) {
+            throw new MiException("El nombre no puede ser nulo ni vacío");
+        }
+        if (apellido == null || apellido.isEmpty()) {
+            throw new MiException("El apellido no puede ser nulo ni vacío");
+        }
+        if (email == null || email.isEmpty()) {
+            throw new MiException("El email no puede ser nulo ni vacío");
+        }
+        if (password == null || password.isEmpty() || password.length() <= 5) {
+            throw new MiException("El password no puede ser nulo ni vacío, y debe contener más de 5 caracteres");
+        }
+
+        if (especialidad == null) {
+            throw new MiException("La especialidad no puede ser nula");
+        }
+        if (descripcionEspecialidad == null || descripcionEspecialidad.isEmpty()) {
+            throw new MiException("La descripción de la especialidad no puede ser nula ni vacía");
+        }
+
+        if (valorConsulta == null || valorConsulta < 0) {
+            throw new MiException("El valor de consulta debe ser un número entero positivo");
+        }
+
+        if (dni == null || dni.isEmpty()) {
+            throw new MiException("El DNI no puede ser nulo ni vacío");
+        }
+        if (direccion == null || direccion.isEmpty()) {
+            throw new MiException("La dirección no puede ser nula ni vacía");
+        }
+        if (telefono == null || telefono.isEmpty()) {
+            throw new MiException("El teléfono no puede ser nulo ni vacío");
+        }
+//        if (obrasSociales == null || obrasSociales.isEmpty()) {
+//            throw new MiException("La lista de obras sociales no puede ser nula o vacía");
+//        }
+    }
     @Transactional(readOnly = true)
     public List<Usuario> listarUsuariosProfesional() {
 
@@ -168,6 +212,14 @@ public class UsuarioProfesionalServicio  extends UsuarioServicio implements User
         }
     }
 
-
+    public boolean verificarPassword(String email, String password) {
+        Optional<UsuarioProfesional> usuarioOptional = usuarioRepositorio.buscarPorEmail(email);
+        if (usuarioOptional.isPresent()) {
+            UsuarioProfesional usuarioProfesional = usuarioOptional.get();
+            // Comparar la contraseña proporcionada con la contraseña almacenada
+            return new BCryptPasswordEncoder().matches(password, usuarioProfesional.getPassword());
+        }
+        return false;
+    }
 }
 
