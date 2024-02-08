@@ -1,9 +1,7 @@
 package com.appsalud.plataformaSalud.controladores;
 
-import com.appsalud.plataformaSalud.enumeraciones.Especialidad;
 import com.appsalud.plataformaSalud.enumeraciones.ObraSocial;
 import com.appsalud.plataformaSalud.servicios.UsuarioPacienteServicio;
-import com.appsalud.plataformaSalud.servicios.UsuarioProfesionalServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -25,7 +23,7 @@ public class PacienteControlador {
     @PreAuthorize("hasRole('ROLE_PACIENTE')")
     @GetMapping("/dashboard-paciente")
     public String mostrarVistaPaciente() {
-        return "usuarioVista.html";
+        return "pacienteVista.html";
     }
 
     @GetMapping("/registrarPaciente")
@@ -36,15 +34,15 @@ public class PacienteControlador {
     }
     @PostMapping("/registroPaciente")
     public String registroPaciente(@RequestParam String nombre,
-                                      @RequestParam String apellido,
-                                      @RequestParam String email,
-                                      @RequestParam String password,
-                                      @RequestParam String password2,
-                                      @RequestParam String dni,
-                                      @RequestParam String direccion,
-                                      @RequestParam String telefono,
-                                      @RequestParam ObraSocial obraSocial,
-                                      Model model) {
+                                   @RequestParam String apellido,
+                                   @RequestParam String email,
+                                   @RequestParam String password,
+                                   @RequestParam String password2,
+                                   @RequestParam String dni,
+                                   @RequestParam String direccion,
+                                   @RequestParam String telefono,
+                                   @RequestParam ObraSocial obraSocial,
+                                   Model model) {
         try {
             usuarioPacienteServicio.crearUsuarioPaciente(nombre, apellido, email, password, password2, obraSocial, dni, direccion, telefono);
             model.addAttribute("exito", "Paciente registrado con exito");
@@ -54,32 +52,32 @@ public class PacienteControlador {
         }
         return "registroPaciente.html";
     }
-    
+
     @PostMapping("/darBaja")
     public String darBajaPaciente(@RequestParam("email") String email) {
         try {
-        usuarioPacienteServicio.anularPaciente(email);
-        return "redirect:/dashboard-paciente";
+            usuarioPacienteServicio.anularPaciente(email);
+            return "redirect:/dashboard-paciente";
         } catch (Exception e) {
             e.getMessage();
             return "redirect:/dashboard-paciente";
         }
     }
-    
+
     @PostMapping("/modificar")
     public String modificarPaciente(@RequestParam String nombre,
-                                      @RequestParam String apellido,
-                                      @RequestParam String email,
-                                      @RequestParam String password,
-                                      @RequestParam String password2,
-                                      @RequestParam String dni,
-                                      @RequestParam String direccion,
-                                      @RequestParam String telefono,
-                                      @RequestParam ObraSocial obraSocial,
-                                      Model model) {
+                                    @RequestParam String apellido,
+                                    @RequestParam String email,
+                                    @RequestParam String password,
+                                    @RequestParam String password2,
+                                    @RequestParam String dni,
+                                    @RequestParam String direccion,
+                                    @RequestParam String telefono,
+                                    @RequestParam ObraSocial obraSocial,
+                                    Model model) {
         try {
-            usuarioPacienteServicio.modificarPaciente(nombre, apellido, email, password, password2, obraSocial, dni, direccion, telefono);
-        model.addAttribute("exito", "Paciente modificado con exito");
+            usuarioPacienteServicio.modificarPaciente(nombre, apellido, email, password, password2, obraSocial, dni, direccion, telefono, Boolean.TRUE);
+            model.addAttribute("exito", "Paciente modificado con exito");
             return "redirect:/dashboard-paciente";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
@@ -87,3 +85,4 @@ public class PacienteControlador {
         return ""; //aca redirigiria a la vista de modificar paciente.
     }
 }
+

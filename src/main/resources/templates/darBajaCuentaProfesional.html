@@ -3,14 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <title>Dar de Baja Cuenta Profesional</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
-<body>
-<div>
-  <h5>¿Desea dar de baja su cuenta?</h5>
-  <form th:action="@{/profesional/darBaja}" method="post">
-    <button type="submit">Sí</button>
-    <a th:href="@{/profesional/dashboard-profesional}">No</a>
-  </form>
+<body class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+<div class="card text-center">
+  <div class="card-body">
+    <h5 class="card-title">¿Desea dar de baja su cuenta?</h5>
+    <form th:action="@{/profesional/darBaja}" method="post">
+      <button type="submit" class="btn btn-primary mr-2">Sí</button>
+      <a th:href="@{/profesional/dashboard-profesional}" class="btn btn-secondary">No</a>
+    </form>
+  </div>
 </div>
 </body>
 </html>
