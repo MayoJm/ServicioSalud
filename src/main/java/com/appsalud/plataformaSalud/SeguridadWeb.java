@@ -57,7 +57,7 @@ public class SeguridadWeb {                  // Clase de configuración de segur
                                 }
                             }
                             //Si no encuentra algun rol en particular redirecciona a inicio por defecto.
-                            response.sendRedirect("/inicio");
+                            response.sendRedirect("/");
                         })
                         .permitAll()
                 )

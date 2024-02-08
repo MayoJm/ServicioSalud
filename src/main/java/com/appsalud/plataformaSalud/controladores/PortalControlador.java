@@ -33,10 +33,6 @@ public class PortalControlador {
         return "iniciarSesion.html";
     }
 
-//    @GetMapping("/loginPage")
-//    public String loginPage() {
-//        return "iniciarSesion.html";
-//    }
 
     @GetMapping("/tipoUsuario")
     public String tipoUsuario() {
