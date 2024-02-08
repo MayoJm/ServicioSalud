@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú Superior con Formulario</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Menú</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="perfilDropdown" role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Perfil</a>
+                <div class="dropdown-menu" aria-labelledby="perfilDropdown">
+                    <a class="dropdown-item" href="#" onclick="mostrarFormulario()">Modificar perfil</a>
+                    <a class="dropdown-item" href="#">Subir foto</a>
+                    <a class="dropdown-item" href="#" onclick="mostrarConfirmacion()">Dar de baja cuenta</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="calendarioDropdown" role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Calendario</a>
+                <div class="dropdown-menu" aria-labelledby="calendarioDropdown">
+                    <a class="dropdown-item" href="#">Ver turnos</a>
+                </div>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Cerrar sesión</button>
+        </form>
+    </div>
+</nav>
+
+<!-- Formulario de Modificar Perfil -->
+<div class="container mt-4" id="formModificarPerfil" style="display: none;">
+    <div class="card col-md-6 mx-auto">
+        <div class="card-body">
+            <h5 class="card-title">Modificar Perfil</h5>
+            <form>
+                <div class="form-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" class="form-control" id="nombre">
+                </div>
+                <div class="form-group">
+                    <label for="apellido">Apellido:</label>
+                    <input type="text" class="form-control" id="apellido">
+                </div>
+                <div class="form-group">
+                    <label for="apellido">Contraseña actual:</label>
+                    <input type="password" class="form-control" id="apellido">
+                </div>
+                <div class="form-group">
+                    <label for="apellido">Nueva contraseña:</label>
+                    <input type="password" name="password" class="form-control" id="apellido">
+                </div>
+                <div class="form-group">
+                    <label for="especialidad">Especialidad:</label>
+                    <select class="form-control" id="especialidad" name="especialidad">
+                        <option th:each="esp : ${listaEspecialidades}" th:value="${esp}" th:text="${esp}"></option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="descripcionEspecialidad">Descripcion de especialidad:</label>
+                    <input type="text" class="form-control" id="descripcionEspecialidad">
+                </div>
+                <div class="form-group">
+                    <label for="dni">dni:</label>
+                    <input type="text" class="form-control" id="dni">
+                </div>
+                <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                <button type="button" class="btn btn-secondary" onclick="ocultarFormulario()">Cerrar</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Confirmación de dar de baja cuenta -->
+<div class="container mt-4" id="confirmacionDarBaja" style="display: none;">
+    <div class="card col-md-6 mx-auto">
+        <div class="card-body">
+            <h5 class="card-title">¿Desea dar de baja su cuenta?</h5>
+            <button type="button" class="btn btn-danger" onclick="darDeBaja()">Sí</button>
+            <button type="button" class="btn btn-secondary" onclick="ocultarConfirmacion()">No</button>
+        </div>
+    </div>
+</div>
+
+<script>
+        function mostrarFormulario() {
+            var formulario = document.getElementById("formModificarPerfil");
+            formulario.style.display = "block";
+        }
+
+        function ocultarFormulario() {
+            var formulario = document.getElementById("formModificarPerfil");
+            formulario.style.display = "none";
+        }
+
+        function mostrarConfirmacion() {
+            var confirmacion = document.getElementById("confirmacionDarBaja");
+            confirmacion.style.display = "block";
+        }
+
+        function ocultarConfirmacion() {
+            var confirmacion = document.getElementById("confirmacionDarBaja");
+            confirmacion.style.display = "none";
+        }
+
+        function darDeBaja() {
+            // Aquí puedes agregar la lógica para dar de baja la cuenta
+            // Por ejemplo, podrías redirigir al usuario a una página de confirmación o enviar una solicitud al servidor
+            console.log("La cuenta ha sido dada de baja.");
+        }
+    </script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
