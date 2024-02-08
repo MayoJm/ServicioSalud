@@ -6,22 +6,13 @@ import com.appsalud.plataformaSalud.enumeraciones.Especialidad;
 import com.appsalud.plataformaSalud.enumeraciones.ObraSocial;
 import com.appsalud.plataformaSalud.enumeraciones.Rol;
 import com.appsalud.plataformaSalud.excepciones.MiException;
-import com.appsalud.plataformaSalud.repositorios.TurnoRepositorio;
 import com.appsalud.plataformaSalud.repositorios.UsuarioRepositorio;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,7 +29,7 @@ public class UsuarioProfesionalServicio  extends UsuarioServicio implements User
     public Usuario buscarProfesionalPorId(String id) {
         return usuarioRepositorio.buscarPorId(id);
     }
-    
+
     @Transactional
     public Optional<UsuarioProfesional> buscarProfesionalPorEmail(String mail) {
         return usuarioRepositorio.buscarPorEmail(mail);
@@ -96,7 +87,7 @@ public class UsuarioProfesionalServicio  extends UsuarioServicio implements User
             usuarioProfesional.setDireccion(direccion);
             usuarioProfesional.setTelefono(telefono);
             usuarioProfesional.setEstado(estado);
-           // usuarioProfesional.setObrasSociales(obrasSociales);
+            // usuarioProfesional.setObrasSociales(obrasSociales);
 
             usuarioRepositorio.save(usuarioProfesional);
         }
@@ -149,8 +140,8 @@ public class UsuarioProfesionalServicio  extends UsuarioServicio implements User
 //        }
     }
 
-    public void validarModificacionDeProfesional(String nombre, String apellido, String email, String password, String password2,
-                                   Especialidad especialidad, String descripcionEspecialidad, Integer valorConsulta, String dni, String direccion, String telefono/* List<ObraSocial> obrasSociales*/)
+    public void validarModificacionDeProfesional(String nombre, String apellido, String email, String passwordActual, String nuevoPassword,
+                                                 Especialidad especialidad, String descripcionEspecialidad, Integer valorConsulta, String dni, String direccion, String telefono/* List<ObraSocial> obrasSociales*/)
             throws MiException {
         if (nombre == null || nombre.isEmpty()) {
             throw new MiException("El nombre no puede ser nulo ni vacío");
@@ -161,7 +152,7 @@ public class UsuarioProfesionalServicio  extends UsuarioServicio implements User
         if (email == null || email.isEmpty()) {
             throw new MiException("El email no puede ser nulo ni vacío");
         }
-        if (password == null || password.isEmpty() || password.length() <= 5) {
+        if (passwordActual.isEmpty() || nuevoPassword.isEmpty() || passwordActual == null ||  nuevoPassword.length() <= 5) {
             throw new MiException("El password no puede ser nulo ni vacío, y debe contener más de 5 caracteres");
         }
 
@@ -207,7 +198,7 @@ public class UsuarioProfesionalServicio  extends UsuarioServicio implements User
         if (respuesta.isPresent()) {
             UsuarioProfesional usuarioProfesional = respuesta.get();
             usuarioProfesional.setEstado(false);
-            
+
             usuarioRepositorio.save(usuarioProfesional);
         }
     }
@@ -222,4 +213,3 @@ public class UsuarioProfesionalServicio  extends UsuarioServicio implements User
         return false;
     }
 }
-

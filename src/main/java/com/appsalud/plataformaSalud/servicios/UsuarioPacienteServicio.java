@@ -7,12 +7,7 @@ import com.appsalud.plataformaSalud.enumeraciones.Rol;
 import com.appsalud.plataformaSalud.excepciones.MiException;
 import com.appsalud.plataformaSalud.repositorios.UsuarioRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,6 +37,11 @@ public class UsuarioPacienteServicio extends UsuarioServicio implements UserDeta
         usuarioPaciente.setTelefono(telefono);
         usuarioPaciente.setEstado(true);
         usuarioRepositorio.save(usuarioPaciente);
+    }
+
+    @Transactional
+    public Optional<UsuarioPaciente> buscarPacientePorEmail(String mail) {
+        return usuarioRepositorio.buscarPorEmailPaciente(mail);
     }
     public void validarPaciente(String nombre, String apellido, String email, String password, String password2,
                                 ObraSocial obraSocial, String dni, String direccion, String telefono) throws MiException {
@@ -74,6 +74,32 @@ public class UsuarioPacienteServicio extends UsuarioServicio implements UserDeta
         }
 
     }
+
+    public void validarModificacionDePaciente(String nombre, String apellido, String passwordActual, String nuevoPassword,
+                                              ObraSocial obraSocial, String dni, String direccion, String telefono) throws MiException {
+        if (nombre == null || nombre.isEmpty()) {
+            throw new MiException("El nombre no puede ser nulo ni vacio");
+        }
+        if (apellido == null || apellido.isEmpty()) {
+            throw new MiException("El apellido no puede ser nulo ni vacio");
+        }
+        if (passwordActual.isEmpty() || nuevoPassword.isEmpty() || passwordActual == null ||  nuevoPassword.length() <= 5) {
+            throw new MiException("El password no puede ser nulo ni vacio, y debe contener mas de 5 caracteres");
+        }
+        if (obraSocial == null) {
+            throw new MiException("La obra social no puede ser nula");
+        }
+        if (dni == null || dni.isEmpty()) {
+            throw new MiException("El DNI no puede ser nulo ni vacío");
+        }
+        if (direccion == null || direccion.isEmpty()) {
+            throw new MiException("La dirección no puede ser nula ni vacía");
+        }
+        if (telefono == null || telefono.isEmpty()) {
+            throw new MiException("El teléfono no puede ser nulo ni vacío");
+        }
+
+    }
     @Transactional(readOnly = true)
     public List<Usuario> listarUsuariosPaciente() {
 
@@ -86,7 +112,7 @@ public class UsuarioPacienteServicio extends UsuarioServicio implements UserDeta
 
     @Transactional
     public void modificarPaciente(String nombre, String apellido, String email, String password, String password2,
-                                  ObraSocial obraSocial, String dni, String direccion, String telefono) throws MiException {
+                                  ObraSocial obraSocial, String dni, String direccion, String telefono, Boolean estado) throws MiException {
         validarPaciente(nombre, apellido, email, password, password2, obraSocial, dni, direccion, telefono);
 
         Optional<UsuarioPaciente> respuesta = usuarioRepositorio.buscarPorEmailPaciente(email);
@@ -102,6 +128,7 @@ public class UsuarioPacienteServicio extends UsuarioServicio implements UserDeta
             usuarioPaciente.setDni(dni);
             usuarioPaciente.setDireccion(direccion);
             usuarioPaciente.setTelefono(telefono);
+            usuarioPaciente.setEstado(estado);
 
 
 
@@ -114,10 +141,21 @@ public class UsuarioPacienteServicio extends UsuarioServicio implements UserDeta
         if (respuesta.isPresent()) {
             UsuarioPaciente usuarioPaciente = respuesta.get();
             usuarioPaciente.setEstado(false);
-            
+
             usuarioRepositorio.save(usuarioPaciente);
-        } 
-        
+        }
+
+    }
+
+    public boolean verificarPassword(String email, String password) {
+
+        Optional<UsuarioPaciente> usuarioOptional = usuarioRepositorio.buscarPorEmailPaciente(email);
+        if (usuarioOptional.isPresent()) {
+            UsuarioPaciente usuarioPaciente = usuarioOptional.get();
+            // Comparar la contraseña proporcionada con la contraseña almacenada
+            return new BCryptPasswordEncoder().matches(password, usuarioPaciente.getPassword());
+        }
+        return false;
     }
 
 

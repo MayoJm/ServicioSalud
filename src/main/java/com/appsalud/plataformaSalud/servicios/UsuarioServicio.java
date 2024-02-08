@@ -32,17 +32,17 @@ public class UsuarioServicio implements UserDetailsService{
     }
 
 
-@Override
-public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    Usuario usuario = usuarioRepositorio.buscarPorEmailUsuario(username).orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Usuario usuario = usuarioRepositorio.buscarPorEmailUsuario(username).orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
 
-    if(usuario != null){
-        List<GrantedAuthority> permisos = new ArrayList<>();
-        GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + usuario.getRol().toString());
-        permisos.add(p);
-        return new User(usuario.getEmail(), usuario.getPassword(), permisos);
-    }else {
-        return null;
+        if(usuario != null){
+            List<GrantedAuthority> permisos = new ArrayList<>();
+            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + usuario.getRol().toString());
+            permisos.add(p);
+            return new User(usuario.getEmail(), usuario.getPassword(), permisos);
+        }else {
+            return null;
+        }
     }
-}
 }

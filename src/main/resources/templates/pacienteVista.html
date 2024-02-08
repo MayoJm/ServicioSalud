@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html xmlns:th="http://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
   <meta charset="UTF-8">
@@ -26,9 +26,9 @@
         <a class="nav-link dropdown-toggle" href="#" id="perfilDropdown" role="button"
            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Perfil</a>
         <div class="dropdown-menu" aria-labelledby="perfilDropdown">
-          <a class="dropdown-item" href="#" onclick="mostrarFormulario()">Modificar perfil</a>
+          <a class="dropdown-item" th:href="@{/paciente/dashboard-paciente/modificarPaciente}" onclick="mostrarFormulario()">Modificar perfil</a>
           <a class="dropdown-item" href="#">Subir foto</a>
-          <a class="dropdown-item" href="#" onclick="mostrarConfirmacion()">Dar de baja cuenta</a>
+          <a class="dropdown-item" th:href="@{/paciente/dashboard-paciente/darBajaCuenta}" onclick="mostrarConfirmacion()">Dar de baja cuenta</a>
         </div>
       </li>
       <li class="nav-item dropdown">
@@ -45,87 +45,101 @@
   </div>
 </nav>
 
+<h1>PACIENTE</h1>
+
 <!-- Formulario de Modificar Perfil -->
-<div class="container mt-4" id="formModificarPerfil" style="display: none;">
-  <div class="card col-md-6 mx-auto">
-    <div class="card-body">
-      <h5 class="card-title">Modificar Perfil</h5>
-      <form>
-        <div class="form-group">
-          <label for="nombre">Nombre:</label>
-          <input type="text" class="form-control" id="nombre">
-        </div>
-        <div class="form-group">
-          <label for="apellido">Apellido:</label>
-          <input type="text" class="form-control" id="apellido">
-        </div>
-        <div class="form-group">
-          <label for="apellido">Contraseña actual:</label>
-          <input type="password" class="form-control" id="apellido">
-        </div>
-        <div class="form-group">
-          <label for="apellido">Nueva contraseña:</label>
-          <input type="password" name="password" class="form-control" id="apellido">
-        </div>
-        <div class="form-group">
-          <label for="especialidad">Especialidad:</label>
-          <select class="form-control" id="especialidad" name="especialidad">
-            <option th:each="esp : ${listaEspecialidades}" th:value="${esp}" th:text="${esp}"></option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="descripcionEspecialidad">Descripcion de especialidad:</label>
-          <input type="text" class="form-control" id="descripcionEspecialidad">
-        </div>
-        <div class="form-group">
-          <label for="dni">dni:</label>
-          <input type="text" class="form-control" id="dni">
-        </div>
-        <button type="submit" class="btn btn-primary">Guardar cambios</button>
-        <button type="button" class="btn btn-secondary" onclick="ocultarFormulario()">Cerrar</button>
-      </form>
-    </div>
-  </div>
-</div>
+<!--<div class="container mt-4" id="formModificarPerfil" style="display: none;">-->
+<!--    <div class="card col-md-6 mx-auto">-->
+<!--        <div class="card-body">-->
+<!--            <h5 class="card-title">Modificar Perfil</h5>-->
+<!--            <form method="post" th:action="@{/profesional/modificar}">-->
+<!--                <div class="form-group">-->
+<!--                    <label for="nombre">Nombre:</label>-->
+<!--                    <input type="text" class="form-control" id="nombre" name="nombre" th:value="${nombre}" required>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label for="apellido">Apellido:</label>-->
+<!--                    <input type="text" class="form-control" name="apellido" id="apellido" th:value="${apellido}" required>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label for="passwordActual">Contraseña actual:</label>-->
+<!--                    <input type="password" class="form-control" id="passwordActual" name="passwordActual" th:value="${passwordActual}" required>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label for="nuevoPassword">Nueva contraseña:</label>-->
+<!--                    <input type="password" name="nuevoPassword" class="form-control" id="nuevoPassword"th:value="${nuevoPassword}" required >-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label for="especialidad">Especialidad:</label>-->
+<!--                    <select class="form-control" id="especialidad" name="especialidad" >-->
+<!--                        <option th:each="esp : ${listaEspecialidades}" th:value="${esp}" th:text="${esp}" ></option>-->
+<!--                    </select>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label for="descripcionEspecialidad">Descripcion de especialidad:</label>-->
+<!--                    <input type="text" class="form-control" id="descripcionEspecialidad" th:value="${descripcionEspecialidad}" required name="descripcionEspecialidad">-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label for="dni">Dni:</label>-->
+<!--                    <input type="text" class="form-control" id="dni" name="dni" th:value="${dni}" required>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label for="valor de consulta">Valor de consulta:</label>-->
+<!--                    <input type="text" class="form-control" id="valor de consulta" name="valorConsulta" th:value="${valorConsulta}" required>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label for="direccion">Direccion:</label>-->
+<!--                    <input type="text" class="form-control" id="direccion" name="direccion" th:value="${direccion}" required>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label for="telefono">Telefono:</label>-->
+<!--                    <input type="text" class="form-control" id="telefono" name="telefono" th:value="${telefono}" required>-->
+<!--                </div>-->
+<!--                <button type="submit" class="btn btn-primary">Guardar cambios</button>-->
+<!--                <button type="button" class="btn btn-secondary" onclick="ocultarFormulario()">Cerrar</button>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
 
 <!-- Confirmación de dar de baja cuenta -->
-<div class="container mt-4" id="confirmacionDarBaja" style="display: none;">
-  <div class="card col-md-6 mx-auto">
-    <div class="card-body">
-      <h5 class="card-title">¿Desea dar de baja su cuenta?</h5>
-      <button type="button" class="btn btn-danger" onclick="darDeBaja()">Sí</button>
-      <button type="button" class="btn btn-secondary" onclick="ocultarConfirmacion()">No</button>
-    </div>
-  </div>
-</div>
+<!--<div class="container mt-4" id="confirmacionDarBaja" style="display: none;">-->
+<!--    <div class="card col-md-6 mx-auto">-->
+<!--        <div class="card-body">-->
+<!--            <h5 class="card-title">¿Desea dar de baja su cuenta?</h5>-->
+<!--            <button type="button" class="btn btn-danger" onclick="darDeBaja()">Sí</button>-->
+<!--            <button type="button" class="btn btn-secondary" onclick="ocultarConfirmacion()">No</button>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
 
-<script>
-  function mostrarFormulario() {
-      var formulario = document.getElementById("formModificarPerfil");
-      formulario.style.display = "block";
-  }
+<!--<script>-->
+<!--    function mostrarFormulario() {-->
+<!--        var formulario = document.getElementById("formModificarPerfil");-->
+<!--        formulario.style.display = "block";-->
+<!--    }-->
 
-  function ocultarFormulario() {
-      var formulario = document.getElementById("formModificarPerfil");
-      formulario.style.display = "none";
-  }
+<!--    function ocultarFormulario() {-->
+<!--        var formulario = document.getElementById("formModificarPerfil");-->
+<!--        formulario.style.display = "none";-->
+<!--    }-->
 
-  function mostrarConfirmacion() {
-      var confirmacion = document.getElementById("confirmacionDarBaja");
-      confirmacion.style.display = "block";
-  }
+<!--    function mostrarConfirmacion() {-->
+<!--        var confirmacion = document.getElementById("confirmacionDarBaja");-->
+<!--        confirmacion.style.display = "block";-->
+<!--    }-->
 
-  function ocultarConfirmacion() {
-      var confirmacion = document.getElementById("confirmacionDarBaja");
-      confirmacion.style.display = "none";
-  }
+<!--    function ocultarConfirmacion() {-->
+<!--        var confirmacion = document.getElementById("confirmacionDarBaja");-->
+<!--        confirmacion.style.display = "none";-->
+<!--    }-->
 
-  function darDeBaja() {
-      // Aquí puedes agregar la lógica para dar de baja la cuenta
-      // Por ejemplo, podrías redirigir al usuario a una página de confirmación o enviar una solicitud al servidor
-      console.log("La cuenta ha sido dada de baja.");
-  }
-</script>
+<!--    function darDeBaja() {-->
+<!--        // Aquí puedes agregar la lógica para dar de baja la cuenta-->
+<!--        // Por ejemplo, podrías redirigir al usuario a una página de confirmación o enviar una solicitud al servidor-->
+<!--        console.log("La cuenta ha sido dada de baja.");-->
+<!--    }-->
+<!--</script>-->
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
