@@ -35,7 +35,7 @@ public class UsuarioProfesional extends Usuario {
     @OneToOne
     private Calendario calendario;
 
-    //@OneToOne
-    //private Imagen imagen;
+    @OneToOne
+    private Imagen FichaMedicaimg;
 
 }
