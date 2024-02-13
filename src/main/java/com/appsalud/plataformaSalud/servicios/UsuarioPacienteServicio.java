@@ -77,6 +77,7 @@ public class UsuarioPacienteServicio extends UsuarioServicio implements UserDeta
 
     public void validarModificacionDePaciente(String nombre, String apellido, String passwordActual, String nuevoPassword,
                                 ObraSocial obraSocial, String dni, String direccion, String telefono) throws MiException {
+                                ObraSocial obraSocial, String dni, String direccion, String telefono) throws MiException {
         if (nombre == null || nombre.isEmpty()) {
             throw new MiException("El nombre no puede ser nulo ni vacio");
         }
@@ -141,10 +142,10 @@ public class UsuarioPacienteServicio extends UsuarioServicio implements UserDeta
         if (respuesta.isPresent()) {
             UsuarioPaciente usuarioPaciente = respuesta.get();
             usuarioPaciente.setEstado(false);
-            
             usuarioRepositorio.save(usuarioPaciente);
         } 
-        
+            usuarioRepositorio.save(usuarioPaciente);
+        }
     }
 
     public boolean verificarPassword(String email, String password) {

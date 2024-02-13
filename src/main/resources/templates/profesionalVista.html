@@ -1,109 +1,78 @@
-<!doctype html>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
-    <title>Dashboard Profesional</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/ServicioSalud/src/main/resources/static/css/paciente.css">
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../static/css/profesionalDashboard.css">
-    <style>
-        .blur-background {
-            background-image: url(../static/img/background-dashboard.jpg);
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw; /* Cambiado a 100vw */
-            height: 100vh; /* Cambiado a 100vh */
-            z-index: -1;
-        }
-
-        .wrapper {
-            position: relative;
-            z-index: 0;
-        }
-    </style>
 </head>
+
 <body>
-
-<div class="blur-background"></div>
-<div class="wrapper d-flex align-items-stretch">
-    <nav id="sidebar">
-        <div class="p-4 pt-5">
-            <a href="#" class="img logo rounded-circle mb-5" style="background-image: url(../static/img/logo.jpg);"></a>
-            <ul class="list-unstyled components mb-5">
-                <li class="active">
-                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false"
-                       class="dropdown-toggle">Perfil</a>
-                    <ul class="collapse list-unstyled" id="homeSubmenu">
-                        <li>
-                            <a th:href="@{/profesional/dashboard-profesional/modificarProfesional}" onclick="mostrarFormulario()">Editar Perfil</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false"
-                       class="dropdown-toggle">Pacientes</a>
-                    <ul class="collapse list-unstyled" id="pageSubmenu">
-                        <li>
-                            <a href="#">Buscar Todos</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">Turnos</a>
-                </li>
-                <li>
-                    <a href="#">Contacto Admin</a>
-                </li>
-            </ul>
-
-        </div>
-    </nav>
-
-    <!-- Nav superior  -->
-    <div id="content" class="p-4 p-md-5">
-
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-
-                <button type="button" id="sidebarCollapse" class="btn btn-primary">
-                    <i class="fa fa-bars"></i>
-                    <span class="sr-only">Toggle Menu</span>
-                </button>
-                <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
-                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <i class="fa fa-bars"></i>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="nav navbar-nav ml-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="#">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Logout</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+    <header>
+        <h2 class="logo">Logo</h2>
+        <nav class="navigation">
+            <a href="#" onclick="showSection('home')">Home</a>
+            <a href="#" onclick="showSection('about')">Sobre nosotros</a>
+            <a href="#" onclick="showSection('services')">Servicios</a>
+            <a href="#" onclick="showSection('contact')">Contáctanos</a>
         </nav>
+        <div class="profile-menu">
+            <div class="profile-button" onclick="toggleDropdown()">
+                <img id="profile-picture" src="/ServicioSalud/src/main/resources/img/predeterminado.jpg" alt="Foto de perfil">
+            </div>
+            <div id="profile-dropdown" class="dropdown-content">
+                <a href="#" onclick="showAvatarOptions()">Editar foto de perfil</a>
+                <a href="#">Cambiar datos</a>
+                <a href="index.html">Cerrar sesión</a>
+            </div>
+        </div>
+    </header>
+    
+    <section id="avatar-options" style="display: none;" class="avatar-options">
+        <h2>Selecciona tu avatar</h2>
+        <img src="/ServicioSalud/src/main/resources/img/doctora.png"  onclick="selectAvatar('/ServicioSalud/src/main/resources/img/doctora.png')">
+        <img src="/ServicioSalud/src/main/resources/img/doctora2.jpg"  onclick="selectAvatar('/ServicioSalud/src/main/resources/img/doctora2.jpg')">
+        <img src="/ServicioSalud/src/main/resources/img/doctora3.jpg"  onclick="selectAvatar('/ServicioSalud/src/main/resources/img/doctora3.jpg')">
+        <img src="/ServicioSalud/src/main/resources/img/doctor.jpg"  onclick="selectAvatar('/ServicioSalud/src/main/resources/img/doctor.jpg')">
+        <img src="/ServicioSalud/src/main/resources/img/doctor.png"  onclick="selectAvatar('/ServicioSalud/src/main/resources/img/doctor.png')">
+        <img src="/ServicioSalud/src/main/resources/img/doctor3.jpg"  onclick="selectAvatar('/ServicioSalud/src/main/resources/img/doctor3.jpg')">
+        <img src="/ServicioSalud/src/main/resources/img/doctor2.jpg"  onclick="selectAvatar('/ServicioSalud/src/main/resources/img/doctor2.jpg')">
+        <br>
+        <h2>Subir nueva foto de perfil</h2>
+        <input type="file" accept="image/*" onchange="uploadProfilePicture(event)">
+    </section>
+    
 
-        <!-- Contenido de pagina  -->
+    <section id="home">
+        <h2>Bienvenido [Nombre del Profesional]</h2>
+        <p>Otra información del perfil del paciente.</p>
+        <a href="index.html">volver</a>
+    </section>
 
+    <section id="about">
+        <h2>Sobre Nosotros</h2>
+        <p>Información sobre nuestra empresa u organización.</p>
+    </section>
 
-    </div>
-</div>
+    <section id="services">
+        <h2>Nuestros Servicios</h2>
+        <p>Lista de servicios que ofrecemos.</p>
+    </section>
 
-<script src="../static/js/jquery.min.js"></script>
-<script src="../static/js/popper.js"></script>
-<script src="../static/js/bootstrap.min.js"></script>
-<script src="../static/js/main.js"></script>
+    <section id="contact">
+        <h2>Contactanos</h2>
+        <p>Información de contacto y formulario de contacto.</p>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Tu Empresa. Todos los derechos reservados.</p>
+    </footer>
+    <script src="/ServicioSalud/src/main/resources/static/js/paciente.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
+
 </html>

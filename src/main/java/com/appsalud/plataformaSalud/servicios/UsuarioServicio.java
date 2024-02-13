@@ -31,7 +31,6 @@ public class UsuarioServicio implements UserDetailsService{
         return usuarioRepositorio.getReferenceById(id);
     }
 
-
 @Override
 public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     Usuario usuario = usuarioRepositorio.buscarPorEmailUsuario(username).orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
@@ -44,5 +43,4 @@ public UserDetails loadUserByUsername(String username) throws UsernameNotFoundEx
     }else {
         return null;
     }
-}
 }

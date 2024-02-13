@@ -40,7 +40,7 @@ public class UsuarioProfesionalControlador {
         model.addAttribute("listaEspecialidades", listaEspecialidades);
         return "profesionalVista.html";
     }
-    
+  
     @GetMapping("/registrarProfesional")
     public String registroProfesional(Model model) {
         List<Especialidad> listaEspecialidades = Arrays.stream(Especialidad.values()).collect(Collectors.toList());
@@ -92,6 +92,8 @@ public class UsuarioProfesionalControlador {
             String email = authentication.getName();
         usuarioProfesionalServicio.anularProfesional(email);
         return "redirect:/";
+            usuarioProfesionalServicio.anularProfesional(email);
+            return "redirect:/";
         } catch (Exception e) {
             e.getMessage();
             return "redirect:/dashboard-profesional";
@@ -105,18 +107,25 @@ public String modificarProfesional(Model model) {
 }
 @PostMapping("/profesionalForm")
 public String modificarProfesional(@RequestParam String nombre,
+    @GetMapping("/dashboard-profesional/modificarProfesional")
+    public String modificarProfesional(Model model) {
+        List<Especialidad> listaEspecialidades = Arrays.asList(Especialidad.values());
+        model.addAttribute("listaEspecialidades", listaEspecialidades);
+        return "modificarProfesional.html";
+    }
+    @PostMapping("/profesionalForm")
+    public String modificarProfesional(@RequestParam String nombre,
                                        @RequestParam String apellido,
                                        @RequestParam String passwordActual,
                                        @RequestParam String nuevoPassword,
                                        @RequestParam Especialidad especialidad,
                                        @RequestParam String descripcionEspecialidad,
                                        @RequestParam Integer valorConsulta,
-
                                        @RequestParam String dni,
                                        @RequestParam String direccion,
                                        @RequestParam String telefono,
-                                   Model model) {
-    try {
+                                                            Model model) {
+        try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String email = authentication.getName();
             if (!usuarioProfesionalServicio.verificarPassword(email, passwordActual)) {

@@ -29,7 +29,7 @@ public class UsuarioProfesionalServicio  extends UsuarioServicio implements User
     public Usuario buscarProfesionalPorId(String id) {
         return usuarioRepositorio.buscarPorId(id);
     }
-    
+  
     @Transactional
     public Optional<UsuarioProfesional> buscarProfesionalPorEmail(String mail) {
         return usuarioRepositorio.buscarPorEmail(mail);
@@ -87,7 +87,6 @@ public class UsuarioProfesionalServicio  extends UsuarioServicio implements User
             usuarioProfesional.setDireccion(direccion);
             usuarioProfesional.setTelefono(telefono);
             usuarioProfesional.setEstado(estado);
-           // usuarioProfesional.setObrasSociales(obrasSociales);
 
             usuarioRepositorio.save(usuarioProfesional);
         }
@@ -141,7 +140,7 @@ public class UsuarioProfesionalServicio  extends UsuarioServicio implements User
     }
 
     public void validarModificacionDeProfesional(String nombre, String apellido, String email, String passwordActual, String nuevoPassword,
-                                   Especialidad especialidad, String descripcionEspecialidad, Integer valorConsulta, String dni, String direccion, String telefono/* List<ObraSocial> obrasSociales*/)
+                                   Especialidad especialidad, String descripcionEspecialidad, Integer valorConsulta, String dni, String direccion, String telefono)
             throws MiException {
         if (nombre == null || nombre.isEmpty()) {
             throw new MiException("El nombre no puede ser nulo ni vacío");
@@ -198,7 +197,7 @@ public class UsuarioProfesionalServicio  extends UsuarioServicio implements User
         if (respuesta.isPresent()) {
             UsuarioProfesional usuarioProfesional = respuesta.get();
             usuarioProfesional.setEstado(false);
-            
+
             usuarioRepositorio.save(usuarioProfesional);
         }
     }
@@ -213,4 +212,3 @@ public class UsuarioProfesionalServicio  extends UsuarioServicio implements User
         return false;
     }
 }
-
