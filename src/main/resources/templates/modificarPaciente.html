@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Modificar Paciente</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Modificar Perfil</h5>
+                    <form method="post" th:action="@{/paciente/pacienteForm}">
+                        <div class="form-group">
+                            <label for="nombre">Nombre:</label>
+                            <input type="text" class="form-control" id="nombre" name="nombre" th:value="${nombre}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="apellido">Apellido:</label>
+                            <input type="text" class="form-control" name="apellido" id="apellido" th:value="${apellido}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="passwordActual">Contraseña actual:</label>
+                            <input type="password" class="form-control" id="passwordActual" name="passwordActual" th:value="${passwordActual}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="nuevoPassword">Nueva contraseña:</label>
+                            <input type="password" class="form-control" name="nuevoPassword" id="nuevoPassword" th:value="${nuevoPassword}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="dni">Dni:</label>
+                            <input type="text" class="form-control" id="dni" name="dni" th:value="${dni}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="direccion">Direccion:</label>
+                            <input type="text" class="form-control" id="direccion" name="direccion" th:value="${direccion}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="telefono">Telefono:</label>
+                            <input type="text" class="form-control" id="telefono" name="telefono" th:value="${telefono}" required>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" id="obraSocial" name="obraSocial" required>
+                                <option selected disabled>Seleccione Obra Social</option>
+                                <option th:each="obraSocial : ${T(com.appsalud.plataformaSalud.enumeraciones.ObraSocial).values()}"
+                                        th:value="${obraSocial}"
+                                        th:text="${obraSocial}">
+                                </option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Guardar cambios</button>
+                        <button type="button" class="btn btn-secondary btn-block" onclick="ocultarFormulario()">Cerrar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+</title>
+</head>
+<body>
+
+</body>
+</html>
