@@ -4,6 +4,8 @@ import com.appsalud.plataformaSalud.enumeraciones.ObraSocial;
 import com.appsalud.plataformaSalud.servicios.UsuarioPacienteServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,7 +54,15 @@ public class PacienteControlador {
         }
         return "registroPaciente.html";
     }
+    @GetMapping("/dashboard-paciente/modificarPaciente")
+    public String modificarPaciente(Model model) {
 
+        return "modificarPaciente.html";
+    }
+    @GetMapping("/dashboard-paciente/darBajaCuenta")
+    public String darBajaCuentaProfesional(Model model) {
+        return "darBajaCuentaPaciente.html";
+    }
     @PostMapping("/darBaja")
     public String darBajaPaciente(@RequestParam("email") String email) {
         try {
@@ -64,25 +74,28 @@ public class PacienteControlador {
         }
     }
 
-    @PostMapping("/modificar")
+
+    @PostMapping("/pacienteForm")
     public String modificarPaciente(@RequestParam String nombre,
                                     @RequestParam String apellido,
-                                    @RequestParam String email,
-                                    @RequestParam String password,
-                                    @RequestParam String password2,
+
+                                    @RequestParam String passwordActual,
+                                    @RequestParam String nuevoPassword,
                                     @RequestParam String dni,
                                     @RequestParam String direccion,
                                     @RequestParam String telefono,
                                     @RequestParam ObraSocial obraSocial,
                                     Model model) {
         try {
-            usuarioPacienteServicio.modificarPaciente(nombre, apellido, email, password, password2, obraSocial, dni, direccion, telefono, Boolean.TRUE);
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String email = authentication.getName();
+            usuarioPacienteServicio.modificarPaciente(nombre, apellido, email, passwordActual, nuevoPassword, obraSocial, dni, direccion, telefono, Boolean.TRUE);
             model.addAttribute("exito", "Paciente modificado con exito");
-            return "redirect:/dashboard-paciente";
+            return "redirect:/paciente/dashboard-paciente";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
         }
-        return ""; //aca redirigiria a la vista de modificar paciente.
+        return "redirect:/paciente/dashboard-paciente";
     }
 }
 
