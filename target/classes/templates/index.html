@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../static/css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+
+    <header class="header" id="header">
+        <nav class="nav container">
+            <a href="#" class="nav__logo">Vital Salud</a>
+
+            <div class="nav__menu" id="nav-menu">
+                <ul class="nav__list">
+                    <li class="nav__item"><a href="#" class="nav__link">Home</a></li>
+                    <li class="nav__item">
+                        <a href="#" class="nav__link">Guia</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#" class="nav__link">Servicios</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#" class="nav__link">Especialidades</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#" class="nav__link">Sobre nosotros</a>
+                    </li>
+                </ul>
+
+                <!-- Close button -->
+                <div class="nav__close" id="nav-close">
+                    <i class="ri-close-line"></i>
+                </div>
+            </div>
+
+            <div class="nav__actions">
+                <!-- Search button -->
+                <!-- <i class="ri-search-line nav__search" id="search-btn"></i> -->
+                <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                <!-- Login button -->
+                <i class="ri-user-line nav__login" id="login-btn"></i>
+
+                <!-- Toggle button -->
+                <div class="nav__toggle" id="nav-toggle">
+                    <i class="ri-menu-line"></i>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- <div class="search" id="search">
+        <form action="" class="search__form">
+          <i class="ri-search-line search__icon"></i>
+          <input
+            type="search"
+            placeholder="What are you looking for?"
+            class="search__input" />
+        </form>
+  
+        <i class="ri-close-line search__close" id="search-close"></i>
+      </div> -->
+
+    <div class="login" id="login">
+        <form th:action="@{/logincheck}" class="login__form" method="post">
+            <h2 class="login__title">Ingresa</h2>
+
+            <div class="login__group">
+                <div>
+                    <label for="email" class="login__label">Email</label>
+                    <input name="email" id="email" type="email" class="login__input" placeholder="Ingresa tu correo" required />
+                </div>
+
+                <div>
+                    <label for="password" class="login__label">contraseña</label>
+                    <input id="password" name="password" required type="password"  class="login__input" placeholder="Ingresa tu contraseña" />
+                </div>
+            </div>
+
+            <div>
+                <p class="login__signup">
+                    No tienes una cuenta? <a href="#" id="signup">Regístrate</a>
+                </p>
+
+                <a href="#" class="login__forgot"> Olvidaste la contraseña? </a>
+
+                <button type="submit" class="login__button">Ingresar</button>
+            </div>
+        </form>
+
+        <i class="ri-close-line login__close" id="login-close"></i>
+    </div>
+
+    <div class="login" id="select-role">
+        <form th:action="@{/tipoUsuario}" class="login__form" method="post">
+            <h2 class="login__title">Seleccione su rol</h2>
+    
+            <div class="login__group">
+                <div class="login__checkbox">
+                    <input type="radio" id="profesional" th:name="tipoUsuario" th:value="profesional" class="login__radio">
+                    <label for="profesional" class="login__label">Profesional</label>
+                </div>
+            
+                <div class="login__checkbox">
+                    <input type="radio" id="paciente" th:name="tipoUsuario" th:value="paciente" class="login__radio">
+                    <label for="paciente" class="login__label">Paciente</label>
+                </div>
+            </div>
+    
+            <div>
+                <button type="submit" class="btn btn-primary btn-block mt-3" id="continuarBtn">Continuar</button>
+            </div>
+        </form>
+    
+        <i class="ri-close-line login__close" id="select-role-close"></i>
+    </div>
+    
+
+
+
+    <section class="Hero-Section">
+        <div class="hero-content">
+
+            <h1>Tu salud es nuestra prioridad</h1>
+            <p>En Salud Plus tu bienestar es nuestra prioridad. Accede a una red de especialistas calificados,
+                agenda
+                citas con unos pocos clics y recibe la atención
+                que necesitas, cuando la necesitas. Con nosotros, el cuidado de tu salud es más accesible que nunca.
+            </p>
+            <button class="btn">Comienza</button>
+
+        </div>
+    </section>
+
+
+
+    <section class="Guia">
+        <div class="Guia-Container">
+            <div class="Guia-Container-Top">
+                <h3>Utiliza nuestros servicios de manera simple y rápida</h3>
+                <h2>Paso a paso, soluciona tus necesidades ahora!</h2>
+            </div>
+            <div class="Guia-Container-Bottom">
+                <div class="Card-guia">
+                    <i class="fa-sharp fa-solid fa-user-plus"></i>
+                    <h4>Regístrate</h4>
+                    <p>Regístrate en nuestra web y comienza a usar nuestros servicios!</p>
+                </div>
+                <div class="Card-guia">
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                    <h4>Ingresa</h4>
+                    <p>Pulsa ingresar e introduce tu correo y contraseña.</p>
+                </div>
+                <div class="Card-guia">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <h4>Busca un profesional</h4>
+                    <p>Puedes buscar el médico que se adapte a tus necesidades.</p>
+                </div>
+                <div class="Card-guia">
+                    <i class="fa-regular fa-calendar"></i>
+                    <h4>Pide un turno</h4>
+                    <p>Mira los turnos disponibles y podrás sacar un turno desde aquí.</p>
+                </div>
+                <div class="Card-guia">
+                    <i class="fa-solid fa-star"></i>
+                    <h4>Califica</h4>
+                    <p>Luego de haber sido atendido, califica al profesional.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="Servicios">
+        <div class="Left-Box">
+            <img src="../static/img/servicios.png" alt="Descripción de la imagen">
+        </div>
+        <div class="Right-Box">
+            <h2>Nuestros servicios</h2>
+            <p>En Salud Plus, nos enorgullece ofrecerte una amplia gama de servicios diseñados para
+                brindarte una experiencia de atención médica excepcional. Desde la gestión sencilla de tus turnos hasta
+                la búsqueda y calificación de profesionales de la salud, estamos comprometidos a proporcionarte las
+                herramientas que necesitas para cuidar de tu bienestar con facilidad y comodidad.</p>
+            <div class="Card-Container">
+                <div class="Card">
+                    <h3>Busqueda de profesionales</h3>
+                    <button class="Toggle-Button"><i class="fa-solid fa-chevron-down"></i></button>
+                    <p class="Description hidden">¿Buscando al profesional de la salud adecuado para tus necesidades
+                        específicas? Con nuestra herramienta de búsqueda avanzada, encontrarás a los mejores médicos,
+                        especialistas y profesionales de la salud en tu área. Filtra por especialidad, ubicación y más
+                        para encontrar al especialista perfecto para ti.</p>
+                </div>
+                <div class="Card">
+                    <h3>Gestion de turnos</h3>
+                    <button class="Toggle-Button"><i class="fa-solid fa-chevron-down"></i></button>
+                    <p class="Description hidden">Nuestra plataforma te permite gestionar tus turnos médicos de manera
+                        rápida y conveniente. Olvídate de las largas esperas en la línea telefónica; con solo unos pocos
+                        clics, puedes programar y administrar tus citas desde la comodidad de tu hogar o en movimiento.
+                    </p>
+                </div>
+                <div class="Card">
+                    <h3>Estudios clinicos</h3>
+                    <button class="Toggle-Button"><i class="fa-solid fa-chevron-down"></i></button>
+                    <p class="Description hidden">Accede fácilmente a tus estudios clínicos y resultados de pruebas
+                        desde nuestra plataforma segura. Mantén un registro detallado de tu historial médico, visualiza
+                        tus resultados de laboratorio y realiza un seguimiento de tu progreso con total tranquilidad.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="Departamentos">
+        <div class="Left-Container">
+            <h2>Especialidades disponibles</h2>
+            <p>Descubre nuestras especialidades médicas y encuentra el tratamiento que necesitas para cuidar tu salud.
+                Nuestro equipo de especialistas altamente calificados está aquí para brindarte la atención que mereces.
+            </p>
+        </div>
+        <div class="Right-Container">
+            <div class="Card-especialidad">
+                <span class="fa-solid fa-heart-pulse"></span>
+                <h3>Cardiología</h3>
+                <p>Cuidamos tu corazón y vasos sanguíneos, desde la hipertensión hasta las enfermedades coronarias.
+                </p>
+            </div>
+            <div class="Card-especialidad">
+                <img src="../static/img/Ginecologia.png" alt="Ginecologia">
+                <h3>Ginecología</h3>
+                <p>Enfocados en la salud reproductiva de la mujer, desde exámenes de rutina hasta tratamientos
+                    especializados.</p>
+            </div>
+            <div class="Card-especialidad">
+                <span class="fa-solid fa-user-doctor"></span>
+                <h3>clínica</h3>
+                <p>Ofrecemos atención integral para diversas condiciones médicas, desde enfermedades agudas hasta
+                    crónicas.</p>
+            </div>
+            <div class="Card-especialidad">
+                <span class="fa-solid fa-child"></span>
+                <h3>Pediatría</h3>
+                <p>Atendemos la salud de tus pequeños, desde la prevención hasta el seguimiento del desarrollo.</p>
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+    <section class="ObrasSociales">
+        <div class="ObrasSociales-Content">
+            <div class="ObrasSociales-Intro">
+                <h2>Descubre algunas de las obras sociales que reciben los profesionales</h2>
+                <p>Descubre las instituciones que confían en nuestros servicios y en la calidad de nuestros
+                    profesionales.</p>
+            </div>
+            <div class="ObrasSociales-Cards">
+                <div class="Card-ObraSocial">
+                    <img src="../static/img/SancorSalud1.png" alt="Obra Social 1">
+                </div>
+                <div class="Card-ObraSocial">
+                    <img src="../static/img/Osde.png" alt="Obra Social 2">
+                </div>
+                <div class="Card-ObraSocial">
+                    <img src="../static/img/SwissMedical.png" alt="Obra Social 3">
+                </div>
+                <div class="Card-ObraSocial">
+                    <img src="../static/img/Omint.png" alt="Obra Social 3">
+                </div>
+                <div class="Card-ObraSocial">
+                    <img src="../static/img/Galeno.png" alt="Obra Social 3">
+                </div>
+                <div class="Card-ObraSocial ShowMore">
+                    <h3>Mostrar más</h3>
+                    <i class="fas fa-plus"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="AboutUs">
+        <div class="AboutUs-Container">
+            <div class="AboutUs-Content">
+                <div class="AboutUs-Text">
+                    <h2>Sobre nosotros</h2>
+                    <p>En Salud Plus, nos apasiona tu bienestar. Somos un equipo comprometido con ofrecerte la mejor
+                        atención médica y experiencias de usuario excepcionales. Nuestra misión es brindarte acceso
+                        fácil y rápido a una red de profesionales de confianza, tecnología de vanguardia y servicios de
+                        salud de calidad. Con nosotros, puedes confiar en que estarás en buenas manos en cada paso de tu
+                        viaje hacia una vida más saludable y plena. ¡Únete a nosotros y descubre cómo juntos podemos
+                        cuidar de tu salud de manera más inteligente y accesible que nunca!</p>
+                </div>
+                <div class="AboutUs-Image">
+                    <img src="img/AboutUs.png" alt="Sobre nosotros">
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <footer class="Footer">
+        <div class="Contacto">
+            <h2>Contacto</h2>
+            <p>¿Tienes alguna pregunta o comentario? No dudes en ponerte en contacto con nosotros. Estamos aquí para
+                ayudarte.</p>
+        </div>
+        <div class="RedesSociales">
+            <h2>Redes Sociales</h2>
+            <div class="Iconos">
+                <i class="fab fa-facebook-f"></i>
+                <i class="fab fa-twitter"></i>
+                <i class="fab fa-instagram"></i>
+                <!-- Agrega más iconos según sea necesario -->
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="../static/js/script.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>
