@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro de Profesional</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../static/css/registroProfesional.css">
+</head>
+
+<body>
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-6">
+        <div class="card login__form">
+          <div class="card-body">
+            <h2 class="card-title text-center">Registro de Profesional</h2>
+            <form th:action="@{/profesional/registroProfesional}" method="POST">
+              <div class="form-row login__group">
+                <div class="form-group col-md-6">
+                  <label for="nombre" class="login__label"></label>
+                  <input type="text" class="form-control login__input" id="nombre" name="nombre"
+                    placeholder="Ingresar Nombre" th:value="${nombre}" required>
+                </div>
+
+                <div class="form-group col-md-6">
+                  <label for="apellido" class="login__label"></label>
+                  <input type="text" class="form-control login__input" id="apellido" name="apellido"
+                    placeholder="Ingresar Apellido" th:value="${apellido}" required>
+                </div>
+              </div>
+
+              <div class="form-group login__group">
+                <label for="email" class="login__label"></label>
+                <input type="email" class="form-control login__input" id="email" name="email"
+                  placeholder="Ingresar Correo Electronico" th:value="${email}" required>
+              </div>
+
+              <div class="form-row login__group">
+                <div class="form-group col-md-6">
+                  <label for="password" class="login__label"></label>
+                  <input type="password" class="form-control login__input" id="password" name="password"
+                    placeholder="Ingresar Contraseña" th:value="${password}" required>
+                </div>
+
+                <div class="form-group col-md-6">
+                  <label for="password2" class="login__label"></label>
+                  <input type="password" class="form-control login__input" id="password2" name="password2"
+                    placeholder="Repetir Contraseña" th:value="${password2}" required>
+                </div>
+              </div>
+
+              <div class="form-row login__group">
+                <div class="form-group col-md-6">
+                  <label for="especialidad"></label>
+                  <select class="form-control login__input" id="especialidad" name="especialidad">
+                    <option value="" disabled selected>Selecciona una especialidad</option>
+                    <option th:each="esp : ${listaEspecialidades}" th:value="${esp}" th:text="${esp}"></option>
+                  </select>
+                </div>
+
+                <div class="form-group col-md-6">
+                  <label for="valorConsulta" class="login__label"></label>
+                  <input type="text" class="form-control login__input" id="valorConsulta" name="valorConsulta"
+                    placeholder="Valor Consulta" th:value="${valorConsulta}" required>
+                </div>
+              </div>
+
+              <div class="form-group login__group">
+                <label for="descripcionEspecialidad" class="login__label"></label>
+                <input type="text" class="form-control login__input" id="descripcionEspecialidad"
+                  name="descripcionEspecialidad" placeholder="Descripcion Especialidad"
+                  th:value="${descripcionEspecialidad}" required>
+              </div>
+
+              <div class="form-row login__group">
+                <div class="form-group col-md-6">
+                  <label for="matricula" class="login__label"></label>
+                  <input type="text" class="form-control login__input" id="matricula" name="matricula"
+                    placeholder="Matricula" th:value="${matricula}" required>
+                </div>
+
+                <div class="form-group col-md-6">
+                  <label for="dni" class="login__label"></label>
+                  <input type="text" class="form-control login__input" id="dni" name="dni" placeholder="DNI"
+                    th:value="${dni}" required>
+                </div>
+              </div>
+
+              <div class="form-row login__group">
+                <div class="form-group col-md-6">
+                  <label for="direccion" class="login__label"></label>
+                  <input type="text" class="form-control login__input" id="direccion" name="direccion"
+                    placeholder="Direccion" th:value="${direccion}" required>
+                </div>
+
+                <div class="form-group col-md-6">
+                  <label for="telefono" class="login__label"></label>
+                  <input type="text" class="form-control login__input" id="telefono" name="telefono"
+                    placeholder="Telefono" th:value="${telefono}" required>
+                </div>
+              </div>
+
+              <div class="form-group login__group">
+                <label class="login__label">Seleccion de Obras Sociales:</label>
+                <div class="checkbox-group">
+                  <div class="form-check checkbox-item" th:each="obra, iterStat : ${listaObrasSociales}">
+                    <input type="checkbox" class="form-check-input" th:id="'obra-' + ${obra}" name="obrasSociales"
+                      th:value="${obra}" />
+                    <label class="form-check-label" th:for="'obra-' + ${obra}" th:text="${obra}"></label>
+                    <th:block th:if="${iterStat.index % 3 == 2}"><br /></th:block>
+                  </div>
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-block login__button">Registrarse</button>
+
+              <div class="text-center mt-3">
+                <p>¿Ya tienes una cuenta? <a th:href="@{/login}" class="login__signup">Iniciar
+                    Sesión</a></p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+
+
+</html>
