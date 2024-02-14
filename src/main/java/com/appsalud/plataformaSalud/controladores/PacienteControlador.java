@@ -59,7 +59,10 @@ public class PacienteControlador {
         }
         return "registroPaciente.html";
     }
-
+    @GetMapping("/dashboard-paciente/darBajaCuenta")
+    public String darBajaCuentaProfesional(Model model) {
+        return "darBajaCuentaPaciente.html";
+    }
     @PostMapping("/darBaja")
     public String darBajaPaciente(@RequestParam("email") String email) throws Exception {
         try {
@@ -70,7 +73,11 @@ public class PacienteControlador {
             return "redirect:/dashboard-paciente";
         }
     }
+    @GetMapping("/dashboard-paciente/modificarPaciente")
+    public String modificarPaciente(Model model) {
 
+        return "modificarPaciente.html";
+    }
     @PostMapping("/modificar")
     public String modificarPaciente(@RequestParam String nombre,
                                     @RequestParam String apellido,
