@@ -106,6 +106,16 @@ public class UsuarioProfesionalControlador {
     public String modificarProfesional(Model model) {
         List<Especialidad> listaEspecialidades = Arrays.asList(Especialidad.values());
         model.addAttribute("listaEspecialidades", listaEspecialidades);
+        
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+
+        Optional<UsuarioProfesional> usuarioProfesionalOptional = usuarioProfesionalServicio
+                .buscarProfesionalPorEmail(email);
+
+        UsuarioProfesional usuarioProfesional = usuarioProfesionalOptional.get();
+        model.addAttribute("usuarioProfesional", usuarioProfesional);
+        
         return "modificarProfesional.html";
     }
 
