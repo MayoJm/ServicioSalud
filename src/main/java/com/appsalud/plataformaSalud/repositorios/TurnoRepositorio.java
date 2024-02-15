@@ -17,5 +17,10 @@ public interface TurnoRepositorio extends JpaRepository<Turno, String> {
     
     @Query("SELECT t FROM Turno t WHERE t.usuarioProfesional = :profesional")
     public List<Turno> buscarPorProfesional(@Param("profesional") UsuarioProfesional profesional);
+    @Query("SELECT t FROM Turno t WHERE t.usuarioProfesional = :profesional AND t.usuarioPaciente IS NULL")
+    List<Turno> buscarTurnosDisponiblesPorProfesional(@Param("profesional") UsuarioProfesional profesional);
 
+
+    @Query("SELECT t FROM Turno t WHERE t.usuarioProfesional.email = :emailProfesional AND t.usuarioPaciente IS NOT NULL")
+    List<Turno> buscarTurnosTomadosPorProfesional(String emailProfesional);
 }

@@ -8,9 +8,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="88c29b52-8aca-483f-a431-88c378267dce" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/appsalud/plataformaSalud/controladores/PacienteControlador.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/appsalud/plataformaSalud/controladores/PacienteControlador.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/pacienteVista.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/pacienteVista.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/appsalud/plataformaSalud/controladores/UsuarioProfesionalControlador.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/appsalud/plataformaSalud/controladores/UsuarioProfesionalControlador.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/appsalud/plataformaSalud/entidades/Turno.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/appsalud/plataformaSalud/entidades/Turno.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/appsalud/plataformaSalud/repositorios/TurnoRepositorio.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/appsalud/plataformaSalud/repositorios/TurnoRepositorio.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/appsalud/plataformaSalud/servicios/DisponibilidadProfesionalServicio.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/appsalud/plataformaSalud/servicios/DisponibilidadProfesionalServicio.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/appsalud/plataformaSalud/servicios/TurnoServicio.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/appsalud/plataformaSalud/servicios/TurnoServicio.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/buscarTurnosProfesional.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/buscarTurnosProfesional.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/disponibilidad.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/disponibilidad.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/profesionalVista.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/profesionalVista.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/appsalud/plataformaSalud/controladores/PacienteControlador.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/appsalud/plataformaSalud/controladores/PacienteControlador.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/appsalud/plataformaSalud/controladores/UsuarioProfesionalControlador.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/appsalud/plataformaSalud/controladores/UsuarioProfesionalControlador.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/appsalud/plataformaSalud/entidades/UsuarioPaciente.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/appsalud/plataformaSalud/entidades/UsuarioPaciente.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/appsalud/plataformaSalud/entidades/UsuarioProfesional.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/appsalud/plataformaSalud/entidades/UsuarioProfesional.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/modificarProfesional.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/modificarProfesional.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/pacienteVista.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/pacienteVista.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/profesionalVista.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/profesionalVista.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,8 +34,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="Class" />
         <option value="HTML File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -56,7 +69,8 @@
     &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;SantiagoBarra&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;JuanMartin&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/santi/Documents/SPRING REPO java/ServicioSalud&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.file-colors&quot;
@@ -98,7 +112,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-17.0.10-corretto-17.0.10-4caba194b151-5cd809f4" />
+        <option value="jdk-17.0.9-corretto-17.0.9-4caba194b151-107bc6b7" />
       </set>
     </attachedChunks>
   </component>

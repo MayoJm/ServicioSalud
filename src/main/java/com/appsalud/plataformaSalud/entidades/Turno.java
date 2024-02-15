@@ -24,6 +24,9 @@ public class Turno {
 
    private LocalDateTime fechaHora;
 
+   private String fechaFormateada;
+   private String horaFormateada;
+
    private String descripcion;
 
     @ManyToOne
