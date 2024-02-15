@@ -190,59 +190,5 @@ public class UsuarioProfesionalControlador {
         return "calendarioProfesional.html";
     }
 
-    @GetMapping("/dashboard-profesional/establecer-disponibilidad")
-    public String mostrarFormularioEstablecerDisponibilidad(Model model) {
 
-        return "disponibilidad.html";
-    }
-
-    @PostMapping("/establecer-disponibilidad-form")
-    public String establecerDisponibilidad(@RequestParam Map<String, String> formData, RedirectAttributes redirectAttributes) {
-        try {
-            // Obtener el profesional actual desde la sesión
-
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            String email = authentication.getName();
-
-            Optional<UsuarioProfesional> usuarioProfesionalOptional = usuarioProfesionalServicio
-                    .buscarProfesionalPorEmail(email);
-
-            UsuarioProfesional usuarioProfesional = usuarioProfesionalOptional.get();
-
-            // Crear una lista para almacenar las disponibilidades
-            List<DisponibilidadProfesional> disponibilidades = new ArrayList<>();
-
-            // Iterar sobre el formData para obtener los datos de cada día de la semana
-            for (DayOfWeek diaSemana : DayOfWeek.values()) {
-                // Obtener los horarios de inicio y fin para este día de la semana
-                String horaInicioStr = formData.get(diaSemana.toString().toLowerCase() + "Inicio");
-                String horaFinStr = formData.get(diaSemana.toString().toLowerCase() + "Fin");
-
-
-                // Convertir las cadenas de hora en LocalTime
-                LocalTime horaInicio = LocalTime.parse(horaInicioStr);
-                LocalTime horaFin = LocalTime.parse(horaFinStr);
-                System.out.println("convirtio las cadenas de hora en LocalTime");
-
-
-                // Crear una instancia de DisponibilidadProfesional y agregarla a la lista
-                DisponibilidadProfesional disponibilidad = new DisponibilidadProfesional();
-                disponibilidad.setUsuarioProfesional(usuarioProfesional);
-                disponibilidad.setDiaSemana(diaSemana);
-                disponibilidad.setHoraInicio(horaInicio);
-                disponibilidad.setHoraFin(horaFin);
-                disponibilidades.add(disponibilidad);
-            }
-
-            // Guardar las disponibilidades en la base de datos
-            disponibilidadProfesionalServicio.guardarDisponibilidadProfesional(disponibilidades);
-            disponibilidadProfesionalServicio.establecerDisponibilidad(usuarioProfesional, disponibilidades);
-
-            redirectAttributes.addFlashAttribute("exito", "Disponibilidad establecida correctamente.");
-            return "redirect:/profesional/dashboard-profesional";
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Hubo un problema al establecer la disponibilidad.");
-            return "redirect:/profesional/dashboard-profesional";
-        }
-    }
 }

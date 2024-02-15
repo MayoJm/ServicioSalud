@@ -111,4 +111,16 @@ public class TurnoServicio {
         }
         
     }
+    @Transactional(readOnly = true)
+    public List<Turno> obtenerTurnosDisponibles(String email) {
+
+        Optional<UsuarioProfesional> respuesta = usuarioRepositorio.buscarPorEmail(email);
+        UsuarioProfesional usuarioProfesional = respuesta.get();
+        return turnoRepositorio.buscarTurnosDisponiblesPorProfesional(usuarioProfesional);
+    }
+    @Transactional(readOnly = true)
+    public List<Turno> obtenerTurnosTomados(String emailProfesional) {
+        return turnoRepositorio.buscarTurnosTomadosPorProfesional(emailProfesional);
+    }
+
 }

@@ -14,6 +14,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +39,7 @@ public class DisponibilidadProfesionalServicio {
         // Aquí puedes realizar validaciones u otras operaciones necesarias antes de guardar
         disponibilidadProfesionalRepositorio.saveAll(disponibilidades);
     }
+
     public void establecerDisponibilidad(UsuarioProfesional profesional, List<DisponibilidadProfesional> disponibilidades) {
         System.out.println("Estableciendo disponibilidad para el profesional " + profesional.getNombre() + " " + profesional.getApellido());
         System.out.println("Disponibilidades: " + disponibilidades.toString());
@@ -48,39 +50,45 @@ public class DisponibilidadProfesionalServicio {
         System.out.println("Turnos asociados con calendario exitosamente");
     }
 
+
     private List<Turno> generarTurnosDisponibles(List<DisponibilidadProfesional> disponibilidades, UsuarioProfesional profesional) {
         List<Turno> turnosDisponibles = new ArrayList<>();
-        System.out.println("Generando turnos disponibles...");
-        LocalDate fechaActual = LocalDate.now();
+        LocalDate fechaActual = LocalDate.now().plusDays(1); // Obtener el día siguiente al actual
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
-        for (DisponibilidadProfesional disponibilidad : disponibilidades) {
-            System.out.println("entro al buclue");
-            System.out.println("Generando turnos para disponibilidad: " + disponibilidad.toString());
-            DayOfWeek diaSemana = disponibilidad.getDiaSemana();
-            System.out.println("Dia de la semana: " + diaSemana.toString());
-            LocalTime horaInicio = disponibilidad.getHoraInicio();
-            System.out.println("Hora de inicio: " + horaInicio.toString());
-            LocalTime horaFin = disponibilidad.getHoraFin();
-            System.out.println("Hora de fin: " + horaFin.toString());
-            // Iterar sobre el rango de horas y generar turnos disponibles de una hora
-            LocalTime horaActual = horaInicio;
-            while (horaActual.isBefore(horaFin)) {
-                System.out.println("entro al buclue");
-                System.out.println("Generando turno para hora: " + horaActual.toString());
-                LocalDateTime fechaHoraTurno = fechaActual.with(TemporalAdjusters.nextOrSame(diaSemana)).atTime(horaActual);
-                System.out.println("Fecha y hora del turno: " + fechaHoraTurno.toString());
-                Turno turno = new Turno();
-                System.out.println("Instancio turno");
-                turno.setFechaHora(fechaHoraTurno);
-                System.out.println("Seteo fecha y hora");
-                turno.setUsuarioProfesional(profesional);
-                System.out.println("Seteo profesional");
-                turnosDisponibles.add(turno);
-                System.out.println("Agrego turno a la lista");
-                //turnoRepositorio.save(turno);
+        // Obtener el último día del mes actual
+        LocalDate ultimoDiaMes = fechaActual.with(TemporalAdjusters.lastDayOfMonth());
 
-                horaActual = horaActual.plusHours(1); // Avanzar una hora
-                System.out.println("Avanzo una hora");
+        // Iterar sobre cada día del mes
+        for (LocalDate fecha = fechaActual; !fecha.isAfter(ultimoDiaMes); fecha = fecha.plusDays(1)) {
+            DayOfWeek diaSemana = fecha.getDayOfWeek();
+
+            // Verificar si hay disponibilidad para este día de la semana
+            if (hayDisponibilidad(diaSemana, disponibilidades)) {
+                // Iterar sobre las disponibilidades para este día
+                for (DisponibilidadProfesional disponibilidad : disponibilidades) {
+                    if (disponibilidad.getDiaSemana() == diaSemana) {
+                        LocalTime horaInicio = disponibilidad.getHoraInicio();
+                        LocalTime horaFin = disponibilidad.getHoraFin();
+
+                        // Iterar sobre el rango de horas y generar turnos disponibles de una hora
+                        LocalTime horaActual = horaInicio;
+                        while (horaActual.isBefore(horaFin)) {
+                            LocalDateTime fechaHoraTurno = fecha.atTime(horaActual);
+                            String formattedDate = fechaHoraTurno.format(dateFormatter);
+                            String formattedTime = fechaHoraTurno.format(timeFormatter);
+                            Turno turno = new Turno();
+                            turno.setFechaHora(fechaHoraTurno);
+                            turno.setFechaFormateada(formattedDate);
+                            turno.setHoraFormateada(formattedTime);
+                            turno.setUsuarioProfesional(profesional);
+                            turnosDisponibles.add(turno);
+
+                            horaActual = horaActual.plusHours(1);
+                        }
+                    }
+                }
             }
         }
 
@@ -113,4 +121,15 @@ public class DisponibilidadProfesionalServicio {
             e.printStackTrace();
         }
     }
+    private boolean hayDisponibilidad(DayOfWeek diaSemana, List<DisponibilidadProfesional> disponibilidades) {
+        for (DisponibilidadProfesional disponibilidad : disponibilidades) {
+            if (disponibilidad.getDiaSemana() == diaSemana) {
+                // Si se encuentra al menos una disponibilidad para este día, se retorna verdadero
+                return true;
+            }
+        }
+        // Si no se encuentra ninguna disponibilidad para este día, se retorna falso
+        return false;
+    }
+
 }
