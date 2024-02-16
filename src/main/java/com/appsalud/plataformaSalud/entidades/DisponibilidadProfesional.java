@@ -8,7 +8,7 @@ import lombok.Setter;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
-// Hola amigo tenes que borrar esta tabla porque es una verga, sugerencia
+// Hola amigo tenes que borrar esta tabla porque es una verga, imho
 
 @Entity
 @Getter
