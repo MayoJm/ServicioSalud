@@ -48,7 +48,7 @@
                 <li class="active">
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false"
                        class="dropdown-toggle">Perfil</a>
-                    <ul class="collapse list-unstyled" id="homeModificarPerfil">
+                    <ul class="collapse list-unstyled" id="homeSubmenu">
                         <li>
                             <a class="dropdown-item" th:href="@{/paciente/dashboard-paciente/modificar-paciente}"
                                onclick="mostrarFormulario()">Modificar perfil</a>
@@ -66,16 +66,12 @@
                        class="dropdown-toggle">Turnos</a>
                     <ul class="collapse list-unstyled" id="pageSubmenu">
                         <li>
-                            <a href="#">Buscar Todos</a>
+                            <a href="#">Buscar Profesionales</a>
                         </li>
-                        <li>
-                            <a href="#">Disponibilizar Turnos</a>
-                        </li>
+
                     </ul>
                 </li>
-                <li>
-                    <a href="#">Pacientes</a>
-                </li>
+
                 <li>
                     <a href="#">Contacto Admin</a>
                 </li>
@@ -105,7 +101,7 @@
                             <a class="nav-link" href="@{/paciente/dashboard-paciente}">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" th:href="/logout">Logout</a>
+                            <a class="nav-link" href="/logout">Logout</a>
                         </li>
                     </ul>
                 </div>

@@ -8,7 +8,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="88c29b52-8aca-483f-a431-88c378267dce" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/appsalud/plataformaSalud/entidades/DisponibilidadProfesional.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/appsalud/plataformaSalud/entidades/DisponibilidadProfesional.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/appsalud/plataformaSalud/controladores/UsuarioPacienteControlador.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/appsalud/plataformaSalud/controladores/UsuarioPacienteControlador.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/appsalud/plataformaSalud/controladores/UsuarioProfesionalControlador.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/appsalud/plataformaSalud/controladores/UsuarioProfesionalControlador.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/appsalud/plataformaSalud/repositorios/DisponibilidadProfesionalRepositorio.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/appsalud/plataformaSalud/repositorios/DisponibilidadProfesionalRepositorio.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/appsalud/plataformaSalud/servicios/UsuarioPacienteServicio.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/appsalud/plataformaSalud/servicios/UsuarioPacienteServicio.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/appsalud/plataformaSalud/servicios/UsuarioProfesionalServicio.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/appsalud/plataformaSalud/servicios/UsuarioProfesionalServicio.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/buscarTurnosPaciente.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/buscarTurnosPaciente.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/modificarProfesional.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/modificarProfesional.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/registroPaciente.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/registroPaciente.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/registroProfesional.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/registroProfesional.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/appsalud/plataformaSalud/controladores/UsuarioProfesionalControlador.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/appsalud/plataformaSalud/controladores/UsuarioProfesionalControlador.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/appsalud/plataformaSalud/entidades/Calendario.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/appsalud/plataformaSalud/entidades/Calendario.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/appsalud/plataformaSalud/repositorios/DisponibilidadProfesionalRepositorio.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/appsalud/plataformaSalud/repositorios/DisponibilidadProfesionalRepositorio.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/appsalud/plataformaSalud/servicios/UsuarioPacienteServicio.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/appsalud/plataformaSalud/servicios/UsuarioPacienteServicio.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/appsalud/plataformaSalud/servicios/UsuarioProfesionalServicio.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/appsalud/plataformaSalud/servicios/UsuarioProfesionalServicio.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/css/styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/modificarProfesional.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/modificarProfesional.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/registroPaciente.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/registroPaciente.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/registroProfesional.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/registroProfesional.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +47,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
@@ -48,19 +72,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.PlataformaSaludApplication.executor&quot;: &quot;Run&quot;,
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;JuanMartin&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/santi/Documents/SPRING REPO java/ServicioSalud&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.file-colors&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.PlataformaSaludApplication.executor": "Run",
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "SantiagoBarra",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/santi/Documents/SPRING REPO java/ServicioSalud",
+    "settings.editor.selected.configurable": "reference.settings.ide.settings.file-colors"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="PlataformaSaludApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.appsalud.plataformaSalud.PlataformaSaludApplication" />
@@ -97,7 +121,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-17.0.9-corretto-17.0.9-4caba194b151-107bc6b7" />
+        <option value="jdk-17.0.10-corretto-17.0.10-4caba194b151-5cd809f4" />
       </set>
     </attachedChunks>
   </component>
