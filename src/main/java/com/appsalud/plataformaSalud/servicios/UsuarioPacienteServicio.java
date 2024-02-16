@@ -134,8 +134,8 @@ public class UsuarioPacienteServicio extends UsuarioServicio implements UserDeta
         if (password.isEmpty() || password == null || password.length() <= 5) {
             throw new MiException("El password no puede ser nulo ni vacio, y debe contener mas de 5 caracteres");
         }
-        if (password.length() > 9) {
-            throw new MiException("El password no puede tener mas de 9 caracteres!!");
+        if (password.length() > 10) {
+            throw new MiException("El password no puede tener mas de 10 caracteres!!");
         }
         if (!password.equals(password2)) {
             throw new MiException("Los passwords deben ser iguales");
@@ -183,8 +183,8 @@ public class UsuarioPacienteServicio extends UsuarioServicio implements UserDeta
         if (apellido == null || apellido.isEmpty()) {
             throw new MiException("El apellido no puede ser nulo ni vacio");
         }
-        if (passwordActual.isEmpty() || nuevoPassword.isEmpty() || passwordActual == null || nuevoPassword.length() <= 5 || nuevoPassword.length() > 9) {
-            throw new MiException("El password no coincide con el actual o no puede ser nulo ni vacio, y debe contener mas de 5 caracteres y menos de 9");
+        if (passwordActual.isEmpty() || nuevoPassword.isEmpty() || passwordActual == null || nuevoPassword.length() <= 5 || nuevoPassword.length() > 10) {
+            throw new MiException("El password no coincide con el actual o no puede ser nulo ni vacio, y debe contener mas de 5 caracteres y menos de 10");
         }
         if (obraSocial == null) {
             throw new MiException("La obra social no puede ser nula");

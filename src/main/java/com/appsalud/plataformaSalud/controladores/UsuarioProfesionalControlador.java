@@ -81,18 +81,22 @@ public class UsuarioProfesionalControlador {
                                       @RequestParam String direccion,
                                       @RequestParam String telefono,
                                       @RequestParam List<ObraSocial> obrasSociales,
-                                      RedirectAttributes redirectAttributes) {
+                                      Model model) {
         try {
             usuarioProfesionalServicio.crearUsuarioProfesional(nombre, apellido, email, password, password2, especialidad,
                     descripcionEspecialidad, valorConsulta, matricula, dni, direccion, telefono,
                     obrasSociales);
 
-            redirectAttributes.addFlashAttribute("exito", "El Usuario fue registrado correctamente!");
+            model.addAttribute("exito", "El Usuario fue registrado correctamente!");
 
             return "redirect:/";
         } catch (MiException e) {
-            redirectAttributes.addFlashAttribute("error", e.getMessage());
-            return "redirect:/registroProfesional";
+            List<Especialidad> listaEspecialidades = Arrays.stream(Especialidad.values()).collect(Collectors.toList());
+            List<ObraSocial> listaObrasSociales = Arrays.stream(ObraSocial.values()).collect(Collectors.toList());
+            model.addAttribute("listaEspecialidades", listaEspecialidades);
+            model.addAttribute("listaObrasSociales", listaObrasSociales);
+            model.addAttribute("error", e.getMessage());
+            return "registroProfesional.html";
         }
     }
 
@@ -172,8 +176,16 @@ public class UsuarioProfesionalControlador {
             }
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
+            List<Especialidad> listaEspecialidades = Arrays.asList(Especialidad.values());
+            model.addAttribute("listaEspecialidades", listaEspecialidades);
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String email = authentication.getName();
+            Optional<UsuarioProfesional> usuarioProfesionalOptional = usuarioProfesionalServicio
+                    .buscarProfesionalPorEmail(email);
+            UsuarioProfesional usuarioProfesional = usuarioProfesionalOptional.get();
+            model.addAttribute("usuarioProfesional", usuarioProfesional);
         }
-        return "redirect:/profesional/dashboard-profesional/modificar-profesional"; // aca redirigiria a la vista de modificar profesional.
+        return "modificarProfesional.html"; // aca redirigiria a la vista de modificar profesional.
     }
     @GetMapping("/dashboard-profesional/buscarTurnos")
     public String buscarTurnosProfesional(Model model) {

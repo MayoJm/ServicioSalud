@@ -52,8 +52,10 @@ public class UsuarioPacienteControlador {
         try {
             usuarioPacienteServicio.crearUsuarioPaciente(nombre, apellido, email, password, password2, obraSocial, dni, direccion, telefono);
             model.addAttribute("exito", "Paciente registrado con exito");
-            return "index.html";
+            return "redirect:/";
         } catch (Exception e) {
+            List<ObraSocial> listaObrasSociales = Arrays.stream(ObraSocial.values()).collect(Collectors.toList());
+            model.addAttribute("listaObrasSociales", listaObrasSociales);
             model.addAttribute("error", e.getMessage());
         }
         return "registroPaciente.html";
@@ -104,15 +106,15 @@ public class UsuarioPacienteControlador {
 
                 usuarioPacienteServicio.modificarPaciente(nombre, apellido, email, passwordActual, nuevoPassword, obraSocial, dni, direccion, telefono, Boolean.TRUE);
                 model.addAttribute("exito", "Paciente modificado con exito");
-                return "redirect:/paciente/dashboard-paciente";
+                return "redirect:/dashboard-paciente";
             } else {
                 model.addAttribute("error", "Paciente no encontrado");
-                return "redirect:/paciente/dashboard-paciente";
+                return "redirect:/dashboard-paciente";
             }
 
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
-            return "redirect:/paciente/dashboard-paciente";
+            return "redirect:/dashboard-paciente/modificarPaciente";
         }
     }
     @GetMapping("/dashboard-paciente/buscar-turnos")

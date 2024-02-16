@@ -39,7 +39,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title text-center">Modificar Perfil</h5>
-                    <form method="post" th:action="@{/profesional/modificar-profesional}">
+                    <form method="POST" th:action="@{/profesional/profesionalForm}">
                         <div class="form-group">
                             <label for="nombre">Nombre:</label>
                             <input type="text" class="form-control" id="nombre" name="nombre" th:value="${usuarioProfesional.nombre}" required>

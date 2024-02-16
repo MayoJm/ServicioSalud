@@ -164,7 +164,7 @@ public class UsuarioProfesionalServicio extends UsuarioServicio implements UserD
         if (!password.equals(password2)) {
             throw new MiException("Los passwords deben ser iguales");
         }
-        if (especialidad == null) {
+        if (especialidad == null ) {
             throw new MiException("La especialidad no puede ser nula");
         }
         if (descripcionEspecialidad == null || descripcionEspecialidad.isEmpty()) {
@@ -183,8 +183,8 @@ public class UsuarioProfesionalServicio extends UsuarioServicio implements UserD
         if (dni.length() != 8 ) {
             throw new MiException("El DNI debe contener 8 digitos");
         }
-        if (password.length() >= 9) {
-            throw new MiException("El password no puede tener mas de 9 caracteres!!");
+        if (password.length() > 10) {
+            throw new MiException("El password no puede tener mas de 10 caracteres!!");
         }
         if (direccion == null || direccion.isEmpty()) {
             throw new MiException("La dirección no puede ser nula ni vacía");
@@ -234,8 +234,8 @@ public class UsuarioProfesionalServicio extends UsuarioServicio implements UserD
         if (dni.length() != 8 ) {
             throw new MiException("El DNI debe contener 8 digitos");
         }
-        if (nuevoPassword.length() >= 9) {
-            throw new MiException("El password no puede tener mas de 9 caracteres!!");
+        if (nuevoPassword.length() > 10) {
+            throw new MiException("El password no puede tener mas de 10 caracteres!!");
         }
 
         if (especialidad == null) {
