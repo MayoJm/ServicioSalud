@@ -180,15 +180,40 @@ public class UsuarioProfesionalServicio extends UsuarioServicio implements UserD
         if (dni == null || dni.isEmpty()) {
             throw new MiException("El DNI no puede ser nulo ni vacío");
         }
+        if (dni.length() != 8 ) {
+            throw new MiException("El DNI debe contener 8 digitos");
+        }
+        if (password.length() >= 9) {
+            throw new MiException("El password no puede tener mas de 9 caracteres!!");
+        }
         if (direccion == null || direccion.isEmpty()) {
             throw new MiException("La dirección no puede ser nula ni vacía");
         }
         if (telefono == null || telefono.isEmpty()) {
             throw new MiException("El teléfono no puede ser nulo ni vacío");
+
         }
+        if (telefono.length() !=10  ) {
+            throw new MiException("El teléfono debe tener 10 numeros ej: [2995101101] y estar todo junto");
+        }
+        if (verificarNumeros(telefono)) {
+            throw new MiException("El numero de teléfono no debe contener letras u otros caracteres");
+        }
+        if (verificarNumeros(dni)) {
+            throw new MiException("El dni no debe contener letras u otros caracteres");
+        }
+
 //        if (obrasSociales == null || obrasSociales.isEmpty()) {
 //            throw new MiException("La lista de obras sociales no puede ser nula o vacía");
 //        }
+    }
+    public boolean verificarNumeros(String input) {
+        for (int i = 0; i < input.length(); i++) {
+            if (Character.isDigit(input.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public void validarModificacionDeProfesional(String nombre, String apellido, String email, String passwordActual, String nuevoPassword,
@@ -205,6 +230,12 @@ public class UsuarioProfesionalServicio extends UsuarioServicio implements UserD
         }
         if (passwordActual.isEmpty() || nuevoPassword.isEmpty() || passwordActual == null || nuevoPassword.length() <= 5) {
             throw new MiException("El password no puede ser nulo ni vacío, y debe contener más de 5 caracteres");
+        }
+        if (dni.length() != 8 ) {
+            throw new MiException("El DNI debe contener 8 digitos");
+        }
+        if (nuevoPassword.length() >= 9) {
+            throw new MiException("El password no puede tener mas de 9 caracteres!!");
         }
 
         if (especialidad == null) {
@@ -226,6 +257,15 @@ public class UsuarioProfesionalServicio extends UsuarioServicio implements UserD
         }
         if (telefono == null || telefono.isEmpty()) {
             throw new MiException("El teléfono no puede ser nulo ni vacío");
+        }
+        if (telefono.length() !=10  ) {
+            throw new MiException("El teléfono debe tener 10 numeros ej: [2995101101] y estar todo junto");
+        }
+        if (verificarNumeros(telefono)) {
+            throw new MiException("El numero de teléfono no debe contener letras u otros caracteres");
+        }
+        if (verificarNumeros(dni)) {
+            throw new MiException("El dni no debe contener letras u otros caracteres");
         }
 //        if (obrasSociales == null || obrasSociales.isEmpty()) {
 //            throw new MiException("La lista de obras sociales no puede ser nula o vacía");

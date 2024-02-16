@@ -32,14 +32,16 @@
 <div class="wrapper d-flex align-items-stretch">
     <nav id="sidebar">
         <div class="p-4 pt-5">
-            <a href="#" class="img logo rounded-circle mb-5" style="background-image: url(../static/img/logo.jpg);"></a>
+            <a th:href="@{/profesional/dashboard-profesional/cambiarImagen}" class="img logo rounded-circle mb-5">
+                <img th:src="@{/profesional/perfil/__${usuarioProfesional.id}__}" style="width: 120px; height: 120px; border-radius: 50%;" />
+            </a>
             <ul class="list-unstyled components mb-5">
                 <li class="active">
                     <a href="#perfilSubmenu" data-toggle="collapse" aria-expanded="false"
                        class="dropdown-toggle">Perfil</a>
                     <ul class="collapse list-unstyled" id="perfilSubmenu">
                         <li>
-                            <a th:href="@{/profesional/dashboard-profesional/modificarProfesional}"
+                            <a th:href="@{/profesional/dashboard-profesional/modificar-profesional}"
                                onclick="mostrarFormulario()">Editar Perfil</a>
                         </li>
                     </ul>

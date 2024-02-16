@@ -21,13 +21,25 @@
     </style>
 </head>
 <body>
+<div class="alert alert-danger" th:if="${error != null}"  >
+    <div class="text-center">
+        <h5>Error</h5>
+        <p class="texto-error" th:text="${error}"></p>
+    </div>
+</div>
+<div class="alert alert-success" th:if="${exito != null}"  >
+    <div class="text-center">
+        <h5>Exito</h5>
+        <p class="texto-exito" th:text="${exito}"></p>
+    </div>
+</div>
 <div class="container mt-4">
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title text-center">Modificar Perfil</h5>
-                    <form method="post" th:action="@{/profesional/profesionalForm}">
+                    <form method="post" th:action="@{/profesional/modificar-profesional}">
                         <div class="form-group">
                             <label for="nombre">Nombre:</label>
                             <input type="text" class="form-control" id="nombre" name="nombre" th:value="${usuarioProfesional.nombre}" required>
@@ -71,7 +83,7 @@
                             <input type="text" class="form-control" id="telefono" name="telefono" th:value="${usuarioProfesional.telefono}" required>
                         </div>
                         <button type="submit" class="btn btn-primary btn-block">Guardar cambios</button>
-                        <button type="button" class="btn btn-secondary btn-block" onclick="ocultarFormulario()">Cerrar</button>
+                        <button type="button" class="btn btn-secondary btn-block" ><a th:href="@{/profesional/dashboard-profesional}">Cerrar</a></button>
                     </form>
                 </div>
             </div>

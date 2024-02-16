@@ -105,6 +105,7 @@ a {
 }
 
 /*=============== HEADER & NAV ===============*/
+
 .header {
     position: fixed;
     top: 0;
@@ -114,6 +115,15 @@ a {
     box-shadow: 0 2px 16px hsla(230, 75%, 32%, 0.15);
     z-index: var(--z-fixed);
 }
+.text-danger {
+      color: hsl(0, 80%, 50%) !important;  /* Rojo /
+      background-color: hsl(0, 50%, 90%) !important;
+    }
+
+    .text-success {
+      color: hsl(120, 65%, 35%) !important; / Verde */
+      background-color: hsl(120, 50%, 90%) !important;
+    }
 
 .nav {
     height: var(--header-height);

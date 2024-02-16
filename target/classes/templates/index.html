@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8">
@@ -17,7 +17,21 @@
 
 <body>
 
-    <header class="header" id="header">
+<header class="header" id="header">
+
+    <div class="text-danger" align="center" th:if="${error != null}"  >
+        <div class="text-center">
+
+            <p class="texto-error" th:text="${error}">error</p>
+        </div>
+    </div>
+    <div class="text-success" align="center" th:if="${exito != null}"  >
+        <div class="text-center">
+
+            <p class="texto-exito" th:text="${exito}">exito</p>
+        </div>
+    </div>
+
         <nav class="nav container">
             <a href="#" class="nav__logo">Vital Salud</a>
 
