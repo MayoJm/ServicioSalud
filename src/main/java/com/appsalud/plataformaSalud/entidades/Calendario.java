@@ -28,6 +28,7 @@ public class Calendario {
     @OneToMany
     private List<Turno> turnos;
 
+
     public boolean contieneTurnoParaFechaHora(LocalDateTime fechaHora) {
         for (Turno turno : turnos) {
             if (turno.getFechaHora().equals(fechaHora)) {

@@ -8,7 +8,6 @@ import lombok.Setter;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
-// Hola amigo tenes que borrar esta tabla porque es una verga, imho
 
 @Entity
 @Getter
@@ -21,9 +20,9 @@ public class DisponibilidadProfesional {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private DayOfWeek diaSemana;
-    private LocalTime horaInicio;
-    private LocalTime horaFin;
+    private DayOfWeek diaSemana; //tuesday
+    private LocalTime horaInicio; //08:00
+    private LocalTime horaFin; //15:00
 
     @ManyToOne
     @JoinColumn(name = "profesional_id")
