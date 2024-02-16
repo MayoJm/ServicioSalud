@@ -1,25 +1,26 @@
 package com.appsalud.plataformaSalud.controladores;
 
-import com.appsalud.plataformaSalud.entidades.Calendario;
-import com.appsalud.plataformaSalud.entidades.DisponibilidadProfesional;
-import com.appsalud.plataformaSalud.entidades.Turno;
-import com.appsalud.plataformaSalud.entidades.UsuarioProfesional;
+import com.appsalud.plataformaSalud.entidades.*;
 import com.appsalud.plataformaSalud.enumeraciones.Especialidad;
 import com.appsalud.plataformaSalud.enumeraciones.ObraSocial;
 import com.appsalud.plataformaSalud.excepciones.MiException;
 import com.appsalud.plataformaSalud.servicios.CalendarioServicio;
 import com.appsalud.plataformaSalud.servicios.DisponibilidadProfesionalServicio;
 import com.appsalud.plataformaSalud.servicios.UsuarioProfesionalServicio;
+import com.appsalud.plataformaSalud.servicios.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.DayOfWeek;
@@ -38,11 +39,22 @@ public class UsuarioProfesionalControlador {
     @Autowired
     private DisponibilidadProfesionalServicio disponibilidadProfesionalServicio;
 
+    @Autowired
+    private UsuarioServicio usuarioServicio;
+
     @PreAuthorize("hasRole('ROLE_PROFESIONAL')")
     @GetMapping("/dashboard-profesional")
     public String mostrarVistaProfesional(Model model) {
         List<Especialidad> listaEspecialidades = Arrays.asList(Especialidad.values());
         model.addAttribute("listaEspecialidades", listaEspecialidades);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+
+        Optional<UsuarioProfesional> usuarioProfesionalOptional = usuarioProfesionalServicio
+                .buscarProfesionalPorEmail(email);
+
+        UsuarioProfesional usuarioProfesional = usuarioProfesionalOptional.get();
+        model.addAttribute("usuarioProfesional", usuarioProfesional);
         return "profesionalVista.html";
     }
 
@@ -102,7 +114,7 @@ public class UsuarioProfesionalControlador {
         }
     }
 
-    @GetMapping("/dashboard-profesional/modificarProfesional")
+    @GetMapping("/dashboard-profesional/modificar-profesional")
     public String modificarProfesional(Model model) {
         List<Especialidad> listaEspecialidades = Arrays.asList(Especialidad.values());
         model.addAttribute("listaEspecialidades", listaEspecialidades);
@@ -161,7 +173,7 @@ public class UsuarioProfesionalControlador {
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
         }
-        return "redirect:/dashboard-profesional"; // aca redirigiria a la vista de modificar profesional.
+        return "redirect:/profesional/dashboard-profesional/modificar-profesional"; // aca redirigiria a la vista de modificar profesional.
     }
     @GetMapping("/dashboard-profesional/buscarTurnos")
     public String buscarTurnosProfesional(Model model) {
@@ -189,6 +201,59 @@ public class UsuarioProfesionalControlador {
 
         return "calendarioProfesional.html";
     }
+    @GetMapping("/perfil/{id}")
+    public ResponseEntity<byte[]> imagenUsuario(@PathVariable String id) {
+        Usuario usuario = usuarioServicio.getOne(id);
 
+        byte[] imagen = usuario.getImagen().getContenido();
+
+        HttpHeaders headers = new HttpHeaders();
+
+        headers.setContentType(MediaType.IMAGE_JPEG);
+
+        return new ResponseEntity<>(imagen, headers, HttpStatus.OK); //los parametros son 1) la imagen, 2) las cabeceras 3) el estado http
+    }
+
+    @GetMapping("/dashboard-profesional/cambiarImagen")
+    public String cambiarImagen(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+
+        Optional<UsuarioProfesional> usuarioProfesionalOptional = usuarioProfesionalServicio
+                .buscarProfesionalPorEmail(email);
+
+        if (usuarioProfesionalOptional.isPresent()) {
+            UsuarioProfesional usuarioProfesional = usuarioProfesionalOptional.get();
+            model.addAttribute("usuarioProfesional", usuarioProfesional);
+            return "cambiarImagen.html";
+        } else {
+            model.addAttribute("error", "No se encontró ningún usuario profesional con el email proporcionado.");
+            return "redirect:/profesional/dashboard-profesional";
+        }
+
+    }
+
+    @PostMapping("/dashboard-profesional/cambiarImagen")
+    public String cambiarImagen(@RequestParam MultipartFile archivo, ModelMap model) throws MiException {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+
+
+        if (!email.isEmpty()) {
+
+            try {
+                usuarioServicio.guardarImagen(email, archivo);
+                model.put("exito", "La imagen se a guardado con exito");
+
+                return "redirect:/profesional/dashboard-profesional";
+            } catch (MiException ex) {
+                model.put("error", ex.getMessage());
+                return "redirect:/profesional/dashboard-profesional";
+            }
+        } else {
+            model.addAttribute("error", "No se encontró ningún usuario profesional con el email proporcionado.");
+            return "redirect:/profesional/dashboard-profesional";
+        }
+    }
 
 }

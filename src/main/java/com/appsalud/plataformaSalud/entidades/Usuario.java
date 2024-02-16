@@ -1,11 +1,7 @@
 package com.appsalud.plataformaSalud.entidades;
 
 import com.appsalud.plataformaSalud.enumeraciones.Rol;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,7 +31,8 @@ public class Usuario {
     private Boolean estado;
     private Boolean aprobacion;
 
-
+    @OneToOne
+    private Imagen imagen;
 
     @Enumerated(EnumType.STRING)
     private Rol rol;

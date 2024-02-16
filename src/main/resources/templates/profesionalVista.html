@@ -31,20 +31,22 @@
 <div class="wrapper d-flex align-items-stretch">
     <nav id="sidebar">
         <div class="p-4 pt-5">
-            <a href="#" class="img logo rounded-circle mb-5" style="background-image: url(../static/img/logo.jpg);"></a>
+            <a th:href="@{/profesional/dashboard-profesional/cambiarImagen}" class="img logo rounded-circle mb-5">
+                <img th:src="@{/profesional/perfil/__${usuarioProfesional.id}__}" style="width: 120px; height: 120px; border-radius: 50%;" />
+            </a>
             <ul class="list-unstyled components mb-5">
                 <li class="active">
                     <a href="#perfilSubmenu" data-toggle="collapse" aria-expanded="false"
                        class="dropdown-toggle">Perfil</a>
                     <ul class="collapse list-unstyled" id="perfilSubmenu">
                         <li>
-                            <a th:href="@{/paciente/dashboard-paciente/modificarPaciente}"
+                            <a th:href="@{/profesional/dashboard-profesional/modificar-profesional}"
                                onclick="mostrarFormulario()">Editar Perfil</a>
                         </li>
                     </ul>
-                    <ul class="collapse list-unstyled" id="verPerfilPaciente">
+                    <ul class="collapse list-unstyled" id="verPerfilProfesional">
                         <li>
-                            <a th:href="@{/paciente/dashboard-paciente/verPerfilPaciente}"
+                            <a th:href="@{/profesional/dashboard-profesional/verPerfilProfesional}"
                                onclick="mostrarFormulario()">Ver Perfil</a>
                         </li>
                     </ul>
@@ -58,7 +60,8 @@
                                onclick="buscarTurnosProfesional()">Buscar Turnos disponibles</a>
                         </li>
                         <li>
-                            <a th:href="@{/profesional/dashboard-profesional/turnos-profesional/establecer-disponibilidad}">Disponibilizar Turnos</a>
+                            <a th:href="@{/profesional/dashboard-profesional/turnos-profesional/establecer-disponibilidad}">Disponibilizar
+                                Turnos</a>
                         </li>
                     </ul>
                 </li>
@@ -97,6 +100,18 @@
             </div>
         </nav>
         <!-- Contenido de pagina  -->
+        <div class="alert alert-danger" th:if="${error != null}"  >
+            <div class="text-center">
+                <h5>Error</h5>
+                <p class="texto-error" th:text="${error}"></p>
+            </div>
+        </div>
+        <div class="alert alert-success" th:if="${exito != null}"  >
+            <div class="text-center">
+                <h5>Exito</h5>
+                <p class="texto-exito" th:text="${exito}"></p>
+            </div>
+        </div>
     </div>
 </div>
 <script src="../static/js/jquery.min.js"></script>

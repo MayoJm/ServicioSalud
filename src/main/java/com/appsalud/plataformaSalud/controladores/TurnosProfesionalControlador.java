@@ -39,8 +39,12 @@ public class TurnosProfesionalControlador {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         if (email != null) {
+            Optional<UsuarioProfesional> usuarioProfesionalOptional = usuarioProfesionalServicio
+                    .buscarProfesionalPorEmail(email);
+            UsuarioProfesional usuarioProfesional = usuarioProfesionalOptional.get();
             List<Turno> turnosDisponibles = turnoServicio.obtenerTurnosDisponibles(email);
             turnosDisponibles.sort(Comparator.comparing(Turno::getFechaHora));
+            model.addAttribute("usuarioProfesional", usuarioProfesional);
             model.addAttribute("turnosDisponibles", turnosDisponibles);
             System.out.println("turnosDisponibles: " + turnosDisponibles.toString());
 

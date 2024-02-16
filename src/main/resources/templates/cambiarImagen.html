@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subir Imagen de Perfil</title>
+</head>
+<body>
+<h1>Subir Imagen de Perfil</h1>
+<form th:action="@{/profesional/dashboard-profesional/cambiarImagen}" method="post" enctype="multipart/form-data">
+    <input type="file" name="archivo" th:value="${archivo}"><br><br>
+    <button type="submit">Subir Imagen</button>
+</form>
+</body>
+</html>
