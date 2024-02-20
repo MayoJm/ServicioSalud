@@ -3,7 +3,6 @@ package com.appsalud.plataformaSalud.controladores;
 import com.appsalud.plataformaSalud.entidades.DisponibilidadHoraria;
 import com.appsalud.plataformaSalud.entidades.UsuarioProfesional;
 import com.appsalud.plataformaSalud.excepciones.MiException;
-import com.appsalud.plataformaSalud.repositorios.TurnoRepositorio;
 import com.appsalud.plataformaSalud.servicios.TurnoServicio;
 import com.appsalud.plataformaSalud.servicios.UsuarioProfesionalServicio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +26,6 @@ public class TurnosPacienteControlador {
     @Autowired
     private UsuarioProfesionalServicio usuarioProfesionalServicio;
 
-    @Autowired
-    private TurnoRepositorio turnoRepositorio;
 
     @GetMapping("/buscar-turnos")
     public String buscarTurnosPaciente(Model model) throws MiException {

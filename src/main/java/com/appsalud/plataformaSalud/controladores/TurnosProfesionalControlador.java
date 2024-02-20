@@ -33,7 +33,6 @@ public class TurnosProfesionalControlador {
     @Autowired
     private DisponibilidadHorariaServicio disponibilidadHorariaServicio;
 
-
     @GetMapping("/establecer-disponibilidad")
     public String mostrarFormularioEstablecerDisponibilidad(Model model) {
 
@@ -41,13 +40,15 @@ public class TurnosProfesionalControlador {
     }
 
     @PostMapping("/establecer-disponibilidad-form")
-    public String establecerDisponibilidad(@RequestParam Map<String, String> formData, RedirectAttributes redirectAttributes) {
+    public String establecerDisponibilidad(@RequestParam Map<String, String> formData,
+            RedirectAttributes redirectAttributes) {
         try {
             // Obtener el profesional actual desde la sesión
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String email = authentication.getName();
 
-            Optional<UsuarioProfesional> usuarioProfesionalOptional = usuarioProfesionalServicio.buscarProfesionalPorEmail(email);
+            Optional<UsuarioProfesional> usuarioProfesionalOptional = usuarioProfesionalServicio
+                    .buscarProfesionalPorEmail(email);
             UsuarioProfesional usuarioProfesional = usuarioProfesionalOptional.get();
 
             // Crear una lista para almacenar las disponibilidades
@@ -59,7 +60,8 @@ public class TurnosProfesionalControlador {
                 String horaInicioKey = diaSemana.toString().toLowerCase() + "Inicio";
                 String horaFinKey = diaSemana.toString().toLowerCase() + "Fin";
 
-                // Verificar si los campos para este día están presentes en el formData y si contienen valores no vacíos
+                // Verificar si los campos para este día están presentes en el formData y si
+                // contienen valores no vacíos
                 if (formData.containsKey(horaInicioKey) && formData.containsKey(horaFinKey)
                         && !formData.get(horaInicioKey).isEmpty() && !formData.get(horaFinKey).isEmpty()) {
                     // Obtener los horarios de inicio y fin para este día de la semana
@@ -80,12 +82,14 @@ public class TurnosProfesionalControlador {
                 }
             }
 
-            // Guardar las disponibilidades en la base de datos si hay al menos una disponibilidad válida
+            // Guardar las disponibilidades en la base de datos si hay al menos una
+            // disponibilidad válida
             if (!disponibilidades.isEmpty()) {
                 disponibilidadHorariaServicio.guardarDisponibilidadProfesional(disponibilidades, usuarioProfesional);
                 redirectAttributes.addFlashAttribute("exito", "Disponibilidad establecida correctamente.");
             } else {
-                redirectAttributes.addFlashAttribute("error", "Debes proporcionar la hora de inicio y fin para al menos un día.");
+                redirectAttributes.addFlashAttribute("error",
+                        "Debes proporcionar la hora de inicio y fin para al menos un día.");
             }
 
             return "redirect:/profesional/dashboard-profesional";
@@ -94,7 +98,5 @@ public class TurnosProfesionalControlador {
             return "redirect:/profesional/dashboard-profesional";
         }
     }
-
-
 
 }

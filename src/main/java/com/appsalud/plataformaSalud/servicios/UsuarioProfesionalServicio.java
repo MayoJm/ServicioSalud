@@ -1,6 +1,8 @@
 package com.appsalud.plataformaSalud.servicios;
 
+import com.appsalud.plataformaSalud.entidades.Turno;
 import com.appsalud.plataformaSalud.entidades.Usuario;
+import com.appsalud.plataformaSalud.entidades.UsuarioPaciente;
 import com.appsalud.plataformaSalud.entidades.UsuarioProfesional;
 import com.appsalud.plataformaSalud.enumeraciones.Especialidad;
 import com.appsalud.plataformaSalud.enumeraciones.ObraSocial;
@@ -23,13 +25,14 @@ public class UsuarioProfesionalServicio extends UsuarioServicio implements UserD
 
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
-
+    @Autowired
+    private TurnoServicio turnoServicio;
 
     @Transactional
     public void crearUsuarioProfesional(String nombre, String apellido, String email, String password, String password2,
-                                        Especialidad especialidad, String descripcionEspecialidad,
-                                        Integer valorConsulta, String matricula, String dni, String direccion,
-                                        String telefono, List<ObraSocial> obrasSociales) throws MiException {
+            Especialidad especialidad, String descripcionEspecialidad,
+            Integer valorConsulta, String matricula, String dni, String direccion,
+            String telefono, List<ObraSocial> obrasSociales) throws MiException {
         UsuarioProfesional usuarioProfesional = new UsuarioProfesional();
 
         validarProfesional(nombre, apellido, email, password, password2, especialidad, descripcionEspecialidad,
@@ -55,10 +58,12 @@ public class UsuarioProfesionalServicio extends UsuarioServicio implements UserD
     }
 
     @Transactional
-    public void modificarProfesional(String nombre, String apellido, String email, String passwordActual, String nuevoPassword,
-                                     Especialidad especialidad, String descripcionEspecialidad, Integer reputacion, Integer valorConsulta,
-                                     String matricula, String dni, String direccion, String telefono, Boolean estado) throws MiException {
-        validarModificacionDeProfesional(nombre, apellido, email, passwordActual, nuevoPassword, especialidad, descripcionEspecialidad,
+    public void modificarProfesional(String nombre, String apellido, String email, String passwordActual,
+            String nuevoPassword,
+            Especialidad especialidad, String descripcionEspecialidad, Integer reputacion, Integer valorConsulta,
+            String matricula, String dni, String direccion, String telefono, Boolean estado) throws MiException {
+        validarModificacionDeProfesional(nombre, apellido, email, passwordActual, nuevoPassword, especialidad,
+                descripcionEspecialidad,
                 valorConsulta, dni, direccion, telefono);
 
         Optional<UsuarioProfesional> respuesta = usuarioRepositorio.buscarPorEmail(email);
@@ -142,8 +147,8 @@ public class UsuarioProfesionalServicio extends UsuarioServicio implements UserD
     }
 
     public void validarProfesional(String nombre, String apellido, String email, String password, String password2,
-                                   Especialidad especialidad, String descripcionEspecialidad, Integer valorConsulta,
-                                   String matricula, String dni, String direccion, String telefono/* List<ObraSocial> obrasSociales*/)
+            Especialidad especialidad, String descripcionEspecialidad, Integer valorConsulta,
+            String matricula, String dni, String direccion, String telefono/* List<ObraSocial> obrasSociales */)
             throws MiException {
         if (nombre == null || nombre.isEmpty()) {
             throw new MiException("El nombre no puede ser nulo ni vacío");
@@ -160,7 +165,7 @@ public class UsuarioProfesionalServicio extends UsuarioServicio implements UserD
         if (!password.equals(password2)) {
             throw new MiException("Los passwords deben ser iguales");
         }
-        if (especialidad == null ) {
+        if (especialidad == null) {
             throw new MiException("La especialidad no puede ser nula");
         }
         if (descripcionEspecialidad == null || descripcionEspecialidad.isEmpty()) {
@@ -176,7 +181,7 @@ public class UsuarioProfesionalServicio extends UsuarioServicio implements UserD
         if (dni == null || dni.isEmpty()) {
             throw new MiException("El DNI no puede ser nulo ni vacío");
         }
-        if (dni.length() != 8 ) {
+        if (dni.length() != 8) {
             throw new MiException("El DNI debe contener 8 digitos");
         }
         if (password.length() > 10) {
@@ -189,7 +194,7 @@ public class UsuarioProfesionalServicio extends UsuarioServicio implements UserD
             throw new MiException("El teléfono no puede ser nulo ni vacío");
 
         }
-        if (telefono.length() !=10  ) {
+        if (telefono.length() != 10) {
             throw new MiException("El teléfono debe tener 10 numeros ej: [2995101101] y estar todo junto");
         }
         if (verificarNumeros(telefono)) {
@@ -199,10 +204,12 @@ public class UsuarioProfesionalServicio extends UsuarioServicio implements UserD
             throw new MiException("El dni no debe contener letras u otros caracteres");
         }
 
-//        if (obrasSociales == null || obrasSociales.isEmpty()) {
-//            throw new MiException("La lista de obras sociales no puede ser nula o vacía");
-//        }
+        // if (obrasSociales == null || obrasSociales.isEmpty()) {
+        // throw new MiException("La lista de obras sociales no puede ser nula o
+        // vacía");
+        // }
     }
+
     public boolean verificarNumeros(String input) {
         for (int i = 0; i < input.length(); i++) {
             if (Character.isDigit(input.charAt(i))) {
@@ -212,8 +219,10 @@ public class UsuarioProfesionalServicio extends UsuarioServicio implements UserD
         return true;
     }
 
-    public void validarModificacionDeProfesional(String nombre, String apellido, String email, String passwordActual, String nuevoPassword,
-                                                 Especialidad especialidad, String descripcionEspecialidad, Integer valorConsulta, String dni, String direccion, String telefono/* List<ObraSocial> obrasSociales*/)
+    public void validarModificacionDeProfesional(String nombre, String apellido, String email, String passwordActual,
+            String nuevoPassword,
+            Especialidad especialidad, String descripcionEspecialidad, Integer valorConsulta, String dni,
+            String direccion, String telefono/* List<ObraSocial> obrasSociales */)
             throws MiException {
         if (nombre == null || nombre.isEmpty()) {
             throw new MiException("El nombre no puede ser nulo ni vacío");
@@ -224,10 +233,11 @@ public class UsuarioProfesionalServicio extends UsuarioServicio implements UserD
         if (email == null || email.isEmpty()) {
             throw new MiException("El email no puede ser nulo ni vacío");
         }
-        if (passwordActual.isEmpty() || nuevoPassword.isEmpty() || passwordActual == null || nuevoPassword.length() <= 5) {
+        if (passwordActual.isEmpty() || nuevoPassword.isEmpty() || passwordActual == null
+                || nuevoPassword.length() <= 5) {
             throw new MiException("El password no puede ser nulo ni vacío, y debe contener más de 5 caracteres");
         }
-        if (dni.length() != 8 ) {
+        if (dni.length() != 8) {
             throw new MiException("El DNI debe contener 8 digitos");
         }
         if (nuevoPassword.length() > 10) {
@@ -254,7 +264,7 @@ public class UsuarioProfesionalServicio extends UsuarioServicio implements UserD
         if (telefono == null || telefono.isEmpty()) {
             throw new MiException("El teléfono no puede ser nulo ni vacío");
         }
-        if (telefono.length() !=10  ) {
+        if (telefono.length() != 10) {
             throw new MiException("El teléfono debe tener 10 numeros ej: [2995101101] y estar todo junto");
         }
         if (verificarNumeros(telefono)) {
@@ -263,9 +273,10 @@ public class UsuarioProfesionalServicio extends UsuarioServicio implements UserD
         if (verificarNumeros(dni)) {
             throw new MiException("El dni no debe contener letras u otros caracteres");
         }
-//        if (obrasSociales == null || obrasSociales.isEmpty()) {
-//            throw new MiException("La lista de obras sociales no puede ser nula o vacía");
-//        }
+        // if (obrasSociales == null || obrasSociales.isEmpty()) {
+        // throw new MiException("La lista de obras sociales no puede ser nula o
+        // vacía");
+        // }
     }
 
     public boolean verificarPassword(String email, String password) {
@@ -276,5 +287,14 @@ public class UsuarioProfesionalServicio extends UsuarioServicio implements UserD
             return new BCryptPasswordEncoder().matches(password, usuarioProfesional.getPassword());
         }
         return false;
+    }
+
+    public List<UsuarioPaciente> obtenerPacientes(String email) {
+        List<Turno> turnos = turnoServicio.listarTurnosPorProfesional(email);
+        List<UsuarioPaciente> pacientes = new ArrayList<>();
+        for (Turno turno : turnos) {
+            pacientes.add(turno.getUsuarioPaciente());
+        }
+        return pacientes;
     }
 }

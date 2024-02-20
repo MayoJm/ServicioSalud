@@ -1,10 +1,10 @@
 package com.appsalud.plataformaSalud.servicios;
 
-import com.appsalud.plataformaSalud.entidades.FichaMedica;
+import com.appsalud.plataformaSalud.entidades.HistoriaClinica;
 import com.appsalud.plataformaSalud.entidades.UsuarioPaciente;
 import com.appsalud.plataformaSalud.entidades.UsuarioProfesional;
 import com.appsalud.plataformaSalud.excepciones.MiException;
-import com.appsalud.plataformaSalud.repositorios.FichaMedicaRepositorio;
+import com.appsalud.plataformaSalud.repositorios.HistoriaClinicaRepositorio;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -13,19 +13,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class FichaMedicaServicio {
+public class HistoriaClinicaServicio {
 
     @Autowired
-    private FichaMedicaRepositorio fichaMedicaRepositorio;
+    private HistoriaClinicaRepositorio fichaMedicaRepositorio;
 
     @Transactional
-    public void crearFichaMedica(UsuarioPaciente usuarioPaciente, UsuarioProfesional usuarioProfesional, String edad,
+    public void crearHistoriaClinica(UsuarioPaciente usuarioPaciente, UsuarioProfesional usuarioProfesional, String edad,
             String presionArterial, String saturacion, String temperatura, Double peso, String frecuenciaRespiratoria, Double talla,
             String frecuenciaCardiaca, Double IMC, String motivoConsulta, String antecedentes, String alergia, String intervencionQuirurgica, Boolean vacunasCompletas,
             String examenFisico, String diagnostico, String tratamiento, Date fechaConsulta) throws MiException {
 
         validar(usuarioPaciente, usuarioProfesional, edad, presionArterial, saturacion, temperatura, peso, frecuenciaRespiratoria, talla, frecuenciaCardiaca, IMC, motivoConsulta, antecedentes, alergia, intervencionQuirurgica, vacunasCompletas, examenFisico, diagnostico, tratamiento, fechaConsulta);
-        FichaMedica fichaMedica = new FichaMedica();
+        HistoriaClinica fichaMedica = new HistoriaClinica();
 
         fichaMedica.setAlergia(alergia);
         fichaMedica.setAntecedentes(antecedentes);
@@ -56,10 +56,10 @@ public class FichaMedicaServicio {
             String examenFisico, String diagnostico, String tratamiento, Date fechaConsulta) throws MiException {
 
         validar(usuarioPaciente, usuarioProfesional, edad, presionArterial, saturacion, temperatura, peso, frecuenciaRespiratoria, talla, frecuenciaCardiaca, IMC, motivoConsulta, antecedentes, alergia, intervencionQuirurgica, vacunasCompletas, examenFisico, diagnostico, tratamiento, fechaConsulta);
-        Optional<FichaMedica> respuesta = fichaMedicaRepositorio.findById(id);
+        Optional<HistoriaClinica> respuesta = fichaMedicaRepositorio.findById(id);
         
         if(respuesta.isPresent()) {
-            FichaMedica fichaMedica = respuesta.get();
+            HistoriaClinica fichaMedica = respuesta.get();
         fichaMedica.setAlergia(alergia);
         fichaMedica.setAntecedentes(antecedentes);
         fichaMedica.setDiagnostico(diagnostico);
@@ -85,8 +85,8 @@ public class FichaMedicaServicio {
     }
 
     @Transactional(readOnly = true)
-    public List<FichaMedica> listarFichasMedicasPorPaciente(UsuarioPaciente paciente) { //sino por idPaciente o dni
-        List<FichaMedica> lista = fichaMedicaRepositorio.buscarPorPaciente(paciente);
+    public List<HistoriaClinica> listarFichasMedicasPorPaciente(UsuarioPaciente paciente) { //sino por idPaciente o dni
+        List<HistoriaClinica> lista = fichaMedicaRepositorio.buscarPorPaciente(paciente);
         return lista;
     }
 

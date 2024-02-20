@@ -28,7 +28,7 @@ public class UsuarioPaciente extends Usuario {
     private String telefono;
 
     @OneToMany(mappedBy = "usuarioPaciente")
-    private List<FichaMedica> fichasMedicas = new ArrayList<>();
+    private List<HistoriaClinica> fichasMedicas = new ArrayList<>();
     //private EstudiosClinicos estudiosClinicos; //A DEBATIR
     //@OneToOne
     //private Imagen imagen;
