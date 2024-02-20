@@ -1,6 +1,5 @@
 package com.appsalud.plataformaSalud.servicios;
 
-import com.appsalud.plataformaSalud.entidades.Calendario;
 import com.appsalud.plataformaSalud.entidades.Usuario;
 import com.appsalud.plataformaSalud.entidades.UsuarioPaciente;
 import com.appsalud.plataformaSalud.enumeraciones.ObraSocial;
@@ -21,14 +20,10 @@ import java.util.Optional;
 public class UsuarioPacienteServicio extends UsuarioServicio implements UserDetailsService {
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
-    @Autowired
-    private CalendarioServicio calendarioServicio;
 
     public void crearUsuarioPaciente(String nombre, String apellido, String email, String password, String password2,
                                      ObraSocial obraSocial, String dni, String direccion, String telefono) throws MiException {
 
-        Calendario calendario = new Calendario();
-        calendarioServicio.crearCalendario(calendario);
         UsuarioPaciente usuarioPaciente = new UsuarioPaciente();
         validarPaciente(nombre, apellido, email, password, password2, obraSocial, dni, direccion, telefono);
         usuarioPaciente.setNombre(nombre);
@@ -41,7 +36,6 @@ public class UsuarioPacienteServicio extends UsuarioServicio implements UserDeta
         usuarioPaciente.setDireccion(direccion);
         usuarioPaciente.setTelefono(telefono);
         usuarioPaciente.setEstado(true);
-        usuarioPaciente.setCalendario(calendario);
         usuarioRepositorio.save(usuarioPaciente);
     }
 

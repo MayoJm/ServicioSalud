@@ -65,10 +65,12 @@ public class UsuarioPacienteControlador {
         return "darBajaCuentaPaciente.html";
     }
     @PostMapping("/darBaja")
-    public String darBajaPaciente(@RequestParam("email") String email) throws Exception {
+    public String darBajaPaciente() throws Exception {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
         try {
             usuarioPacienteServicio.anularPaciente(email);
-            return "redirect:/dashboard-paciente";
+            return "redirect:/";
         } catch (Exception e) {
             e.getMessage();
             return "redirect:/dashboard-paciente";
@@ -117,10 +119,7 @@ public class UsuarioPacienteControlador {
             return "redirect:/dashboard-paciente/modificarPaciente";
         }
     }
-    @GetMapping("/dashboard-paciente/buscar-turnos")
-    public String buscarTurnosPaciente(Model model) {
-        return "buscarTurnosPaciente.html";
-    }
+
 }
 
 

@@ -26,8 +26,6 @@ public class UsuarioPaciente extends Usuario {
     private String dni;
     private String direccion;
     private String telefono;
-    @OneToOne
-    private Calendario calendario;
 
     @OneToMany(mappedBy = "usuarioPaciente")
     private List<FichaMedica> fichasMedicas = new ArrayList<>();

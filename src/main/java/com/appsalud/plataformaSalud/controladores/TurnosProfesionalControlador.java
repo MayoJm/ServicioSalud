@@ -1,9 +1,8 @@
 package com.appsalud.plataformaSalud.controladores;
 
-import com.appsalud.plataformaSalud.entidades.DisponibilidadProfesional;
-import com.appsalud.plataformaSalud.entidades.Turno;
+import com.appsalud.plataformaSalud.entidades.DisponibilidadHoraria;
 import com.appsalud.plataformaSalud.entidades.UsuarioProfesional;
-import com.appsalud.plataformaSalud.servicios.DisponibilidadProfesionalServicio;
+import com.appsalud.plataformaSalud.servicios.DisponibilidadHorariaServicio;
 import com.appsalud.plataformaSalud.servicios.TurnoServicio;
 import com.appsalud.plataformaSalud.servicios.UsuarioProfesionalServicio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,49 +31,8 @@ public class TurnosProfesionalControlador {
     private UsuarioProfesionalServicio usuarioProfesionalServicio;
 
     @Autowired
-    private DisponibilidadProfesionalServicio disponibilidadProfesionalServicio;
+    private DisponibilidadHorariaServicio disponibilidadHorariaServicio;
 
-    @GetMapping("/turnos-disponibles")
-    public String mostrarTurnosDisponibles(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String email = authentication.getName();
-        if (email != null) {
-            Optional<UsuarioProfesional> usuarioProfesionalOptional = usuarioProfesionalServicio
-                    .buscarProfesionalPorEmail(email);
-            UsuarioProfesional usuarioProfesional = usuarioProfesionalOptional.get();
-            List<Turno> turnosDisponibles = turnoServicio.obtenerTurnosDisponibles(email);
-            turnosDisponibles.sort(Comparator.comparing(Turno::getFechaHora));
-            model.addAttribute("usuarioProfesional", usuarioProfesional);
-            model.addAttribute("turnosDisponibles", turnosDisponibles);
-            System.out.println("turnosDisponibles: " + turnosDisponibles.toString());
-
-            return "buscarTurnosProfesional.html";
-        }
-
-        return "redirect:/profesional/dashboard-profesional";
-    }
-
-    @PostMapping("/tomar-turno")
-    public String tomarTurno(@RequestParam("turnoId") Long turnoId, @RequestParam("pacienteDNI") String pacienteDNI) {
-        // Lógica para asignar el turno al paciente con el DNI especificado
-        // Esto implica modificar el objeto de turno para asociarlo con el paciente y persistir los cambios en la base de datos
-        // ...
-        return "redirect:/profesional/dashboard-profesional/turnos-disponibles";
-    }
-
-    @GetMapping("/turnos-tomados")
-    public String mostrarTurnosTomados(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String email = authentication.getName();
-
-        Optional<UsuarioProfesional> usuarioProfesionalOptional = usuarioProfesionalServicio
-                .buscarProfesionalPorEmail(email);
-
-        UsuarioProfesional usuarioProfesional = usuarioProfesionalOptional.get();
-        List<Turno> turnosTomados = turnoServicio.obtenerTurnosTomados(email);
-        model.addAttribute("turnosTomados", turnosTomados);
-        return "turnos_tomados";
-    }
 
     @GetMapping("/establecer-disponibilidad")
     public String mostrarFormularioEstablecerDisponibilidad(Model model) {
@@ -93,7 +51,7 @@ public class TurnosProfesionalControlador {
             UsuarioProfesional usuarioProfesional = usuarioProfesionalOptional.get();
 
             // Crear una lista para almacenar las disponibilidades
-            List<DisponibilidadProfesional> disponibilidades = new ArrayList<>();
+            List<DisponibilidadHoraria> disponibilidades = new ArrayList<>();
 
             // Iterar sobre el formData para obtener los datos de cada día de la semana
             for (DayOfWeek diaSemana : DayOfWeek.values()) {
@@ -112,8 +70,8 @@ public class TurnosProfesionalControlador {
                     LocalTime horaInicio = LocalTime.parse(horaInicioStr);
                     LocalTime horaFin = LocalTime.parse(horaFinStr);
 
-                    // Crear una instancia de DisponibilidadProfesional y agregarla a la lista
-                    DisponibilidadProfesional disponibilidad = new DisponibilidadProfesional();
+                    // Crear una instancia de DisponibilidadHoraria y agregarla a la lista
+                    DisponibilidadHoraria disponibilidad = new DisponibilidadHoraria();
                     disponibilidad.setUsuarioProfesional(usuarioProfesional);
                     disponibilidad.setDiaSemana(diaSemana);
                     disponibilidad.setHoraInicio(horaInicio);
@@ -124,8 +82,7 @@ public class TurnosProfesionalControlador {
 
             // Guardar las disponibilidades en la base de datos si hay al menos una disponibilidad válida
             if (!disponibilidades.isEmpty()) {
-                disponibilidadProfesionalServicio.guardarDisponibilidadProfesional(disponibilidades);
-                disponibilidadProfesionalServicio.establecerDisponibilidad(usuarioProfesional, disponibilidades);
+                disponibilidadHorariaServicio.guardarDisponibilidadProfesional(disponibilidades, usuarioProfesional);
                 redirectAttributes.addFlashAttribute("exito", "Disponibilidad establecida correctamente.");
             } else {
                 redirectAttributes.addFlashAttribute("error", "Debes proporcionar la hora de inicio y fin para al menos un día.");
@@ -137,6 +94,7 @@ public class TurnosProfesionalControlador {
             return "redirect:/profesional/dashboard-profesional";
         }
     }
+
 
 
 }
