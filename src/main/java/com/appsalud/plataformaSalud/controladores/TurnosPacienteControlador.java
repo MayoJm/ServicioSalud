@@ -73,13 +73,10 @@ public class TurnosPacienteControlador {
             Model model) throws ParseException {
 
         try {
-            // Lógica para solicitar el turno aquí...
             turnoServicio.solicitarTurno(profesionalId, fechaSeleccionada, horarioSeleccionado, motivoConsulta);
-            // Devolver un mensaje de éxito como JSON
             return ResponseEntity.ok().body("Turno solicitado exitosamente");
         } catch (MiException e) {
-            // Devolver un mensaje de error como JSON
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al solicitar el turno: " + e.getMessage());
         }
-        }
+    }
 }
