@@ -63,21 +63,22 @@ public class UsuarioProfesionalControlador {
 
     @PostMapping("/registroProfesional")
     public String registroProfesional(@RequestParam String nombre,
-                                      @RequestParam String apellido,
-                                      @RequestParam String email,
-                                      @RequestParam String password,
-                                      @RequestParam String password2,
-                                      @RequestParam Especialidad especialidad,
-                                      @RequestParam String descripcionEspecialidad,
-                                      @RequestParam Integer valorConsulta,
-                                      @RequestParam String matricula,
-                                      @RequestParam String dni,
-                                      @RequestParam String direccion,
-                                      @RequestParam String telefono,
-                                      @RequestParam List<ObraSocial> obrasSociales,
-                                      Model model) {
+            @RequestParam String apellido,
+            @RequestParam String email,
+            @RequestParam String password,
+            @RequestParam String password2,
+            @RequestParam Especialidad especialidad,
+            @RequestParam String descripcionEspecialidad,
+            @RequestParam Integer valorConsulta,
+            @RequestParam String matricula,
+            @RequestParam String dni,
+            @RequestParam String direccion,
+            @RequestParam String telefono,
+            @RequestParam List<ObraSocial> obrasSociales,
+            Model model) {
         try {
-            usuarioProfesionalServicio.crearUsuarioProfesional(nombre, apellido, email, password, password2, especialidad,
+            usuarioProfesionalServicio.crearUsuarioProfesional(nombre, apellido, email, password, password2,
+                    especialidad,
                     descripcionEspecialidad, valorConsulta, matricula, dni, direccion, telefono,
                     obrasSociales);
 
@@ -116,7 +117,7 @@ public class UsuarioProfesionalControlador {
     public String modificarProfesional(Model model) {
         List<Especialidad> listaEspecialidades = Arrays.asList(Especialidad.values());
         model.addAttribute("listaEspecialidades", listaEspecialidades);
-        
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
 
@@ -125,23 +126,23 @@ public class UsuarioProfesionalControlador {
 
         UsuarioProfesional usuarioProfesional = usuarioProfesionalOptional.get();
         model.addAttribute("usuarioProfesional", usuarioProfesional);
-        
+
         return "modificarProfesional.html";
     }
 
     @PostMapping("/profesionalForm")
     public String modificarProfesional(@RequestParam String nombre,
-                                       @RequestParam String apellido,
-                                       @RequestParam String passwordActual,
-                                       @RequestParam String nuevoPassword,
-                                       @RequestParam Especialidad especialidad,
-                                       @RequestParam String descripcionEspecialidad,
-                                       @RequestParam Integer valorConsulta,
+            @RequestParam String apellido,
+            @RequestParam String passwordActual,
+            @RequestParam String nuevoPassword,
+            @RequestParam Especialidad especialidad,
+            @RequestParam String descripcionEspecialidad,
+            @RequestParam Integer valorConsulta,
 
-                                       @RequestParam String dni,
-                                       @RequestParam String direccion,
-                                       @RequestParam String telefono,
-                                       Model model) {
+            @RequestParam String dni,
+            @RequestParam String direccion,
+            @RequestParam String telefono,
+            Model model) {
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String email = authentication.getName();
@@ -159,13 +160,15 @@ public class UsuarioProfesionalControlador {
                 Integer reputacion = usuarioProfesional.getReputacion();
                 String matricula = usuarioProfesional.getMatricula();
                 usuarioProfesionalServicio.modificarProfesional(nombre, apellido, email, passwordActual, nuevoPassword,
-                        especialidad, descripcionEspecialidad, reputacion, valorConsulta, matricula, dni, direccion, telefono,
+                        especialidad, descripcionEspecialidad, reputacion, valorConsulta, matricula, dni, direccion,
+                        telefono,
                         Boolean.TRUE);
                 model.addAttribute("exito", "Profesional modificado con exito");
                 return "redirect:/profesional/dashboard-profesional";
             } else {
                 model.addAttribute("error", "No se encontró ningún usuario profesional con el email proporcionado.");
-                return "redirect:/profesional/dashboard-profesional"; // Puedes redirigir a la vista de modificar profesional o hacer lo que
+                return "redirect:/profesional/dashboard-profesional"; // Puedes redirigir a la vista de modificar
+                                                                      // profesional o hacer lo que
                 // consideres necesario
             }
         } catch (Exception e) {
@@ -192,7 +195,8 @@ public class UsuarioProfesionalControlador {
 
         headers.setContentType(MediaType.IMAGE_JPEG);
 
-        return new ResponseEntity<>(imagen, headers, HttpStatus.OK); //los parametros son 1) la imagen, 2) las cabeceras 3) el estado http
+        return new ResponseEntity<>(imagen, headers, HttpStatus.OK); // los parametros son 1) la imagen, 2) las
+                                                                     // cabeceras 3) el estado http
     }
 
     @GetMapping("/dashboard-profesional/cambiarImagen")
@@ -219,7 +223,6 @@ public class UsuarioProfesionalControlador {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
 
-
         if (!email.isEmpty()) {
 
             try {
@@ -236,5 +239,20 @@ public class UsuarioProfesionalControlador {
             return "redirect:/profesional/dashboard-profesional";
         }
     }
+
+    @GetMapping("/dashboard-profesional/mis-pacientes")
+    public String mostrarMisPaciente(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+
+        Optional<UsuarioProfesional> usuarioProfesionalOptional = usuarioProfesionalServicio
+                .buscarProfesionalPorEmail(email);
+
+        List<UsuarioPaciente> pacientes = usuarioProfesionalServicio.obtenerPacientes(email);
+
+        model.addAttribute("pacientes", pacientes);
+
+        return "misPacientes.html";
+    }   
 
 }
