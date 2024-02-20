@@ -240,7 +240,7 @@ public class UsuarioProfesionalControlador {
         }
     }
 
-    @GetMapping("/dashboard-profesional/mis-pacientes")
+    @GetMapping("/dashboard-profesional/mis-pacientes") //Crear Vista para este controller. (ya hice mi tarea)
     public String mostrarMisPaciente(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
