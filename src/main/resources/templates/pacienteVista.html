@@ -50,20 +50,19 @@
                             <a th:href="@{/paciente/dashboard-paciente/modificar-paciente}"
                                onclick="mostrarFormulario()">Editar Perfil</a>
                         </li>
-                    </ul>
-                    <ul class="collapse list-unstyled" id="homeDarBajaCuenta">
                         <li>
-                            <a class="dropdown-item" th:href="@{/paciente/dashboard-paciente/dar-baja-cuenta}"
+                            <a th:href="@{/paciente/dashboard-paciente/dar-baja-cuenta}"
                                onclick="mostrarConfirmacion()">Dar de baja cuenta</a>
                         </li>
                     </ul>
+
                 </li>
                 <li>
                     <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false"
                        class="dropdown-toggle">Turnos</a>
                     <ul class="collapse list-unstyled" id="pageSubmenu">
                         <li>
-                            <a th:href="@{/paciente/dashboard-paciente/buscar-turnos}"
+                            <a th:href="@{/paciente/dashboard-paciente/turnos-paciente/buscar-turnos}"
                                onclick="buscarTurnosProfesional()">Buscar profesional</a>
                         </li>
                     </ul>

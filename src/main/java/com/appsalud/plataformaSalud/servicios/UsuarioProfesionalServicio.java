@@ -1,6 +1,5 @@
 package com.appsalud.plataformaSalud.servicios;
 
-import com.appsalud.plataformaSalud.entidades.Calendario;
 import com.appsalud.plataformaSalud.entidades.Usuario;
 import com.appsalud.plataformaSalud.entidades.UsuarioProfesional;
 import com.appsalud.plataformaSalud.enumeraciones.Especialidad;
@@ -24,8 +23,7 @@ public class UsuarioProfesionalServicio extends UsuarioServicio implements UserD
 
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
-    @Autowired
-    private CalendarioServicio calendarioServicio;
+
 
     @Transactional
     public void crearUsuarioProfesional(String nombre, String apellido, String email, String password, String password2,
@@ -33,8 +31,7 @@ public class UsuarioProfesionalServicio extends UsuarioServicio implements UserD
                                         Integer valorConsulta, String matricula, String dni, String direccion,
                                         String telefono, List<ObraSocial> obrasSociales) throws MiException {
         UsuarioProfesional usuarioProfesional = new UsuarioProfesional();
-        Calendario calendario = new Calendario();
-        calendarioServicio.crearCalendario(calendario);
+
         validarProfesional(nombre, apellido, email, password, password2, especialidad, descripcionEspecialidad,
                 valorConsulta, matricula, dni, direccion, telefono/* obrasSociales */);
 
@@ -54,7 +51,6 @@ public class UsuarioProfesionalServicio extends UsuarioServicio implements UserD
         usuarioProfesional.setAprobacion(true);
         usuarioProfesional.setObrasSociales((List<ObraSocial>) obrasSociales);
         usuarioProfesional.setReputacion(null);
-        usuarioProfesional.setCalendario(calendario);
         usuarioRepositorio.save(usuarioProfesional);
     }
 
@@ -105,13 +101,13 @@ public class UsuarioProfesionalServicio extends UsuarioServicio implements UserD
     }
 
     @Transactional(readOnly = true)
-    public List<Usuario> listarUsuariosProfesional() {
-
-        List<Usuario> usuariosProfesional = new ArrayList<>();
-
-        usuariosProfesional = usuarioRepositorio.findAll();
-
-        return usuariosProfesional;
+    public List<UsuarioProfesional> listarUsuariosProfesionales() throws MiException {
+        try {
+            List<UsuarioProfesional> usuariosProfesionales = usuarioRepositorio.buscarProfesionales();
+            return usuariosProfesionales;
+        } catch (Exception e) {
+            return null;
+        }
 
     }
 

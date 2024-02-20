@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -40,4 +41,7 @@ public interface UsuarioRepositorio extends JpaRepository<Usuario, String> {
 
     @Query("SELECT u FROM Usuario u WHERE u.dni = :dni")
     public Optional<UsuarioProfesional> buscarProfesionalPorDni(@Param("dni") String dni);
+
+    @Query("SELECT u FROM Usuario u WHERE u.rol = 'PROFESIONAL'")
+    List<UsuarioProfesional> buscarProfesionales();
 }

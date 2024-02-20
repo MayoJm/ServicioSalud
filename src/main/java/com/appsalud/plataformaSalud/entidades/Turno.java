@@ -24,8 +24,8 @@ public class Turno {
 
    private LocalDateTime fechaHora;
 
-   private String fechaFormateada;
-   private String horaFormateada;
+   private String fechaFormateada; //Setear al persistir turno
+   private String horaFormateada; //Setear al persistir turno
 
    private String descripcion;
 

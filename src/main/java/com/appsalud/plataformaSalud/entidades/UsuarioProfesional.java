@@ -32,10 +32,9 @@ public class UsuarioProfesional extends Usuario {
     @ElementCollection
     @Column(name = "obras_sociales")
     private List<ObraSocial> obrasSociales;
-    @OneToOne
-    private Calendario calendario;
+
     @OneToMany(mappedBy = "usuarioProfesional", cascade = CascadeType.ALL)
-    private List<DisponibilidadProfesional> disponibilidades;
+    private List<DisponibilidadHoraria> disponibilidades;
     
     @OneToMany(mappedBy = "usuarioProfesional")
     private List<FichaMedica> fichasMedicas = new ArrayList<>();

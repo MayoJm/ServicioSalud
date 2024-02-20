@@ -4,8 +4,7 @@ import com.appsalud.plataformaSalud.entidades.*;
 import com.appsalud.plataformaSalud.enumeraciones.Especialidad;
 import com.appsalud.plataformaSalud.enumeraciones.ObraSocial;
 import com.appsalud.plataformaSalud.excepciones.MiException;
-import com.appsalud.plataformaSalud.servicios.CalendarioServicio;
-import com.appsalud.plataformaSalud.servicios.DisponibilidadProfesionalServicio;
+import com.appsalud.plataformaSalud.servicios.DisponibilidadHorariaServicio;
 import com.appsalud.plataformaSalud.servicios.UsuarioProfesionalServicio;
 import com.appsalud.plataformaSalud.servicios.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.time.DayOfWeek;
-import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -35,9 +31,7 @@ public class UsuarioProfesionalControlador {
     @Autowired
     private UsuarioProfesionalServicio usuarioProfesionalServicio;
     @Autowired
-    private CalendarioServicio calendarioServicio;
-    @Autowired
-    private DisponibilidadProfesionalServicio disponibilidadProfesionalServicio;
+    private DisponibilidadHorariaServicio disponibilidadHorariaServicio;
 
     @Autowired
     private UsuarioServicio usuarioServicio;
@@ -187,32 +181,7 @@ public class UsuarioProfesionalControlador {
         }
         return "modificarProfesional.html"; // aca redirigiria a la vista de modificar profesional.
     }
-    @GetMapping("/dashboard-profesional/buscarTurnos")
-    public String buscarTurnosProfesional(Model model) {
-        return "buscarTurnosProfesional.html";
-    }
-    @GetMapping("/calendario")
-    public String verCalendario(Model model) {
-        // Obtener el usuario profesional actual desde la sesión
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String email = authentication.getName();
 
-        Optional<UsuarioProfesional> usuarioProfesionalOptional = usuarioProfesionalServicio
-                .buscarProfesionalPorEmail(email);
-
-        UsuarioProfesional usuarioProfesional = usuarioProfesionalOptional.get();
-        // Obtener el calendario del profesional
-
-        Calendario calendario = usuarioProfesional.getCalendario();
-
-        // Obtener los turnos disponibles del profesional
-        List<Turno> turnosDisponibles = calendarioServicio.obtenerTurnosDisponibles(usuarioProfesional);
-
-        model.addAttribute("calendario", calendario);
-        model.addAttribute("turnosDisponibles", turnosDisponibles);
-
-        return "calendarioProfesional.html";
-    }
     @GetMapping("/perfil/{id}")
     public ResponseEntity<byte[]> imagenUsuario(@PathVariable String id) {
         Usuario usuario = usuarioServicio.getOne(id);
