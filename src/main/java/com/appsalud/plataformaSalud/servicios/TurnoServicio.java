@@ -5,12 +5,16 @@ import com.appsalud.plataformaSalud.excepciones.MiException;
 import com.appsalud.plataformaSalud.repositorios.TurnoRepositorio;
 import com.appsalud.plataformaSalud.repositorios.UsuarioRepositorio;
 
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,23 +27,14 @@ public class TurnoServicio {
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
 
-    @Transactional
-    public void crearTurno(LocalDateTime fechaHora, String descripcion, UsuarioPaciente usuarioPaciente,
-                           UsuarioProfesional usuarioProfesional) throws MiException {
+    @Autowired
+    private UsuarioPacienteServicio usuarioPacienteServicio;
 
-        validarTurno(fechaHora, descripcion, usuarioPaciente, usuarioProfesional);
-        Turno turno = new Turno();
-        turno.setFechaHora(fechaHora);
-        turno.setDescripcion(descripcion);
-        turno.setUsuarioPaciente(usuarioPaciente);
-        turno.setUsuarioProfesional(usuarioProfesional);
-        turno.setAlta(Boolean.TRUE);
-        turnoRepositorio.save(turno);
-    }
+    @Autowired
+    private UsuarioProfesionalServicio usuarioProfesionalServicio;
 
     @Transactional
-    public void modificarTurno(String id, LocalDateTime fechaHora, String descripcion, UsuarioPaciente usuarioPaciente,
-                               UsuarioProfesional usuarioProfesional) throws MiException {
+    public void modificarTurno(String id, LocalDateTime fechaHora, String descripcion, UsuarioPaciente usuarioPaciente, UsuarioProfesional usuarioProfesional) throws MiException {
 
         validarTurno(fechaHora, descripcion, usuarioPaciente, usuarioProfesional);
 
@@ -91,8 +86,7 @@ public class TurnoServicio {
         return turnosProfesional;
     }
 
-    public void validarTurno(LocalDateTime fechaHora, String descripcion, UsuarioPaciente usuarioPaciente,
-                             UsuarioProfesional usuarioProfesional) throws MiException {
+    public void validarTurno(LocalDateTime fechaHora, String descripcion, UsuarioPaciente usuarioPaciente, UsuarioProfesional usuarioProfesional) throws MiException {
 
         if (fechaHora == null) {
             throw new MiException("La fecha no puede ser nula");
@@ -114,9 +108,7 @@ public class TurnoServicio {
     }
 
 
-
-    public List<DisponibilidadHoraria> obtenerHorariosDisponiblesParaDia(UsuarioProfesional profesional,
-                                                                         LocalDate fecha) throws MiException{
+    public List<DisponibilidadHoraria> obtenerHorariosDisponiblesParaDia(UsuarioProfesional profesional, LocalDate fecha) throws MiException {
         // Obtener la disponibilidad horaria del profesional
         List<DisponibilidadHoraria> disponibilidadHoraria = profesional.getDisponibilidades();
 
@@ -124,8 +116,7 @@ public class TurnoServicio {
         // especificada
         LocalDateTime fechaInicioDia = fecha.atStartOfDay();
         LocalDateTime fechaFinDia = fecha.atTime(LocalTime.MAX);
-        List<Turno> turnosReservados = turnoRepositorio.findByUsuarioProfesionalAndFechaBetween(profesional,
-                fechaInicioDia, fechaFinDia);
+        List<Turno> turnosReservados = turnoRepositorio.findByUsuarioProfesionalAndFechaBetween(profesional, fechaInicioDia, fechaFinDia);
 
         // Crear un conjunto para almacenar los horarios ocupados en la fecha
         // especificada
@@ -151,8 +142,7 @@ public class TurnoServicio {
                     // Verificar si el horario actual no está ocupado
                     if (!horariosOcupados.contains(horaActual)) {
                         // Agregar el horario disponible a la lista
-                        horariosDisponibles.add(new DisponibilidadHoraria(fecha.getDayOfWeek(), horaActual,
-                                horaActual.plusMinutes(60)));
+                        horariosDisponibles.add(new DisponibilidadHoraria(fecha.getDayOfWeek(), horaActual, horaActual.plusMinutes(60)));
                     }
                     // Incrementar la hora actual en intervalos de 30 minutos
                     horaActual = horaActual.plusMinutes(60);
@@ -166,5 +156,40 @@ public class TurnoServicio {
         return horariosDisponibles;
     }
 
+    public void solicitarTurno(String profesionalId, String fechaSeleccionada, String horarioSeleccionado, String descripcion) throws ParseException, MiException {
+        // Obtener usuario paciente de la sesión activa
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        Optional<UsuarioPaciente> usuarioPaciente = usuarioPacienteServicio.buscarPacientePorEmail(email);
 
+        // Obtener usuario profesional por ID
+        UsuarioProfesional usuarioProfesional = usuarioProfesionalServicio.buscarPorId(profesionalId);
+
+        // Formatear fecha y hora
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+        // Procesamos el horario seleccionado para obtener solo la hora de inicio
+        String horaInicioStr = horarioSeleccionado.split(" - ")[0];
+        // Combinamos la fecha y la hora de inicio para obtener la fechaHora del turno
+        String fechaHoraStr = fechaSeleccionada + " " + horaInicioStr;
+        LocalDateTime fechaHora = LocalDateTime.parse(fechaHoraStr, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
+        // Crear el turno
+        if (usuarioPaciente.isPresent() && usuarioProfesional != null) {
+            UsuarioPaciente paciente = usuarioPaciente.get();
+            Turno turno = new Turno();
+            turno.setUsuarioPaciente(paciente);
+            turno.setUsuarioProfesional(usuarioProfesional);
+            turno.setFechaHora(fechaHora);
+            turno.setFechaFormateada(fechaHora.format(dateFormatter));
+            turno.setHoraFormateada(fechaHora.format(timeFormatter));
+            turno.setDescripcion(descripcion);
+            turno.setAlta(true); // Setear a true al persistir el turno
+
+            // Persistir el turno en la base de datos
+            turnoRepositorio.save(turno);
+        } else {
+            throw new MiException("Paciente o profesional no encontrados");
+        }
+    }
 }
