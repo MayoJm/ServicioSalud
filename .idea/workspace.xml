@@ -7,7 +7,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="88c29b52-8aca-483f-a431-88c378267dce" name="Changes" comment="" />
+    <list default="true" id="88c29b52-8aca-483f-a431-88c378267dce" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/appsalud/plataformaSalud/controladores/TurnosPacienteControlador.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/appsalud/plataformaSalud/controladores/TurnosPacienteControlador.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/appsalud/plataformaSalud/entidades/HistoriaClinica.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/appsalud/plataformaSalud/entidades/HistoriaClinica.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/appsalud/plataformaSalud/servicios/HistoriaClinicaServicio.java" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,8 +22,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="Class" />
         <option value="HTML File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -55,7 +60,7 @@
     "DefaultHtmlFileTemplate": "HTML File",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "developer",
+    "git-widget-placeholder": "HistorialClinico/CRUD",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/juand/OneDrive/Documentos/ServicioSalud",

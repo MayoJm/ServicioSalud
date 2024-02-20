@@ -5,136 +5,86 @@ import com.appsalud.plataformaSalud.entidades.UsuarioPaciente;
 import com.appsalud.plataformaSalud.entidades.UsuarioProfesional;
 import com.appsalud.plataformaSalud.excepciones.MiException;
 import com.appsalud.plataformaSalud.repositorios.HistoriaClinicaRepositorio;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class HistoriaClinicaServicio {
 
     @Autowired
-    private HistoriaClinicaRepositorio fichaMedicaRepositorio;
+    private HistoriaClinicaRepositorio historiaClinicaRepositorio;
 
     @Transactional
-    public void crearHistoriaClinica(UsuarioPaciente usuarioPaciente, UsuarioProfesional usuarioProfesional, String edad,
-            String presionArterial, String saturacion, String temperatura, Double peso, String frecuenciaRespiratoria, Double talla,
-            String frecuenciaCardiaca, Double IMC, String motivoConsulta, String antecedentes, String alergia, String intervencionQuirurgica, Boolean vacunasCompletas,
-            String examenFisico, String diagnostico, String tratamiento, Date fechaConsulta) throws MiException {
+    public void crearHistoriaClinica(UsuarioPaciente usuariopaciente, UsuarioProfesional usuarioProfesional, String nombre, Integer edad,
+                                     String sexo, Double peso, List<String> datosHistoricos, List<LocalDate> fechaConsulta, Boolean alta) throws MiException {
+        validar(nombre, edad, sexo, peso, datosHistoricos, fechaConsulta);
 
-        validar(usuarioPaciente, usuarioProfesional, edad, presionArterial, saturacion, temperatura, peso, frecuenciaRespiratoria, talla, frecuenciaCardiaca, IMC, motivoConsulta, antecedentes, alergia, intervencionQuirurgica, vacunasCompletas, examenFisico, diagnostico, tratamiento, fechaConsulta);
-        HistoriaClinica fichaMedica = new HistoriaClinica();
+        HistoriaClinica historiaClinica = new HistoriaClinica();
+        historiaClinica.setUsuarioPaciente(usuariopaciente);
+        historiaClinica.setUsuarioProfesional(usuarioProfesional);
+        historiaClinica.setEdad(edad);
+        historiaClinica.setSexo(sexo);
+        historiaClinica.setPeso(peso);
+        historiaClinica.setDatosHistoricos(datosHistoricos);
+        historiaClinica.setFechaConsulta(fechaConsulta);
+        historiaClinica.setAlta(true);
 
-        fichaMedica.setAlergia(alergia);
-        fichaMedica.setAntecedentes(antecedentes);
-        fichaMedica.setDiagnostico(diagnostico);
-        fichaMedica.setExamenFisico(examenFisico);
-        fichaMedica.setFechaConsulta(fechaConsulta);
-        fichaMedica.setFrecuenciaCardiaca(frecuenciaCardiaca);
-        fichaMedica.setFrecuenciaRespiratoria(frecuenciaRespiratoria);
-        fichaMedica.setIMC(IMC);
-        fichaMedica.setIntervencionQuirurgica(intervencionQuirurgica);
-        fichaMedica.setMotivoConsulta(motivoConsulta);
-        fichaMedica.setPeso(peso);
-        fichaMedica.setPresionArterial(presionArterial);
-        fichaMedica.setSaturacion(saturacion);
-        fichaMedica.setTalla(talla);
-        fichaMedica.setTemperatura(temperatura);
-        fichaMedica.setTratamiento(tratamiento);
-        fichaMedica.setUsuarioPaciente(usuarioPaciente);
-        fichaMedica.setUsuarioProfesional(usuarioProfesional);
-        fichaMedica.setVacunasCompletas(vacunasCompletas);
-
-        fichaMedicaRepositorio.save(fichaMedica);
+        historiaClinicaRepositorio.save(historiaClinica);
     }
+
     @Transactional
-    public void modificarFichaMedica(String id, UsuarioPaciente usuarioPaciente, UsuarioProfesional usuarioProfesional, String edad,
-            String presionArterial, String saturacion, String temperatura, Double peso, String frecuenciaRespiratoria, Double talla,
-            String frecuenciaCardiaca, Double IMC, String motivoConsulta, String antecedentes, String alergia, String intervencionQuirurgica, Boolean vacunasCompletas,
-            String examenFisico, String diagnostico, String tratamiento, Date fechaConsulta) throws MiException {
+    public void modificarHistoriaClinica(String id, String nombre, Integer edad, String sexo, Double peso,
+                                         List<String> datosHistoricos, List<LocalDate> fechaConsulta) throws MiException {
+        validar(nombre, edad, sexo, peso, datosHistoricos, fechaConsulta);
 
-        validar(usuarioPaciente, usuarioProfesional, edad, presionArterial, saturacion, temperatura, peso, frecuenciaRespiratoria, talla, frecuenciaCardiaca, IMC, motivoConsulta, antecedentes, alergia, intervencionQuirurgica, vacunasCompletas, examenFisico, diagnostico, tratamiento, fechaConsulta);
-        Optional<HistoriaClinica> respuesta = fichaMedicaRepositorio.findById(id);
-        
-        if(respuesta.isPresent()) {
-            HistoriaClinica fichaMedica = respuesta.get();
-        fichaMedica.setAlergia(alergia);
-        fichaMedica.setAntecedentes(antecedentes);
-        fichaMedica.setDiagnostico(diagnostico);
-        fichaMedica.setExamenFisico(examenFisico);
-        fichaMedica.setFechaConsulta(fechaConsulta);
-        fichaMedica.setFrecuenciaCardiaca(frecuenciaCardiaca);
-        fichaMedica.setFrecuenciaRespiratoria(frecuenciaRespiratoria);
-        fichaMedica.setIMC(IMC);
-        fichaMedica.setIntervencionQuirurgica(intervencionQuirurgica);
-        fichaMedica.setMotivoConsulta(motivoConsulta);
-        fichaMedica.setPeso(peso);
-        fichaMedica.setPresionArterial(presionArterial);
-        fichaMedica.setSaturacion(saturacion);
-        fichaMedica.setTalla(talla);
-        fichaMedica.setTemperatura(temperatura);
-        fichaMedica.setTratamiento(tratamiento);
-        fichaMedica.setUsuarioPaciente(usuarioPaciente);
-        fichaMedica.setUsuarioProfesional(usuarioProfesional);
-        fichaMedica.setVacunasCompletas(vacunasCompletas);
-
-        fichaMedicaRepositorio.save(fichaMedica);
+        Optional<HistoriaClinica> respuesta = historiaClinicaRepositorio.findById(id);
+        if (respuesta.isPresent()) {
+            HistoriaClinica historiaClinica = respuesta.get();
+            historiaClinica.setEdad(edad);
+            historiaClinica.setSexo(sexo);
+            historiaClinica.setPeso(peso);
+            historiaClinica.setDatosHistoricos(datosHistoricos);
+            historiaClinica.setFechaConsulta(fechaConsulta);
+            historiaClinicaRepositorio.save(historiaClinica);
         }
     }
 
-    @Transactional(readOnly = true)
-    public List<HistoriaClinica> listarFichasMedicasPorPaciente(UsuarioPaciente paciente) { //sino por idPaciente o dni
-        List<HistoriaClinica> lista = fichaMedicaRepositorio.buscarPorPaciente(paciente);
-        return lista;
+
+    @Transactional
+    public void anularHistoriaClinica(String id) throws MiException {
+        Optional<HistoriaClinica> respuesta = historiaClinicaRepositorio.findById(id);
+        if (respuesta.isPresent()) {
+            HistoriaClinica historiaClinica = respuesta.get();
+            historiaClinica.setAlta(false);
+            historiaClinicaRepositorio.save(historiaClinica);
+        }
     }
 
-    public void validar(UsuarioPaciente usuarioPaciente, UsuarioProfesional usuarioProfesional, String edad,
-            String presionArterial, String saturacion, String temperatura, Double peso, String frecuenciaRespiratoria, Double talla,
-            String frecuenciaCardiaca, Double IMC, String motivoConsulta, String antecedentes, String alergia, String intervencionQuirurgica, Boolean vacunasCompletas,
-            String examenFisico, String diagnostico, String tratamiento, Date fechaConsulta) throws MiException {
-        if (usuarioPaciente == null) {
-            throw new MiException("El paciente no puede ser nulo");
+    public void validar(String nombre, Integer edad, String sexo, Double peso, List<String> datosHistoricos,
+                        List<LocalDate> fechaConsulta) throws MiException {
+        if (nombre == null || nombre.isEmpty()) {
+            throw new MiException("El nombre no puede ser vacio");
         }
-
-        if (usuarioProfesional == null) {
-            throw new MiException("El profesional no puede ser nulo");
+        if (edad == null) {
+            throw new MiException("La edad no puede ser vacia");
         }
-        if (edad == null || edad.isEmpty() || edad.isBlank()) {
-            throw new MiException("La edad no puede ser nula o estar vacia");
-        }
-        if (presionArterial == null || presionArterial.isEmpty()) {
-            throw new MiException("La presion arterial no puede ser nula o estar vacia");
-        }
-        if (saturacion == null || saturacion.isEmpty()) {
-            throw new MiException("La saturacion no puede ser nula o estar vacia");
-        }
-        if (temperatura == null || temperatura.isEmpty()) {
-            throw new MiException("La temperatura no puede ser nula o estar vacia");
+        if (sexo == null || sexo.isEmpty()) {
+            throw new MiException("El sexo no puede ser vacio");
         }
         if (peso == null) {
-            throw new MiException("El peso no puede ser nulo");
+            throw new MiException("El peso no puede ser vacio");
         }
-        if (frecuenciaRespiratoria == null || frecuenciaRespiratoria.isEmpty()) {
-            throw new MiException("La frecuencia respiratoria no puede ser nula o estar vacia");
+        if (datosHistoricos == null || datosHistoricos.isEmpty()) {
+            throw new MiException("Los datos historicos no pueden ser vacios");
         }
-        if (talla == null) {
-            throw new MiException("La talla no puede ser nula");
-        }
-        if (examenFisico == null || examenFisico.isEmpty()) {
-            throw new MiException("El examen fisico no puede ser nulo o estar vacio");
-        }
-        if (diagnostico == null || diagnostico.isEmpty()) {
-            throw new MiException("El diagnostico no puede ser nulo o estar vacio");
-        }
-        if (tratamiento == null || tratamiento.isEmpty()) {
-            throw new MiException("El tratamiento no puede ser nulo o estar vacio");
-        }
-        if (fechaConsulta == null) {
-            throw new MiException("La fechade consulta no puede ser nula");
+        if (fechaConsulta == null || fechaConsulta.isEmpty()) {
+            throw new MiException("La fecha de consulta no puede ser vacia");
         }
     }
 
 }
-
