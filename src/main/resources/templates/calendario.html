@@ -131,6 +131,7 @@
             <div>
                 <button class="btn btn-primary mt-3" onclick="solicitarTurno()">Solicitar Turno</button>
             </div>
+
         </div>
 
     </div>
@@ -199,22 +200,31 @@
     var motivoConsulta = $('#motivoConsulta').val();
 
     $.ajax({
-        type: 'POST',
-        url: '/paciente/dashboard-paciente/turnos-paciente/solicitar-turno',
-        data: {
-            profesionalId: profesionalId,
-            fechaSeleccionada: fechaSeleccionada,
-            horarioSeleccionado: horarioSeleccionado,
-            motivoConsulta: motivoConsulta
-        },
-        success: function (response) {
-            // Aquí puedes manejar la respuesta del servidor si es necesario
-            console.log(response+"Turno solicitado con éxito");
-        },
-        error: function (xhr, status, error) {
-            console.log('Error al solicitar el turno: ' + error);
-        }
-    });
+    type: 'POST',
+    url: '/paciente/dashboard-paciente/turnos-paciente/solicitar-turno',
+    data: {
+        profesionalId: profesionalId,
+        fechaSeleccionada: fechaSeleccionada,
+        horarioSeleccionado: horarioSeleccionado,
+        motivoConsulta: motivoConsulta
+    },
+    success: function (response) {
+        // Aquí manejas la respuesta del servidor si es necesario
+        console.log(response + "Turno solicitado con éxito");
+        // Muestra el mensaje de éxito en el cliente
+        alert("Turno solicitado exitosamente");
+        // Redirige al dashboard del paciente
+        window.location.href = '/paciente/dashboard-paciente';
+    },
+    error: function (xhr, status, error) {
+        console.log('Error al solicitar el turno: ' + error);
+        // Muestra el mensaje de error en el cliente
+        alert("Error al solicitar el turno: " + error);
+        // Redirige al dashboard del paciente
+        window.location.href = '/paciente/dashboard-paciente';
+    }
+});
+
 }
 
     function actualizarSelectHorarios(horariosDisponibles) {

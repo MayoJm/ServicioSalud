@@ -8,11 +8,13 @@ import com.appsalud.plataformaSalud.servicios.TurnoServicio;
 import com.appsalud.plataformaSalud.servicios.UsuarioProfesionalServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -66,18 +68,21 @@ public class TurnosPacienteControlador {
     }
 
     @PostMapping("/solicitar-turno")
-    @ResponseBody
     public ResponseEntity<String> solicitarTurno(
             @RequestParam("profesionalId") String profesionalId,
             @RequestParam("fechaSeleccionada") String fechaSeleccionada,
             @RequestParam("horarioSeleccionado") String horarioSeleccionado,
-            @RequestParam("motivoConsulta") String motivoConsulta) {
+            @RequestParam("motivoConsulta") String motivoConsulta,
+            Model model) throws ParseException {
 
-        // Aquí manejas la solicitud de turno, por ejemplo, guardándola en la base de datos
-
-        return ResponseEntity.ok().body("Turno solicitado exitosamente");
-    }
-
-
-
+        try {
+            // Lógica para solicitar el turno aquí...
+            turnoServicio.solicitarTurno(profesionalId, fechaSeleccionada, horarioSeleccionado, motivoConsulta);
+            // Devolver un mensaje de éxito como JSON
+            return ResponseEntity.ok().body("Turno solicitado exitosamente");
+        } catch (MiException e) {
+            // Devolver un mensaje de error como JSON
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al solicitar el turno: " + e.getMessage());
+        }
+        }
 }
