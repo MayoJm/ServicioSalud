@@ -25,8 +25,6 @@ public class UsuarioProfesionalServicio extends UsuarioServicio implements UserD
 
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
-    @Autowired
-    private TurnoServicio turnoServicio;
 
     @Transactional
     public void crearUsuarioProfesional(String nombre, String apellido, String email, String password, String password2,
@@ -289,8 +287,7 @@ public class UsuarioProfesionalServicio extends UsuarioServicio implements UserD
         return false;
     }
 
-    public List<UsuarioPaciente> obtenerPacientes(String email) {
-        List<Turno> turnos = turnoServicio.listarTurnosPorProfesional(email);
+    public List<UsuarioPaciente> obtenerPacientes(String email, List<Turno> turnos) {
         List<UsuarioPaciente> pacientes = new ArrayList<>();
         for (Turno turno : turnos) {
             pacientes.add(turno.getUsuarioPaciente());

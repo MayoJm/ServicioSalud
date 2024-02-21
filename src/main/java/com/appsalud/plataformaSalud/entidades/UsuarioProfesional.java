@@ -37,8 +37,5 @@ public class UsuarioProfesional extends Usuario {
     private List<DisponibilidadHoraria> disponibilidades;
     
     @OneToMany(mappedBy = "usuarioProfesional")
-    private List<HistoriaClinica> fichasMedicas = new ArrayList<>();
-    //@OneToOne
-    //private Imagen imagen;
-
+    private List<HistoriaClinica> historiasClinicas = new ArrayList<>();
 }
