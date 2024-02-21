@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -49,14 +50,14 @@ public class HistoriaClinicaProfesionalControlador {
 
     @PostMapping("/historia-clinica")
     public String registrarHistoriaClinica(Model modelo,
-                                                           @RequestParam("pacienteId") String dni,
-                                                           @RequestParam("profesionalId") String profesionalId,
-                                                           @RequestParam("nombre") String nombre,
-                                                           @RequestParam("edad") Integer edad,
-                                                           @RequestParam("sexo") String sexo,
-                                                           @RequestParam("peso") Double peso,
-                                                           @RequestParam("datosHistoricos") List<String> datosHistoricos,
-                                                           @RequestParam("fechaConsulta") List<LocalDate> fechaConsulta)
+                                           @RequestParam("pacienteId") String dni,
+                                           @RequestParam("profesionalId") String profesionalId,
+                                           @RequestParam("nombre") String nombre,
+                                           @RequestParam("edad") Integer edad,
+                                           @RequestParam("sexo") String sexo,
+                                           @RequestParam("peso") Double peso,
+                                           @RequestParam("datosHistoricos") List<String> datosHistoricos,
+                                           @RequestParam("fechaConsulta") List<LocalDate> fechaConsulta)
             throws MiException {
 
         try {

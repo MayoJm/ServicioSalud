@@ -1,6 +1,7 @@
 package com.appsalud.plataformaSalud.controladores;
 
 import com.appsalud.plataformaSalud.entidades.UsuarioPaciente;
+import com.appsalud.plataformaSalud.entidades.UsuarioProfesional;
 import com.appsalud.plataformaSalud.enumeraciones.ObraSocial;
 import com.appsalud.plataformaSalud.servicios.UsuarioPacienteServicio;
 import org.springframework.beans.factory.annotation.Autowired;

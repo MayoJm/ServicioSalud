@@ -5,6 +5,7 @@ import com.appsalud.plataformaSalud.enumeraciones.Especialidad;
 import com.appsalud.plataformaSalud.enumeraciones.ObraSocial;
 import com.appsalud.plataformaSalud.excepciones.MiException;
 import com.appsalud.plataformaSalud.servicios.DisponibilidadHorariaServicio;
+import com.appsalud.plataformaSalud.servicios.TurnoServicio;
 import com.appsalud.plataformaSalud.servicios.UsuarioProfesionalServicio;
 import com.appsalud.plataformaSalud.servicios.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,9 @@ public class UsuarioProfesionalControlador {
 
     @Autowired
     private UsuarioServicio usuarioServicio;
+
+    @Autowired
+    private TurnoServicio turnoServicio;
 
     @PreAuthorize("hasRole('ROLE_PROFESIONAL')")
     @GetMapping("/dashboard-profesional")
@@ -240,17 +244,18 @@ public class UsuarioProfesionalControlador {
         }
     }
 
-    @GetMapping("/dashboard-profesional/mis-pacientes") //Crear Vista para este controller. (ya hice mi tarea)
+    @GetMapping("/dashboard-profesional/mis-pacientes")
     public String mostrarMisPaciente(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
 
+        List<Turno> turnos = turnoServicio.listarTurnosPorProfesional(email);
         Optional<UsuarioProfesional> usuarioProfesionalOptional = usuarioProfesionalServicio
                 .buscarProfesionalPorEmail(email);
-
-        List<UsuarioPaciente> pacientes = usuarioProfesionalServicio.obtenerPacientes(email);
-
+        UsuarioProfesional profesional = usuarioProfesionalOptional.get();
+        List<UsuarioPaciente> pacientes = usuarioProfesionalServicio.obtenerPacientes(email, turnos);
         model.addAttribute("pacientes", pacientes);
+        model.addAttribute("usuarioProfesional",profesional);
 
         return "misPacientes.html";
     }   
