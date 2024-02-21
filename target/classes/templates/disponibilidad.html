@@ -1,52 +1,55 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Establecer Disponibilidad</title>
 </head>
+
 <body>
-<h1>Establecer Disponibilidad</h1>
-<form action="/profesional/dashboard-profesional/turnos-profesional/establecer-disponibilidad-form" method="post">
-    <label>Seleccione la disponibilidad para cada día de la semana:</label>
-    <br><br>
-    <div>
-        <label for="lunes">Lunes:</label>
-        <input type="time" id="lunes" name="mondayInicio">
-        <input type="time" name="mondayFin">
-    </div>
-    <div>
-        <label for="martes">Martes:</label>
-        <input type="time" id="martes" name="tuesdayInicio">
-        <input type="time" name="tuesdayFin">
-    </div>
-    <div>
-        <label for="miercoles">Miércoles:</label>
-        <input type="time" id="miercoles" name="wednesdayInicio">
-        <input type="time" name="wednesdayFin">
-    </div>
-    <div>
-        <label for="jueves">Jueves:</label>
-        <input type="time" id="jueves" name="thursdayInicio">
-        <input type="time" name="thursdayFin">
-    </div>
-    <div>
-        <label for="viernes">Viernes:</label>
-        <input type="time" id="viernes" name="fridayInicio">
-        <input type="time" name="fridayFin">
-    </div>
-    <div>
-        <label for="sabado">Sábado:</label>
-        <input type="time" id="sabado" name="saturdayInicio">
-        <input type="time" name="saturdayFin">
-    </div>
-    <div>
-        <label for="domingo">Domingo:</label>
-        <input type="time" id="domingo" name="sundayInicio">
-        <input type="time" name="sundayFin">
-    </div>
-    <br><br>
-    <input type="submit" value="Guardar Disponibilidad">
-</form>
+    <h1>Establecer Disponibilidad</h1>
+    <form action="/profesional/dashboard-profesional/turnos-profesional/establecer-disponibilidad-form" method="post">
+        <label>Seleccione la disponibilidad para cada día de la semana:</label>
+        <br><br>
+        <div>
+            <label for="lunes">Lunes:</label>
+            <input type="time" id="lunes" name="mondayInicio">
+            <input type="time" name="mondayFin">
+        </div>
+        <div>
+            <label for="martes">Martes:</label>
+            <input type="time" id="martes" name="tuesdayInicio">
+            <input type="time" name="tuesdayFin">
+        </div>
+        <div>
+            <label for="miercoles">Miércoles:</label>
+            <input type="time" id="miercoles" name="wednesdayInicio">
+            <input type="time" name="wednesdayFin">
+        </div>
+        <div>
+            <label for="jueves">Jueves:</label>
+            <input type="time" id="jueves" name="thursdayInicio">
+            <input type="time" name="thursdayFin">
+        </div>
+        <div>
+            <label for="viernes">Viernes:</label>
+            <input type="time" id="viernes" name="fridayInicio">
+            <input type="time" name="fridayFin">
+        </div>
+        <div>
+            <label for="sabado">Sábado:</label>
+            <input type="time" id="sabado" name="saturdayInicio">
+            <input type="time" name="saturdayFin">
+        </div>
+        <div>
+            <label for="domingo">Domingo:</label>
+            <input type="time" id="domingo" name="sundayInicio">
+            <input type="time" name="sundayFin">
+        </div>
+        <br><br>
+        <input type="submit" value="Guardar Disponibilidad">
+    </form>
 </body>
+
 </html>

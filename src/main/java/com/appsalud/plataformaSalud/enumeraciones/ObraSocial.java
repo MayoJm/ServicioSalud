@@ -5,7 +5,7 @@
 package com.appsalud.plataformaSalud.enumeraciones;
 
 public enum ObraSocial {
-    PARTICULAR, //0
+    PARTICULAR, // 0
     MEDICUS,
     OSDE,
     SWISS_MEDICAL,
@@ -27,5 +27,5 @@ public enum ObraSocial {
     OSECAC,
     PREVENCION_SALUD,
     OSITAC,
-    OSCAR; 
+    OSCAR;
 }

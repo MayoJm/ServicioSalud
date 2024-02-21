@@ -18,11 +18,14 @@ public class Imagen {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
-    private String mime; //atributo que asigna el formato del archivo de imagen
+    private String mime; // atributo que asigna el formato del archivo de imagen
 
     private String nombre;
 
-    @Column(columnDefinition = "LONGBLOB") @Basic(fetch = FetchType.LAZY) //@Lob = informa a spring que el archivo puede ser grande @Basic(fetch.lazy) = el contenido se va a cargar solo cuando le pidamos, haciendo que la query sea mas liviana
+    @Column(columnDefinition = "LONGBLOB")
+    @Basic(fetch = FetchType.LAZY) // @Lob = informa a spring que el archivo puede ser grande @Basic(fetch.lazy) =
+                                   // el contenido se va a cargar solo cuando le pidamos, haciendo que la query sea
+                                   // mas liviana
     private byte[] contenido;
 
 }

@@ -50,21 +50,21 @@ public class HistoriaClinicaProfesionalControlador {
 
     @PostMapping("/historia-clinica")
     public String registrarHistoriaClinica(Model modelo,
-                                           @RequestParam("pacienteId") String dni,
-                                           @RequestParam("profesionalId") String profesionalId,
-                                           @RequestParam("nombre") String nombre,
-                                           @RequestParam("edad") Integer edad,
-                                           @RequestParam("sexo") String sexo,
-                                           @RequestParam("peso") Double peso,
-                                           @RequestParam("datosHistoricos") List<String> datosHistoricos,
-                                           @RequestParam("fechaConsulta") List<LocalDate> fechaConsulta)
+            @RequestParam("pacienteId") String dni,
+            @RequestParam("profesionalId") String profesionalId,
+            @RequestParam("nombre") String nombre,
+            @RequestParam("edad") Integer edad,
+            @RequestParam("sexo") String sexo,
+            @RequestParam("peso") Double peso,
+            @RequestParam("datosHistoricos") List<String> datosHistoricos,
+            @RequestParam("fechaConsulta") List<LocalDate> fechaConsulta)
             throws MiException {
 
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String email = authentication.getName();
 
-            //Obtengo profesional
+            // Obtengo profesional
             Optional<UsuarioProfesional> usuarioProfesionalOptional = usuarioProfesionalServicio
                     .buscarProfesionalPorEmail(email);
             if (!usuarioProfesionalOptional.isPresent()) {
@@ -72,12 +72,12 @@ public class HistoriaClinicaProfesionalControlador {
             }
             UsuarioProfesional profesional = usuarioProfesionalOptional.get();
 
-            //Obtengo paciente
+            // Obtengo paciente
             Optional<UsuarioPaciente> paciente = usuarioPacienteServicio.buscarPacientePorDni(dni);
 
             if (paciente.isPresent()) {
                 UsuarioPaciente usuarioPaciente = paciente.get();
-                historiaClinicaServicio.crearHistoriaClinica(paciente.get(), profesional, nombre,
+                historiaClinicaServicio.crearHistoriaClinica(usuarioPaciente, profesional, nombre,
                         edad, sexo, peso, datosHistoricos, fechaConsulta, false);
                 modelo.addAttribute("exito", "Historia clinica registrada correctamente");
                 return "vistaProfesional";

@@ -17,20 +17,20 @@
 
 <body>
 
-<header class="header" id="header">
+    <header class="header" id="header">
 
-    <div class="text-danger" align="center" th:if="${error != null}"  >
-        <div class="text-center">
+        <div class="text-danger" align="center" th:if="${error != null}">
+            <div class="text-center">
 
-            <p class="texto-error" th:text="${error}">error</p>
+                <p class="texto-error" th:text="${error}">error</p>
+            </div>
         </div>
-    </div>
-    <div class="text-success" align="center" th:if="${exito != null}"  >
-        <div class="text-center">
+        <div class="text-success" align="center" th:if="${exito != null}">
+            <div class="text-center">
 
-            <p class="texto-exito" th:text="${exito}">exito</p>
+                <p class="texto-exito" th:text="${exito}">exito</p>
+            </div>
         </div>
-    </div>
 
         <nav class="nav container">
             <img src="../static/img/logo2.png" class="nav__logo" alt="Logo de la empresa">
@@ -91,12 +91,14 @@
             <div class="login__group">
                 <div>
                     <label for="email" class="login__label">Email</label>
-                    <input name="email" id="email" type="email" class="login__input" placeholder="Ingresa tu correo" required />
+                    <input name="email" id="email" type="email" class="login__input" placeholder="Ingresa tu correo"
+                        required />
                 </div>
 
                 <div>
                     <label for="password" class="login__label">contraseña</label>
-                    <input id="password" name="password" required type="password"  class="login__input" placeholder="Ingresa tu contraseña" />
+                    <input id="password" name="password" required type="password" class="login__input"
+                        placeholder="Ingresa tu contraseña" />
                 </div>
             </div>
 
@@ -117,27 +119,28 @@
     <div class="login" id="select-role">
         <form th:action="@{/tipoUsuario}" class="login__form" method="post">
             <h2 class="login__title">Seleccione su rol</h2>
-    
+
             <div class="login__group">
                 <div class="login__checkbox">
-                    <input type="radio" id="profesional" th:name="tipoUsuario" th:value="profesional" class="login__radio">
+                    <input type="radio" id="profesional" th:name="tipoUsuario" th:value="profesional"
+                        class="login__radio">
                     <label for="profesional" class="login__label">Profesional</label>
                 </div>
-            
+
                 <div class="login__checkbox">
                     <input type="radio" id="paciente" th:name="tipoUsuario" th:value="paciente" class="login__radio">
                     <label for="paciente" class="login__label">Paciente</label>
                 </div>
             </div>
-    
+
             <div>
                 <button type="submit" class="btn btn-primary btn-block mt-3" id="continuarBtn">Continuar</button>
             </div>
         </form>
-    
+
         <i class="ri-close-line login__close" id="select-role-close"></i>
     </div>
-    
+
 
 
 

@@ -1,21 +1,16 @@
-<!doctype html>
+<!Doctype html>
 <html xmlns:th="http://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
-    <title>Buscar Turnos</title>
+    <title>Dashboard Admin</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
-
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/static/css/profesionalDashboard.css">
+    <link rel="stylesheet" th:href="@{/css/profesionalDashboard.css}">
     <style>
         .blur-background {
-            background-image: url(/static/img/background-dashboard.jpg);
+            background-image: url(../static/img/background-dashboard.jpg);
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
@@ -23,9 +18,7 @@
             top: 0;
             left: 0;
             width: 100vw;
-            /* Cambiado a 100vw */
             height: 100vh;
-            /* Cambiado a 100vh */
             z-index: -1;
         }
 
@@ -37,53 +30,53 @@
 </head>
 
 <body>
-
     <div class="blur-background"></div>
     <div class="wrapper d-flex align-items-stretch">
         <nav id="sidebar">
             <div class="p-4 pt-5">
-                <a href="#" class="img logo rounded-circle mb-5"
-                    style="background-image: url(../static/img/logo.jpg);"></a>
+                <a th:href="@{/admin/dashboard-admin/cambiarImagen}" class="img logo rounded-circle mb-5">
+                    <img th:src="@{/admin/perfil/__${usuarioAdmin.id}__}"
+                        style="width: 120px; height: 120px; border-radius: 50%;" />
+                </a>
                 <ul class="list-unstyled components mb-5">
-                    <li class="active">
-                        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false"
-                            class="dropdown-toggle">Perfil</a>
-                        <ul class="collapse list-unstyled" id="homeSubmenu">
-                            <li>
-                                <a th:href="@{/paciente/dashboard-paciente/modificar-paciente}"
-                                    onclick="mostrarFormulario()">Editar Perfil</a>
-                            </li>
-                            <li>
-                                <a th:href="@{/paciente/dashboard-paciente/dar-baja-cuenta}"
-                                    onclick="mostrarConfirmacion()">Dar de baja cuenta</a>
-                            </li>
-                        </ul>
-
-                    </li>
                     <li>
-                        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false"
-                            class="dropdown-toggle">Turnos</a>
-                        <ul class="collapse list-unstyled" id="pageSubmenu">
+                        <a href="#pacienteSubmenu" data-toggle="collapse" aria-expanded="false"
+                            class="dropdown-toggle">Gestión Pacientes</a>
+                        <ul class="collapse list-unstyled" id="pacienteSubmenu">
                             <li>
-                                <a th:href="@{/paciente/dashboard-paciente/turnos-paciente/buscar-turnos}"
-                                    onclick="buscarTurnosProfesional()">Buscar profesional</a>
+                                <a th:href="@{/admin/dashboard-admin/gestion-paciente}">Aprobar pacientes</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/admin/dashboard-admin/pacientes-activos}">Pacientes Activos</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/admin/dashboard-admin/pacientes-inactivos}">Pacientes Inactivos</a>
                             </li>
                         </ul>
                     </li>
                     <li>
-                        <a href="#">Contacto Admin</a>
+                        <a href="#profesionalSubmenu" data-toggle="collapse" aria-expanded="false"
+                            class="dropdown-toggle">Gestión Profesional</a>
+                        <ul class="collapse list-unstyled" id="profesionalSubmenu">
+                            <li>
+                                <a th:href="@{/admin/dashboard-admin/gestion-profesional}">Aprobar profesionales</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/admin/dashboard-admin/profesionales-activos}">Profesionales Activos</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/admin/dashboard-admin/profesionales-inactivos}">Profesionales
+                                    Inactivos</a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
-
             </div>
         </nav>
-
         <!-- Nav superior  -->
         <div id="content" class="p-4 p-md-5">
-
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
-
                     <button type="button" id="sidebarCollapse" class="btn btn-primary">
                         <i class="fa fa-bars"></i>
                         <span class="sr-only">Toggle Menu</span>
@@ -93,11 +86,10 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                         <i class="fa fa-bars"></i>
                     </button>
-
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">
                             <li class="nav-item active">
-                                <a class="nav-link" th:href="@{/paciente/dashboard-paciente}">Home</a>
+                                <a class="nav-link" th:href="@{/admin/dashboard-admin}">Home</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/logout">Logout</a>
@@ -106,33 +98,51 @@
                     </div>
                 </div>
             </nav>
-
             <!-- Contenido de pagina  -->
+            <div class="alert alert-danger" th:if="${error != null}">
+                <div class="text-center">
+                    <h5>Error</h5>
+                    <p class="texto-error" th:text="${error}"></p>
+                </div>
+            </div>
+            <div class="alert alert-success" th:if="${exito != null}">
+                <div class="text-center">
+                    <h5>Exito</h5>
+                    <p class="texto-exito" th:text="${exito}"></p>
+                </div>
+            </div>
+
             <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
                 <thead>
                     <tr>
-                        <th>Especialidad</th>
+                        <th>ID</th>
                         <th>Nombre</th>
                         <th>Apellido</th>
-                        <th class="th-sm">Info</th>
+                        <th>Email</th>
+                        <th>Obra Social</th>
+                        <th>Estado</th>
+                        <th>Aprobacion</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Iterar sobre la lista de profesionales y agregar cada uno como una fila en la tabla -->
-                    <tr th:each="profesional : ${profesionales}">
-                        <td th:text="${profesional.especialidad}"></td>
-                        <td th:text="${profesional.nombre}"></td>
-                        <td th:text="${profesional.apellido}"></td>
+                    <!-- Iterar sobre la lista de pacientes y agregar cada uno como una fila en la tabla -->
+                    <tr th:each="paciente : ${pacientes}">
+                        <td th:text="${paciente.id}"></td>
+                        <td th:text="${paciente.nombre}"></td>
+                        <td th:text="${paciente.apellido}"></td>
+                        <td th:text="${paciente.email}"></td>
+                        <td th:text="${paciente.obraSocial}"></td>
+                        <td th:text="${paciente.estado}"></td>
+                        <td th:text="${paciente.aprobacion}"></td>
                         <td>
-                            <a th:href="@{'/paciente/dashboard-paciente/turnos-paciente/calendario?profesionalId=' + ${profesional.id}}"
-                                class="btn btn-info btn-sm">
-                                Info
+                            <a th:href="@{/admin/dashboard-admin/modificar-estado-paciente/__${paciente.email}__}"
+                                class="btn btn-info btn-sm">Aprobar
                             </a>
                         </td>
                     </tr>
                 </tbody>
             </table>
-
         </div>
     </div>
 

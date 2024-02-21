@@ -4,7 +4,6 @@ import com.appsalud.plataformaSalud.entidades.*;
 import com.appsalud.plataformaSalud.enumeraciones.Especialidad;
 import com.appsalud.plataformaSalud.enumeraciones.ObraSocial;
 import com.appsalud.plataformaSalud.excepciones.MiException;
-import com.appsalud.plataformaSalud.servicios.DisponibilidadHorariaServicio;
 import com.appsalud.plataformaSalud.servicios.TurnoServicio;
 import com.appsalud.plataformaSalud.servicios.UsuarioProfesionalServicio;
 import com.appsalud.plataformaSalud.servicios.UsuarioServicio;
@@ -22,6 +21,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -32,11 +32,7 @@ public class UsuarioProfesionalControlador {
     @Autowired
     private UsuarioProfesionalServicio usuarioProfesionalServicio;
     @Autowired
-    private DisponibilidadHorariaServicio disponibilidadHorariaServicio;
-
-    @Autowired
     private UsuarioServicio usuarioServicio;
-
     @Autowired
     private TurnoServicio turnoServicio;
 
@@ -190,17 +186,23 @@ public class UsuarioProfesionalControlador {
     }
 
     @GetMapping("/perfil/{id}")
-    public ResponseEntity<byte[]> imagenUsuario(@PathVariable String id) {
+    public ResponseEntity<byte[]> imagenUsuario(@PathVariable String id) throws IOException {
         Usuario usuario = usuarioServicio.getOne(id);
 
-        byte[] imagen = usuario.getImagen().getContenido();
+        if (usuario.getImagen() == null) {
+            usuarioServicio.guardarDefault(usuario);
 
-        HttpHeaders headers = new HttpHeaders();
+            byte[] imagen = usuario.getImagen().getContenido();
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.IMAGE_JPEG);
+            return new ResponseEntity<>(imagen, headers, HttpStatus.OK);
 
-        headers.setContentType(MediaType.IMAGE_JPEG);
-
-        return new ResponseEntity<>(imagen, headers, HttpStatus.OK); // los parametros son 1) la imagen, 2) las
-                                                                     // cabeceras 3) el estado http
+        } else {
+            byte[] imagen = usuario.getImagen().getContenido();
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.IMAGE_JPEG);
+            return new ResponseEntity<>(imagen, headers, HttpStatus.OK);
+        }
     }
 
     @GetMapping("/dashboard-profesional/cambiarImagen")
@@ -210,6 +212,8 @@ public class UsuarioProfesionalControlador {
 
         Optional<UsuarioProfesional> usuarioProfesionalOptional = usuarioProfesionalServicio
                 .buscarProfesionalPorEmail(email);
+        String rolUsuario = authentication.getAuthorities().iterator().next().getAuthority();
+        model.addAttribute("rolUsuario", rolUsuario);
 
         if (usuarioProfesionalOptional.isPresent()) {
             UsuarioProfesional usuarioProfesional = usuarioProfesionalOptional.get();
@@ -255,9 +259,9 @@ public class UsuarioProfesionalControlador {
         UsuarioProfesional profesional = usuarioProfesionalOptional.get();
         List<UsuarioPaciente> pacientes = usuarioProfesionalServicio.obtenerPacientes(email, turnos);
         model.addAttribute("pacientes", pacientes);
-        model.addAttribute("usuarioProfesional",profesional);
+        model.addAttribute("usuarioProfesional", profesional);
 
         return "misPacientes.html";
-    }   
+    }
 
 }

@@ -37,21 +37,22 @@ public class ImagenServicio {
         }
     }
 
-//    private Imagen obtenerImagenPreestablecida() {
-//        try {
-//            Resource resource = new ClassPathResource("../../resources/static/img/logo.jpg");
-//            byte[] contenido = Files.readAllBytes(resource.getFile().toPath());
-//
-//            Imagen imagenPreestablecida = new Imagen();
-//            imagenPreestablecida.setMime("image/jpeg");
-//            imagenPreestablecida.setNombre("logo.jpg");
-//            imagenPreestablecida.setContenido(contenido);
-//
-//            return imagenPreestablecida;
-//        } catch (IOException e) {
-//            return null;
-//        }
-//    }
+    // private Imagen obtenerImagenPreestablecida() {
+    // try {
+    // Resource resource = new
+    // ClassPathResource("../../resources/static/img/logo.jpg");
+    // byte[] contenido = Files.readAllBytes(resource.getFile().toPath());
+    //
+    // Imagen imagenPreestablecida = new Imagen();
+    // imagenPreestablecida.setMime("image/jpeg");
+    // imagenPreestablecida.setNombre("logo.jpg");
+    // imagenPreestablecida.setContenido(contenido);
+    //
+    // return imagenPreestablecida;
+    // } catch (IOException e) {
+    // return null;
+    // }
+    // }
 
     private Imagen obtenerImagenPreestablecida() {
         try {

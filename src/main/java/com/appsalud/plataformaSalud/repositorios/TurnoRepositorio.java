@@ -22,5 +22,5 @@ public interface TurnoRepositorio extends JpaRepository<Turno, String> {
 
     @Query("SELECT t FROM Turno t WHERE t.usuarioProfesional = :profesional AND t.fechaHora BETWEEN :fechaInicio AND :fechaFin")
     List<Turno> findByUsuarioProfesionalAndFechaBetween(@Param("profesional") UsuarioProfesional profesional,
-                                                        @Param("fechaInicio") LocalDateTime fechaInicio, @Param("fechaFin") LocalDateTime fechaFin);
+            @Param("fechaInicio") LocalDateTime fechaInicio, @Param("fechaFin") LocalDateTime fechaFin);
 }

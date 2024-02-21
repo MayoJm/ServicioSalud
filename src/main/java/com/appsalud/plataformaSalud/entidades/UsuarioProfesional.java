@@ -35,7 +35,7 @@ public class UsuarioProfesional extends Usuario {
 
     @OneToMany(mappedBy = "usuarioProfesional", cascade = CascadeType.ALL)
     private List<DisponibilidadHoraria> disponibilidades;
-    
+
     @OneToMany(mappedBy = "usuarioProfesional")
     private List<HistoriaClinica> historiasClinicas = new ArrayList<>();
 }
