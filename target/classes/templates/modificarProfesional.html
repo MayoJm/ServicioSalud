@@ -65,7 +65,7 @@
                             <div class="form-group">
                                 <label for="especialidad">Especialidad:</label>
                                 <select class="form-control" id="especialidad" name="especialidad">
-                                    <option th:each="esp : ${listaEspecialidades}" th:value="${esp}" th:text="${esp}">
+                                    <option th:each="esp : ${listaEspecialidades}" th:value="${esp}" th:text="${esp}" th:selected="${esp == usuarioProfesional.especialidad}">>
                                     </option>
                                 </select>
                             </div>
