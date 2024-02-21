@@ -60,14 +60,15 @@
                             <div class="form-group">
                                 <label for="telefono">Telefono:</label>
                                 <input type="text" class="form-control" id="telefono" name="telefono"
-                                    th:value="${telefono}" required>
+                                    th:value="${usuarioPaciente.telefono}" required>
                             </div>
                             <div class="form-group">
                                 <select class="form-control" id="obraSocial" name="obraSocial" required>
                                     <option selected disabled>Seleccione Obra Social</option>
                                     <option
                                         th:each="obraSocial : ${T(com.appsalud.plataformaSalud.enumeraciones.ObraSocial).values()}"
-                                        th:value="${obraSocial}" th:text="${obraSocial}">
+                                        th:value="${obraSocial}" th:text="${obraSocial}"
+                                        th:selected="${obraSocial == usuarioPaciente.obraSocial}">
                                     </option>
                                 </select>
                             </div>
