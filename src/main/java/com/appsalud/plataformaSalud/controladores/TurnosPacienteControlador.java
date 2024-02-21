@@ -26,7 +26,6 @@ public class TurnosPacienteControlador {
     @Autowired
     private UsuarioProfesionalServicio usuarioProfesionalServicio;
 
-
     @GetMapping("/buscar-turnos")
     public String buscarTurnosPaciente(Model model) throws MiException {
         List<UsuarioProfesional> profesionales = usuarioProfesionalServicio.listarUsuariosProfesionales();
@@ -76,7 +75,8 @@ public class TurnosPacienteControlador {
             turnoServicio.solicitarTurno(profesionalId, fechaSeleccionada, horarioSeleccionado, motivoConsulta);
             return ResponseEntity.ok().body("Turno solicitado exitosamente");
         } catch (MiException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al solicitar el turno: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error al solicitar el turno: " + e.getMessage());
         }
     }
 }

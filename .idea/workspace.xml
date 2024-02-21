@@ -9,14 +9,9 @@
   <component name="ChangeListManager">
     <list default="true" id="88c29b52-8aca-483f-a431-88c378267dce" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/appsalud/plataformaSalud/controladores/HistoriaClinicaProfesionalControlador.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/appsalud/plataformaSalud/controladores/HistoriaClinicaProfesionalControlador.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/appsalud/plataformaSalud/controladores/UsuarioPacienteControlador.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/appsalud/plataformaSalud/controladores/UsuarioPacienteControlador.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/appsalud/plataformaSalud/controladores/UsuarioProfesionalControlador.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/appsalud/plataformaSalud/controladores/UsuarioProfesionalControlador.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/appsalud/plataformaSalud/entidades/UsuarioPaciente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/appsalud/plataformaSalud/entidades/UsuarioPaciente.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/appsalud/plataformaSalud/entidades/UsuarioProfesional.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/appsalud/plataformaSalud/entidades/UsuarioProfesional.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/appsalud/plataformaSalud/repositorios/HistoriaClinicaRepositorio.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/appsalud/plataformaSalud/repositorios/HistoriaClinicaRepositorio.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/appsalud/plataformaSalud/entidades/HistoriaClinica.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/appsalud/plataformaSalud/entidades/HistoriaClinica.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/appsalud/plataformaSalud/servicios/UsuarioProfesionalServicio.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/appsalud/plataformaSalud/servicios/UsuarioProfesionalServicio.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/profesionalVista.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/profesionalVista.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/appsalud/plataformaSalud/servicios/UsuarioProfesionalServicio.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/appsalud/plataformaSalud/servicios/UsuarioProfesionalServicio.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,7 +60,7 @@
     "DefaultHtmlFileTemplate": "HTML File",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "HistorialClinico/CRUD",
+    "git-widget-placeholder": "button-info/connect-next-view",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/juand/OneDrive/Documentos/ServicioSalud",

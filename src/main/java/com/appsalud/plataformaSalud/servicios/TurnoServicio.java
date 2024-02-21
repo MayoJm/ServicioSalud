@@ -34,7 +34,8 @@ public class TurnoServicio {
     private UsuarioProfesionalServicio usuarioProfesionalServicio;
 
     @Transactional
-    public void modificarTurno(String id, LocalDateTime fechaHora, String descripcion, UsuarioPaciente usuarioPaciente, UsuarioProfesional usuarioProfesional) throws MiException {
+    public void modificarTurno(String id, LocalDateTime fechaHora, String descripcion, UsuarioPaciente usuarioPaciente,
+            UsuarioProfesional usuarioProfesional) throws MiException {
 
         validarTurno(fechaHora, descripcion, usuarioPaciente, usuarioProfesional);
 
@@ -86,7 +87,8 @@ public class TurnoServicio {
         return turnosProfesional;
     }
 
-    public void validarTurno(LocalDateTime fechaHora, String descripcion, UsuarioPaciente usuarioPaciente, UsuarioProfesional usuarioProfesional) throws MiException {
+    public void validarTurno(LocalDateTime fechaHora, String descripcion, UsuarioPaciente usuarioPaciente,
+            UsuarioProfesional usuarioProfesional) throws MiException {
 
         if (fechaHora == null) {
             throw new MiException("La fecha no puede ser nula");
@@ -107,8 +109,8 @@ public class TurnoServicio {
 
     }
 
-
-    public List<DisponibilidadHoraria> obtenerHorariosDisponiblesParaDia(UsuarioProfesional profesional, LocalDate fecha) throws MiException {
+    public List<DisponibilidadHoraria> obtenerHorariosDisponiblesParaDia(UsuarioProfesional profesional,
+            LocalDate fecha) throws MiException {
         // Obtener la disponibilidad horaria del profesional
         List<DisponibilidadHoraria> disponibilidadHoraria = profesional.getDisponibilidades();
 
@@ -116,7 +118,8 @@ public class TurnoServicio {
         // especificada
         LocalDateTime fechaInicioDia = fecha.atStartOfDay();
         LocalDateTime fechaFinDia = fecha.atTime(LocalTime.MAX);
-        List<Turno> turnosReservados = turnoRepositorio.findByUsuarioProfesionalAndFechaBetween(profesional, fechaInicioDia, fechaFinDia);
+        List<Turno> turnosReservados = turnoRepositorio.findByUsuarioProfesionalAndFechaBetween(profesional,
+                fechaInicioDia, fechaFinDia);
 
         // Crear un conjunto para almacenar los horarios ocupados en la fecha
         // especificada
@@ -142,7 +145,8 @@ public class TurnoServicio {
                     // Verificar si el horario actual no está ocupado
                     if (!horariosOcupados.contains(horaActual)) {
                         // Agregar el horario disponible a la lista
-                        horariosDisponibles.add(new DisponibilidadHoraria(fecha.getDayOfWeek(), horaActual, horaActual.plusMinutes(60)));
+                        horariosDisponibles.add(new DisponibilidadHoraria(fecha.getDayOfWeek(), horaActual,
+                                horaActual.plusMinutes(60)));
                     }
                     // Incrementar la hora actual en intervalos de 30 minutos
                     horaActual = horaActual.plusMinutes(60);
@@ -156,7 +160,8 @@ public class TurnoServicio {
         return horariosDisponibles;
     }
 
-    public void solicitarTurno(String profesionalId, String fechaSeleccionada, String horarioSeleccionado, String descripcion) throws ParseException, MiException {
+    public void solicitarTurno(String profesionalId, String fechaSeleccionada, String horarioSeleccionado,
+            String descripcion) throws ParseException, MiException {
         // Obtener usuario paciente de la sesión activa
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();

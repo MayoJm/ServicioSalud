@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-PlataformaSaludApplication<plataformaSalud>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.appsalud.plataformaSalud.PlataformaSaludApplication",
+            "projectName": "plataformaSalud",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

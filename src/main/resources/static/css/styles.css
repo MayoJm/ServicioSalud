@@ -115,15 +115,18 @@ a {
     box-shadow: 0 2px 16px hsla(230, 75%, 32%, 0.15);
     z-index: var(--z-fixed);
 }
-.text-danger {
-      color: hsl(0, 80%, 50%) !important;  /* Rojo */
-      background-color: hsl(0, 50%, 90%) !important;
-    }
 
-    .text-success {
-      color: hsl(120, 65%, 35%) !important; /* Verde */
-      background-color: hsl(120, 50%, 90%) !important;
-    }
+.text-danger {
+    color: hsl(0, 80%, 50%) !important;
+    /* Rojo */
+    background-color: hsl(0, 50%, 90%) !important;
+}
+
+.text-success {
+    color: hsl(120, 65%, 35%) !important;
+    /* Verde */
+    background-color: hsl(120, 50%, 90%) !important;
+}
 
 .nav {
     height: var(--header-height);
@@ -136,14 +139,14 @@ a {
     color: var(--title-color);
     font-weight: var(--font-semi-bold);
     transition: color 0.4s;
-    display:
-      max-width: 100%;
-      height: 90px;
-      vertical-align: middle;
-      border-style: none;
+    display: flex;
+    max-width: 100%;
+    height: 90px;
+    vertical-align: middle;
+    border-style: none;
 
-      margin-bottom: 1rem;
-      margin-top:1rem;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
 }
 
 .nav__actions {
@@ -320,6 +323,7 @@ a {
 .login__button:hover {
     box-shadow: 0 4px 24px hsla(230, 75%, 40%, 0.4);
 }
+
 /*=============Rol Usuario=============*/
 .login__group {
     display: flex;
@@ -330,6 +334,7 @@ a {
     display: flex;
     align-items: center;
 }
+
 /* Show login */
 .show-login {
     opacity: 1;
@@ -339,19 +344,29 @@ a {
 .show-login .login__form {
     transform: translateY(0);
 }
+
 #continuarBtn {
-    background-color: var(--first-color); /* Color de fondo */
-    color: #fff; /* Color del texto */
-    border: none; /* Eliminar borde */
-    border-radius: 0.5rem; /* Borde redondeado */
-    padding: 1rem; /* Espaciado interno */
-    cursor: pointer; /* Cambiar cursor al pasar por encima */
-    transition: background-color 0.3s, color 0.3s; /* Transición suave */
+    background-color: var(--first-color);
+    /* Color de fondo */
+    color: #fff;
+    /* Color del texto */
+    border: none;
+    /* Eliminar borde */
+    border-radius: 0.5rem;
+    /* Borde redondeado */
+    padding: 1rem;
+    /* Espaciado interno */
+    cursor: pointer;
+    /* Cambiar cursor al pasar por encima */
+    transition: background-color 0.3s, color 0.3s;
+    /* Transición suave */
 }
 
 #continuarBtn:hover {
-    box-shadow: 0 4px 24px hsla(230, 75%, 40%, 0.4); /* Color de fondo al pasar por encima */
+    box-shadow: 0 4px 24px hsla(230, 75%, 40%, 0.4);
+    /* Color de fondo al pasar por encima */
 }
+
 /*=============== BREAKPOINTS ===============*/
 /* For medium devices */
 @media screen and (min-width: 576px) {

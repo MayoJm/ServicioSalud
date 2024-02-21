@@ -20,9 +20,9 @@ public class DisponibilidadHoraria {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private DayOfWeek diaSemana; //tuesday
-    private LocalTime horaInicio; //08:00
-    private LocalTime horaFin; //15:00
+    private DayOfWeek diaSemana;
+    private LocalTime horaInicio;
+    private LocalTime horaFin;
 
     @ManyToOne
     @JoinColumn(name = "profesional_id")

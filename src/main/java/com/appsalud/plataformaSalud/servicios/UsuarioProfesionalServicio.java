@@ -1,7 +1,6 @@
 package com.appsalud.plataformaSalud.servicios;
 
 import com.appsalud.plataformaSalud.entidades.Turno;
-import com.appsalud.plataformaSalud.entidades.Usuario;
 import com.appsalud.plataformaSalud.entidades.UsuarioPaciente;
 import com.appsalud.plataformaSalud.entidades.UsuarioProfesional;
 import com.appsalud.plataformaSalud.enumeraciones.Especialidad;
@@ -10,18 +9,15 @@ import com.appsalud.plataformaSalud.enumeraciones.Rol;
 import com.appsalud.plataformaSalud.excepciones.MiException;
 import com.appsalud.plataformaSalud.repositorios.UsuarioRepositorio;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class UsuarioProfesionalServicio extends UsuarioServicio implements UserDetailsService {
+public class UsuarioProfesionalServicio extends UsuarioServicio {
 
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
@@ -288,10 +284,11 @@ public class UsuarioProfesionalServicio extends UsuarioServicio implements UserD
     }
 
     public List<UsuarioPaciente> obtenerPacientes(String email, List<Turno> turnos) {
-        List<UsuarioPaciente> pacientes = new ArrayList<>();
+        Set<UsuarioPaciente> pacientesSet = new HashSet<>();
         for (Turno turno : turnos) {
-            pacientes.add(turno.getUsuarioPaciente());
+            pacientesSet.add(turno.getUsuarioPaciente());
         }
+        List<UsuarioPaciente> pacientes = new ArrayList<>(pacientesSet);
         return pacientes;
     }
 }

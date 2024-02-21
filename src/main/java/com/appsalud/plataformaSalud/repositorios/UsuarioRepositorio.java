@@ -28,13 +28,17 @@ public interface UsuarioRepositorio extends JpaRepository<Usuario, String> {
     @Query("SELECT u FROM Usuario u WHERE u.email = :email")
     public Optional<UsuarioProfesional> buscarPorEmailProfesional(@Param("email") String email);
 
+    @Query("SELECT u FROM UsuarioProfesional u WHERE u.estado = false AND u.aprobacion = false")
+    List<UsuarioProfesional> findProfesionalesInactivosNoAprobados();
 
-    //Query para buscar profesionales que necesitan aprobación de cuenta.
-    @Query("SELECT u FROM Usuario u WHERE u.rol = :rol AND u.aprobacion = :aprobacion AND u.estado = :estado")
-    public Optional<UsuarioProfesional> buscarPorEmailProfesionalAprobacion
-    (@Param("rol") String rol,
-     @Param("estado") Boolean estado,
-     @Param("aprobacion") Boolean aprobacion);
+    @Query("SELECT DISTINCT u FROM UsuarioPaciente u WHERE u.estado = false AND u.aprobacion = false")
+    List<UsuarioPaciente> findPacientesInactivosNoAprobados();
+
+    @Query("SELECT u FROM UsuarioProfesional u WHERE u.estado = ?1 AND u.aprobacion = ?2")
+    List<UsuarioProfesional> findProfesionalesByEstadoAndAprobacion(boolean estado, boolean aprobacion);
+
+    @Query("SELECT DISTINCT u FROM UsuarioPaciente u WHERE u.estado = ?1 AND u.aprobacion = ?2")
+    List<UsuarioPaciente> findPacientesByEstadoAndAprobacion(boolean estado, boolean aprobacion);
 
     @Query("SELECT u FROM Usuario u WHERE u.dni = :dni")
     public Optional<UsuarioPaciente> buscarPacientePorDni(@Param("dni") String dni);

@@ -4,17 +4,15 @@
  */
 package com.appsalud.plataformaSalud.enumeraciones;
 
-
 /**
  *
  * @author santi
  */
 public enum Rol {
 
-    //Se quita ROL USUARIO
+    // Se quita ROL USUARIO
     ADMIN,
     PROFESIONAL,
     PACIENTE;
-
 
 }

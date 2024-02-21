@@ -1,6 +1,5 @@
 package com.appsalud.plataformaSalud.controladores;
 
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -9,7 +8,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.appsalud.plataformaSalud.excepciones.MiException;
 import com.appsalud.plataformaSalud.servicios.UsuarioServicio;
 
 @Controller
@@ -19,14 +17,10 @@ public class PortalControlador {
     @Autowired
     UsuarioServicio usuarioServicio;
 
-    @Autowired
-    private HttpServletRequest request;
-
     @GetMapping("/")
     public String index() {
         return "index.html";
     }
-
 
     @GetMapping("/login")
     public String login(@RequestParam(required = false) String error, ModelMap modelo) {
@@ -35,7 +29,6 @@ public class PortalControlador {
         }
         return "index.html";
     }
-
 
     @GetMapping("/tipoUsuario")
     public String tipoUsuario() {

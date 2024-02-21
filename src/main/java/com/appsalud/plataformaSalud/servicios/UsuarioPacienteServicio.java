@@ -7,7 +7,6 @@ import com.appsalud.plataformaSalud.enumeraciones.Rol;
 import com.appsalud.plataformaSalud.excepciones.MiException;
 import com.appsalud.plataformaSalud.repositorios.UsuarioRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,12 +16,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UsuarioPacienteServicio extends UsuarioServicio implements UserDetailsService {
+public class UsuarioPacienteServicio extends UsuarioServicio {
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
 
     public void crearUsuarioPaciente(String nombre, String apellido, String email, String password, String password2,
-                                     ObraSocial obraSocial, String dni, String direccion, String telefono) throws MiException {
+            ObraSocial obraSocial, String dni, String direccion, String telefono) throws MiException {
 
         UsuarioPaciente usuarioPaciente = new UsuarioPaciente();
         validarPaciente(nombre, apellido, email, password, password2, obraSocial, dni, direccion, telefono);
@@ -40,9 +39,11 @@ public class UsuarioPacienteServicio extends UsuarioServicio implements UserDeta
     }
 
     @Transactional
-    public void modificarPaciente(String nombre, String apellido, String email, String passwordActual, String nuevoPassword,
-                                  ObraSocial obraSocial, String dni, String direccion, String telefono, Boolean estado) throws MiException {
-        validarModificacionDePaciente(nombre, apellido, passwordActual, nuevoPassword, obraSocial, dni, direccion, telefono);
+    public void modificarPaciente(String nombre, String apellido, String email, String passwordActual,
+            String nuevoPassword,
+            ObraSocial obraSocial, String dni, String direccion, String telefono, Boolean estado) throws MiException {
+        validarModificacionDePaciente(nombre, apellido, passwordActual, nuevoPassword, obraSocial, dni, direccion,
+                telefono);
 
         Optional<UsuarioPaciente> respuesta = usuarioRepositorio.buscarPorEmailPaciente(email);
 
@@ -58,7 +59,6 @@ public class UsuarioPacienteServicio extends UsuarioServicio implements UserDeta
             usuarioPaciente.setDireccion(direccion);
             usuarioPaciente.setTelefono(telefono);
             usuarioPaciente.setEstado(estado);
-
 
             usuarioRepositorio.save(usuarioPaciente);
         }
@@ -83,7 +83,6 @@ public class UsuarioPacienteServicio extends UsuarioServicio implements UserDeta
         return usuariosPaciente;
 
     }
-
 
     @Transactional
     public void anularPaciente(String email) throws MiException {
@@ -111,11 +110,12 @@ public class UsuarioPacienteServicio extends UsuarioServicio implements UserDeta
         }
         UsuarioPaciente usuarioPaciente = respuesta.get();
         usuarioPaciente.setEstado(true);
+        usuarioPaciente.setAprobacion(false);
         usuarioRepositorio.save(usuarioPaciente);
     }
 
     public void validarPaciente(String nombre, String apellido, String email, String password, String password2,
-                                ObraSocial obraSocial, String dni, String direccion, String telefono) throws MiException {
+            ObraSocial obraSocial, String dni, String direccion, String telefono) throws MiException {
         if (nombre == null || nombre.isEmpty()) {
             throw new MiException("El nombre no puede ser nulo ni vacio");
         }
@@ -169,16 +169,19 @@ public class UsuarioPacienteServicio extends UsuarioServicio implements UserDeta
         return true;
     }
 
-    public void validarModificacionDePaciente(String nombre, String apellido, String passwordActual, String nuevoPassword,
-                                              ObraSocial obraSocial, String dni, String direccion, String telefono) throws MiException {
+    public void validarModificacionDePaciente(String nombre, String apellido, String passwordActual,
+            String nuevoPassword,
+            ObraSocial obraSocial, String dni, String direccion, String telefono) throws MiException {
         if (nombre == null || nombre.isEmpty()) {
             throw new MiException("El nombre no puede ser nulo ni vacio");
         }
         if (apellido == null || apellido.isEmpty()) {
             throw new MiException("El apellido no puede ser nulo ni vacio");
         }
-        if (passwordActual.isEmpty() || nuevoPassword.isEmpty() || passwordActual == null || nuevoPassword.length() <= 5 || nuevoPassword.length() > 10) {
-            throw new MiException("El password no coincide con el actual o no puede ser nulo ni vacio, y debe contener mas de 5 caracteres y menos de 10");
+        if (passwordActual.isEmpty() || nuevoPassword.isEmpty() || passwordActual == null || nuevoPassword.length() <= 5
+                || nuevoPassword.length() > 10) {
+            throw new MiException(
+                    "El password no coincide con el actual o no puede ser nulo ni vacio, y debe contener mas de 5 caracteres y menos de 10");
         }
         if (obraSocial == null) {
             throw new MiException("La obra social no puede ser nula");
@@ -217,6 +220,5 @@ public class UsuarioPacienteServicio extends UsuarioServicio implements UserDeta
         }
         return false;
     }
-
 
 }

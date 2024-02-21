@@ -1,69 +1,74 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Registro</title>
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            font-family: 'Poppins', sans-serif;
-            background-image: url("../img/background.jpg");
-            background-size: cover;
-            background-attachment: fixed;
-            margin: 0;
-            padding: 0;
-        }
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: 'Poppins', sans-serif;
+      background-image: url("../img/background.jpg");
+      background-size: cover;
+      background-attachment: fixed;
+      margin: 0;
+      padding: 0;
+    }
 
-        .card {
-            width: 100%;
-            max-width: 400px;
-            padding: 20px;
-            background-color: rgba(255, 255, 255, 0.8);
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+    .card {
+      width: 100%;
+      max-width: 400px;
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
 
-        .form-login h5 {
-            margin-top: 0;
-        }
-    </style>
+    .form-login h5 {
+      margin-top: 0;
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="container mt-5">
-  <div class="row justify-content-center">
-    <div class="col-lg-6">
-      <div class="card">
-        <div class="card-body">
-          <h2 class="card-title text-center">Registrate</h2>
-          <section class="form-login mt-3">
-            <h5>Seleccionar rol de la cuenta:</h5>
-            <form th:action="@{/tipoUsuario}" method="POST">
-              <div class="form-check mt-3">
-                <input type="radio" class="form-check-input" id="pacienteRadio" th:name="tipoUsuario" th:value="paciente" checked>
-                <label class="form-check-label" for="pacienteRadio">Paciente</label>
-              </div>
-              <div class="form-check">
-                <input type="radio" class="form-check-input" id="profesionalRadio" th:name="tipoUsuario" th:value="profesional">
-                <label class="form-check-label" for="profesionalRadio">Profesional</label>
-              </div>
-              <button type="submit" class="btn btn-primary btn-block mt-3" id="continuarBtn">Continuar</button>
-            </form>
-            <p class="mt-3 text-center">
-              <a th:href="@{/login}">¿Ya tengo cuenta?</a>
-            </p>
-          </section>
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-6">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="card-title text-center">Registrate</h2>
+            <section class="form-login mt-3">
+              <h5>Seleccionar rol de la cuenta:</h5>
+              <form th:action="@{/tipoUsuario}" method="POST">
+                <div class="form-check mt-3">
+                  <input type="radio" class="form-check-input" id="pacienteRadio" th:name="tipoUsuario"
+                    th:value="paciente" checked>
+                  <label class="form-check-label" for="pacienteRadio">Paciente</label>
+                </div>
+                <div class="form-check">
+                  <input type="radio" class="form-check-input" id="profesionalRadio" th:name="tipoUsuario"
+                    th:value="profesional">
+                  <label class="form-check-label" for="profesionalRadio">Profesional</label>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block mt-3" id="continuarBtn">Continuar</button>
+              </form>
+              <p class="mt-3 text-center">
+                <a th:href="@{/login}">¿Ya tengo cuenta?</a>
+              </p>
+            </section>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
 </body>
+
 </html>

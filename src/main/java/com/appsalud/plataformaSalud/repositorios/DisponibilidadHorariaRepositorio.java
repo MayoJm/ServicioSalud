@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface DisponibilidadHorariaRepositorio extends JpaRepository<DisponibilidadHoraria, Long>{
+public interface DisponibilidadHorariaRepositorio extends JpaRepository<DisponibilidadHoraria, Long> {
 
     @Query("SELECT dh FROM DisponibilidadHoraria dh WHERE dh.usuarioProfesional = :profesional")
     List<DisponibilidadHoraria> findByUsuarioProfesional(@Param("profesional") UsuarioProfesional profesional);

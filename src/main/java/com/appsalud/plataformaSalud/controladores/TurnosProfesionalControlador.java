@@ -3,7 +3,6 @@ package com.appsalud.plataformaSalud.controladores;
 import com.appsalud.plataformaSalud.entidades.DisponibilidadHoraria;
 import com.appsalud.plataformaSalud.entidades.UsuarioProfesional;
 import com.appsalud.plataformaSalud.servicios.DisponibilidadHorariaServicio;
-import com.appsalud.plataformaSalud.servicios.TurnoServicio;
 import com.appsalud.plataformaSalud.servicios.UsuarioProfesionalServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -23,9 +22,6 @@ import java.util.*;
 @Controller
 @RequestMapping("/profesional/dashboard-profesional/turnos-profesional")
 public class TurnosProfesionalControlador {
-
-    @Autowired
-    private TurnoServicio turnoServicio;
 
     @Autowired
     private UsuarioProfesionalServicio usuarioProfesionalServicio;

@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="UTF-8">
     <title>Dar de Baja Cuenta Paciente</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
+
 <body class="d-flex justify-content-center align-items-center" style="height: 100vh;">
-<div class="card text-center">
-    <div class="card-body">
-        <h5 class="card-title">¿Desea dar de baja su cuenta?</h5>
-        <form th:action="@{/paciente/darBaja}" method="post">
-            <button type="submit" class="btn btn-primary mr-2">Sí</button>
-            <a th:href="@{/paciente/dashboard-paciente}" class="btn btn-secondary">No</a>
-        </form>
+    <div class="card text-center">
+        <div class="card-body">
+            <h5 class="card-title">¿Desea dar de baja su cuenta?</h5>
+            <form th:action="@{/paciente/darBaja}" method="post">
+                <button type="submit" class="btn btn-primary mr-2">Sí</button>
+                <a th:href="@{/paciente/dashboard-paciente}" class="btn btn-secondary">No</a>
+            </form>
+        </div>
     </div>
-</div>
 </body>
+
 </html>

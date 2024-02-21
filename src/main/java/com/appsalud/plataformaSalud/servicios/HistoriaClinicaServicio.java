@@ -20,8 +20,10 @@ public class HistoriaClinicaServicio {
     private HistoriaClinicaRepositorio historiaClinicaRepositorio;
 
     @Transactional
-    public void crearHistoriaClinica(UsuarioPaciente usuariopaciente, UsuarioProfesional usuarioProfesional, String nombre, Integer edad,
-                                     String sexo, Double peso, List<String> datosHistoricos, List<LocalDate> fechaConsulta, Boolean alta) throws MiException {
+    public void crearHistoriaClinica(UsuarioPaciente usuariopaciente, UsuarioProfesional usuarioProfesional,
+            String nombre, Integer edad,
+            String sexo, Double peso, List<String> datosHistoricos, List<LocalDate> fechaConsulta, Boolean alta)
+            throws MiException {
         validar(nombre, edad, sexo, peso, datosHistoricos, fechaConsulta);
 
         HistoriaClinica historiaClinica = new HistoriaClinica();
@@ -39,7 +41,7 @@ public class HistoriaClinicaServicio {
 
     @Transactional
     public void modificarHistoriaClinica(String id, String nombre, Integer edad, String sexo, Double peso,
-                                         List<String> datosHistoricos, List<LocalDate> fechaConsulta) throws MiException {
+            List<String> datosHistoricos, List<LocalDate> fechaConsulta) throws MiException {
         validar(nombre, edad, sexo, peso, datosHistoricos, fechaConsulta);
 
         Optional<HistoriaClinica> respuesta = historiaClinicaRepositorio.findById(id);
@@ -54,7 +56,6 @@ public class HistoriaClinicaServicio {
         }
     }
 
-
     @Transactional
     public void anularHistoriaClinica(String id) throws MiException {
         Optional<HistoriaClinica> respuesta = historiaClinicaRepositorio.findById(id);
@@ -66,7 +67,7 @@ public class HistoriaClinicaServicio {
     }
 
     public void validar(String nombre, Integer edad, String sexo, Double peso, List<String> datosHistoricos,
-                        List<LocalDate> fechaConsulta) throws MiException {
+            List<LocalDate> fechaConsulta) throws MiException {
         if (nombre == null || nombre.isEmpty()) {
             throw new MiException("El nombre no puede ser vacio");
         }

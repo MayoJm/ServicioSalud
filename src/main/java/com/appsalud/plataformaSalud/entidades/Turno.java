@@ -8,7 +8,6 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Getter
@@ -17,17 +16,17 @@ import java.util.Date;
 @AllArgsConstructor
 public class Turno {
 
-   @Id
-   @GeneratedValue(generator = "uuid")
-   @GenericGenerator(name = "uuid", strategy = "uuid2")
+    @Id
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
-   private LocalDateTime fechaHora;
+    private LocalDateTime fechaHora;
 
-   private String fechaFormateada; //Setear al persistir turno
-   private String horaFormateada; //Setear al persistir turno
+    private String fechaFormateada; // Setear al persistir turno
+    private String horaFormateada; // Setear al persistir turno
 
-   private String descripcion;
+    private String descripcion;
 
     @ManyToOne
     private UsuarioPaciente usuarioPaciente;
@@ -35,5 +34,5 @@ public class Turno {
     @ManyToOne
     private UsuarioProfesional usuarioProfesional;
 
-    private Boolean alta; 
+    private Boolean alta;
 }
