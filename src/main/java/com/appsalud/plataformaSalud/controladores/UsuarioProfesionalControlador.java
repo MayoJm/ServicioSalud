@@ -95,7 +95,7 @@ public class UsuarioProfesionalControlador {
         }
     }
 
-    @GetMapping("/dashboard-profesional/darBajaCuenta")
+    @GetMapping("/dashboard-profesional/dar-baja-cuenta")
     public String darBajaCuentaProfesional(Model model) {
         return "darBajaCuentaProfesional.html";
     }
@@ -106,7 +106,7 @@ public class UsuarioProfesionalControlador {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String email = authentication.getName();
             usuarioProfesionalServicio.anularProfesional(email);
-            return "redirect:/dasboard-profesional";
+            return "redirect:/";
         } catch (Exception e) {
             e.getMessage();
             return "redirect:/dashboard-profesional";

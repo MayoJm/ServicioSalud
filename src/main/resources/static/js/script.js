@@ -41,13 +41,22 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+/*============REGISTRAR(signup)============*/
 /*==============Rol Usuario================*/
+signupClose = document.getElementById('select-role-close');
 
 // Registro show
 document.getElementById('signup').addEventListener('click', () => {
   document.getElementById('select-role').classList.add('show-login');
 });
+document.getElementById('signup2').addEventListener('click', () => {   //MARCADOR POR SI NO FUNCIONA XD
+  document.getElementById('select-role').classList.add('show-login');
+});
 
+// Registro Hidden
+signupClose.addEventListener('click', () => {
+  document.getElementById('select-role').classList.remove('show-login');
+});
 // Obtener referencia al botón de Continuar
 const selectRoleBtn = document.getElementById('select-role-btn');
 
