@@ -34,21 +34,19 @@ public class TurnoServicio {
     private UsuarioProfesionalServicio usuarioProfesionalServicio;
 
     @Transactional
-    public void modificarTurno(String id, LocalDateTime fechaHora, String descripcion, UsuarioPaciente usuarioPaciente,
-            UsuarioProfesional usuarioProfesional) throws MiException {
+    public void modificarTurno(String id, LocalDateTime fechaHora, String descripcion) throws MiException {
 
-        validarTurno(fechaHora, descripcion, usuarioPaciente, usuarioProfesional);
+        validarModificacionTurno(fechaHora, descripcion);
 
         Optional<Turno> respuesta = turnoRepositorio.findById(id);
-
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
         if (respuesta.isPresent()) {
             Turno turno = respuesta.get();
-
+            turno.setFechaFormateada(fechaHora.format(dateFormatter));
+            turno.setHoraFormateada(fechaHora.format(timeFormatter));
             turno.setFechaHora(fechaHora);
             turno.setDescripcion(descripcion);
-            turno.setUsuarioPaciente(usuarioPaciente);
-            turno.setUsuarioProfesional(usuarioProfesional);
-
             turnoRepositorio.save(turno);
         }
     }
@@ -105,6 +103,21 @@ public class TurnoServicio {
         }
         if (usuarioProfesional == null) {
             throw new MiException("El profesional no puede ser nulo");
+        }
+
+    }
+
+    public void validarModificacionTurno(LocalDateTime fechaHora, String descripcion) throws MiException {
+
+        if (fechaHora == null) {
+            throw new MiException("La fecha no puede ser nula");
+        }
+        if (fechaHora.isBefore(LocalDateTime.now())) {
+            throw new MiException("La fecha no puede ser anterior a la fecha actual");
+        }
+
+        if (descripcion == null || descripcion.isEmpty()) {
+            throw new MiException("La descripcion no puede ser nula ni vacia");
         }
 
     }
@@ -198,8 +211,35 @@ public class TurnoServicio {
         }
     }
 
+    public void solicitarTurnoPorProfesional(UsuarioPaciente usuarioPaciente, UsuarioProfesional usuarioProfesional,
+            LocalDateTime fechaHora,
+            String descripcion) throws ParseException, MiException {
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+        // Crear el turno
+        if (usuarioPaciente != null && usuarioProfesional != null) {
+
+            Turno turno = new Turno();
+            turno.setUsuarioPaciente(usuarioPaciente);
+            turno.setUsuarioProfesional(usuarioProfesional);
+            turno.setFechaHora(fechaHora);
+            turno.setFechaFormateada(fechaHora.format(dateFormatter));
+            turno.setHoraFormateada(fechaHora.format(timeFormatter));
+            turno.setDescripcion(descripcion);
+            turno.setAlta(true); // Setear a true al persistir el turno
+
+            // Persistir el turno en la base de datos
+            turnoRepositorio.save(turno);
+        } else {
+            throw new MiException("Paciente o profesional no encontrados");
+        }
+    }
 
     public Turno getOne(String id) {
         return turnoRepositorio.buscarPorId(id);
+    }
+
+    public void eliminarTurno(String id) {
+        turnoRepositorio.deleteById(id);
     }
 }
