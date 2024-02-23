@@ -8,6 +8,7 @@ import com.appsalud.plataformaSalud.servicios.TurnoServicio;
 import com.appsalud.plataformaSalud.servicios.UsuarioProfesionalServicio;
 import com.appsalud.plataformaSalud.servicios.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -63,19 +65,19 @@ public class UsuarioProfesionalControlador {
 
     @PostMapping("/registroProfesional")
     public String registroProfesional(@RequestParam String nombre,
-            @RequestParam String apellido,
-            @RequestParam String email,
-            @RequestParam String password,
-            @RequestParam String password2,
-            @RequestParam Especialidad especialidad,
-            @RequestParam String descripcionEspecialidad,
-            @RequestParam Integer valorConsulta,
-            @RequestParam String matricula,
-            @RequestParam String dni,
-            @RequestParam String direccion,
-            @RequestParam String telefono,
-            @RequestParam List<ObraSocial> obrasSociales,
-            Model model) {
+                                      @RequestParam String apellido,
+                                      @RequestParam String email,
+                                      @RequestParam String password,
+                                      @RequestParam String password2,
+                                      @RequestParam Especialidad especialidad,
+                                      @RequestParam String descripcionEspecialidad,
+                                      @RequestParam Integer valorConsulta,
+                                      @RequestParam String matricula,
+                                      @RequestParam String dni,
+                                      @RequestParam String direccion,
+                                      @RequestParam String telefono,
+                                      @RequestParam List<ObraSocial> obrasSociales,
+                                      Model model) {
         try {
             usuarioProfesionalServicio.crearUsuarioProfesional(nombre, apellido, email, password, password2,
                     especialidad,
@@ -132,17 +134,17 @@ public class UsuarioProfesionalControlador {
 
     @PostMapping("/profesionalForm")
     public String modificarProfesional(@RequestParam String nombre,
-            @RequestParam String apellido,
-            @RequestParam String passwordActual,
-            @RequestParam String nuevoPassword,
-            @RequestParam Especialidad especialidad,
-            @RequestParam String descripcionEspecialidad,
-            @RequestParam Integer valorConsulta,
+                                       @RequestParam String apellido,
+                                       @RequestParam String passwordActual,
+                                       @RequestParam String nuevoPassword,
+                                       @RequestParam Especialidad especialidad,
+                                       @RequestParam String descripcionEspecialidad,
+                                       @RequestParam Integer valorConsulta,
 
-            @RequestParam String dni,
-            @RequestParam String direccion,
-            @RequestParam String telefono,
-            Model model) {
+                                       @RequestParam String dni,
+                                       @RequestParam String direccion,
+                                       @RequestParam String telefono,
+                                       Model model) {
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String email = authentication.getName();
@@ -168,7 +170,7 @@ public class UsuarioProfesionalControlador {
             } else {
                 model.addAttribute("error", "No se encontró ningún usuario profesional con el email proporcionado.");
                 return "redirect:/profesional/dashboard-profesional"; // Puedes redirigir a la vista de modificar
-                                                                      // profesional o hacer lo que
+                // profesional o hacer lo que
                 // consideres necesario
             }
         } catch (Exception e) {
@@ -264,4 +266,45 @@ public class UsuarioProfesionalControlador {
         return "misPacientes.html";
     }
 
+    @GetMapping("/dashboard-profesional/turnos-disponibles")
+    public String mostrarFormularioTurnosDisponibles (Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+
+        Optional<UsuarioProfesional> usuarioProfesionalOptional = usuarioProfesionalServicio
+                .buscarProfesionalPorEmail(email);
+        UsuarioProfesional usuarioProfesional;
+        usuarioProfesional = usuarioProfesionalOptional.get();
+        model.addAttribute("usuarioProfesional", usuarioProfesional);
+
+        List<Turno> turnos= turnoServicio.listarTurnosPorProfesional(email);
+        model.addAttribute("turnos", turnos);
+        return "turnosDisponiblesProfesional.html";
+    }
+    @GetMapping("/dashboard-profesional/turnos-disponibles/modificar-turno/{id}")
+    public String modificarTurno(@PathVariable String id, Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+
+        Optional<UsuarioProfesional> usuarioProfesionalOptional = usuarioProfesionalServicio
+                .buscarProfesionalPorEmail(email);
+        UsuarioProfesional usuarioProfesional = usuarioProfesionalOptional.get();
+        return "modificarTurno.html";
+    }
+
+    @GetMapping("/dashboard-profesional/turnos-disponibles/modificar-turno/horarios-disponibles")
+    @ResponseBody
+    public ResponseEntity<List<DisponibilidadHoraria>> obtenerHorariosDisponibles(
+            @RequestParam("profesionalId") String profesionalId,
+            @RequestParam("fecha") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaSeleccionada)
+            throws MiException {
+
+        System.out.println("profesionalId: " + profesionalId);
+        UsuarioProfesional profesional = usuarioProfesionalServicio.buscarPorId(profesionalId);
+        System.out.println("profesional: " + profesional.getNombre());
+
+        List<DisponibilidadHoraria> horariosDisponibles = turnoServicio.obtenerHorariosDisponiblesParaDia(profesional,
+                fechaSeleccionada);
+        return ResponseEntity.ok().body(horariosDisponibles);
+    }
 }
