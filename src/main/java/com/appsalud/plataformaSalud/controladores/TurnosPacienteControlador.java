@@ -52,7 +52,6 @@ public class TurnosPacienteControlador {
         List<DisponibilidadHoraria> horariosDisponibles = turnoServicio.obtenerHorariosDisponiblesParaDia(profesional,
                 fechaSeleccionada);
         return ResponseEntity.ok().body(horariosDisponibles);
-
     }
 
     @GetMapping("/calendario")

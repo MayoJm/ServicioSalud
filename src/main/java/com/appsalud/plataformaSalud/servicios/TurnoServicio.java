@@ -197,4 +197,9 @@ public class TurnoServicio {
             throw new MiException("Paciente o profesional no encontrados");
         }
     }
+
+
+    public Turno getOne(String id) {
+        return turnoRepositorio.buscarPorId(id);
+    }
 }
