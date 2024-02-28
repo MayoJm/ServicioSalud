@@ -221,4 +221,11 @@ public class UsuarioPacienteServicio extends UsuarioServicio {
         return false;
     }
 
+    public UsuarioPaciente buscarPorId(String id) {
+        return (UsuarioPaciente) usuarioRepositorio.buscarPorId(id);
+    }
+
+    public List<UsuarioPaciente> listarPacientes() {
+        return usuarioRepositorio.listarPacientes();
+    }
 }

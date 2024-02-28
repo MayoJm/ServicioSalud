@@ -2,16 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
-    <title>Turnos Disponibles</title>
+    <title>Dashboard Profesional</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/static/css/profesionalDashboard.css">
     <style>
         .blur-background {
@@ -23,9 +19,7 @@
             top: 0;
             left: 0;
             width: 100vw;
-            /* Cambiado a 100vw */
             height: 100vh;
-            /* Cambiado a 100vh */
             z-index: -1;
         }
 
@@ -81,7 +75,6 @@
                                 </a>
                             </li>
                             <li>
-
                                 <a
                                     th:href="@{/profesional/dashboard-profesional/turnos-profesional/establecer-disponibilidad}">Disponibilizar
                                     Turnos</a>
@@ -120,64 +113,40 @@
                 </div>
             </nav>
             <!-- Contenido de pagina  -->
-            <div class="alert alert-danger" th:if="${error != null}">
-                <div class="text-center">
-                    <h5>Error</h5>
-                    <p class="texto-error" th:text="${error}"></p>
-                </div>
-            </div>
-            <div class="alert alert-success" th:if="${exito != null}">
-                <div class="text-center">
-                    <h5>Exito</h5>
-                    <p class="texto-exito" th:text="${exito}"></p>
-                </div>
-            </div>
-
+            <h2 class="mb-4">Buscar Paciente</h2>
             <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
                 <thead>
                     <tr>
-                        <th>Fecha</th>
-                        <th>Hora</th>
-                        <th>Descripción</th>
-                        <th>Paciente</th>
-                        <th>Profesional</th>
-                        <th>Especialidad</th>
-                        <th>Modificar</th>
-                        <th>Eliminar</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Dni</th>
+                        <th class="th-sm">
+                            Turno
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Iterar sobre la lista de turnos y agregar cada uno como una fila en la tabla -->
-                    <tr th:each="turno : ${turnos}">
-                        <td th:text="${turno.fechaFormateada}" id="fecha"></td>
-                        <td th:text="${turno.horaFormateada}" id="hora"></td>
-                        <td th:text="${turno.descripcion}"></td>
-                        <td th:text="${turno.usuarioPaciente.nombre} + ' ' + ${turno.usuarioPaciente.apellido}"></td>
-                        <td th:text="${turno.usuarioProfesional.nombre} + ' ' + ${turno.usuarioProfesional.apellido}">
-                        </td>
-                        <td th:text="${turno.usuarioProfesional.especialidad}"></td>
-                        <td>
-                            <button type="submit" class="btn btn-info btn-sm">
-                                <a
-                                    th:href="@{/profesional/dashboard-profesional/turnos-profesional/disponibles/modificar-turno/{id}(id=${turno.id})}">Modificar
-                                    Turno</a>
-                            </button>
-                        </td>
-                        <td>
+                    
+                    <!-- Iterar sobre la lista de profesionales y agregar cada uno como una fila en la tabla -->
+                    <tr th:each="paciente : ${pacientes}">
 
-                            <button type="submit" class="btn btn-info btn-sm">
-                                <a
-                                    th:href="@{/profesional/dashboard-profesional/turnos-profesional/disponibles/cancelar-turno/{id}(id=${turno.id})}">
-                                    Eliminar
-                                </a></button>
-
+                        <td th:text="${paciente.nombre}"></td>
+                        <td th:text="${paciente.apellido}"></td>
+                        <td th:text="${paciente.dni}"></td>
+                        <td>
+                            <a th:href="@{'/profesional/dashboard-profesional/turnos-profesional/seleccionar-paciente/calendar/__${paciente.id}__'}"
+                                class="btn btn-info btn-sm">
+                                Asignar Turno
+                            </a>
                         </td>
                     </tr>
                 </tbody>
             </table>
-
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
     <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/popper.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
@@ -193,8 +162,9 @@
             $('#dtBasicExample').DataTable();
         });
 
-
     </script>
 </body>
+
+
 
 </html>

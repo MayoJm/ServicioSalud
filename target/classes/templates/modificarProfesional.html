@@ -2,16 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
-    <title>Turnos Disponibles</title>
+    <title>Modificar Profesional</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/static/css/profesionalDashboard.css">
     <style>
         .blur-background {
@@ -23,9 +19,7 @@
             top: 0;
             left: 0;
             width: 100vw;
-            /* Cambiado a 100vw */
             height: 100vh;
-            /* Cambiado a 100vh */
             z-index: -1;
         }
 
@@ -81,7 +75,6 @@
                                 </a>
                             </li>
                             <li>
-
                                 <a
                                     th:href="@{/profesional/dashboard-profesional/turnos-profesional/establecer-disponibilidad}">Disponibilizar
                                     Turnos</a>
@@ -132,69 +125,83 @@
                     <p class="texto-exito" th:text="${exito}"></p>
                 </div>
             </div>
-
-            <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
-                <thead>
-                    <tr>
-                        <th>Fecha</th>
-                        <th>Hora</th>
-                        <th>Descripción</th>
-                        <th>Paciente</th>
-                        <th>Profesional</th>
-                        <th>Especialidad</th>
-                        <th>Modificar</th>
-                        <th>Eliminar</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Iterar sobre la lista de turnos y agregar cada uno como una fila en la tabla -->
-                    <tr th:each="turno : ${turnos}">
-                        <td th:text="${turno.fechaFormateada}" id="fecha"></td>
-                        <td th:text="${turno.horaFormateada}" id="hora"></td>
-                        <td th:text="${turno.descripcion}"></td>
-                        <td th:text="${turno.usuarioPaciente.nombre} + ' ' + ${turno.usuarioPaciente.apellido}"></td>
-                        <td th:text="${turno.usuarioProfesional.nombre} + ' ' + ${turno.usuarioProfesional.apellido}">
-                        </td>
-                        <td th:text="${turno.usuarioProfesional.especialidad}"></td>
-                        <td>
-                            <button type="submit" class="btn btn-info btn-sm">
-                                <a
-                                    th:href="@{/profesional/dashboard-profesional/turnos-profesional/disponibles/modificar-turno/{id}(id=${turno.id})}">Modificar
-                                    Turno</a>
-                            </button>
-                        </td>
-                        <td>
-
-                            <button type="submit" class="btn btn-info btn-sm">
-                                <a
-                                    th:href="@{/profesional/dashboard-profesional/turnos-profesional/disponibles/cancelar-turno/{id}(id=${turno.id})}">
-                                    Eliminar
-                                </a></button>
-
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
+            <div class="container mt-4">
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">Modificar Perfil</h5>
+                                <form method="POST" th:action="@{/profesional/profesionalForm}">
+                                    <div class="form-group">
+                                        <label for="nombre">Nombre:</label>
+                                        <input type="text" class="form-control" id="nombre" name="nombre"
+                                            th:value="${usuarioProfesional.nombre}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="apellido">Apellido:</label>
+                                        <input type="text" class="form-control" name="apellido" id="apellido"
+                                            th:value="${usuarioProfesional.apellido}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="passwordActual">Contraseña actual:</label>
+                                        <input type="password" class="form-control" id="passwordActual"
+                                            name="passwordActual" th:value="${passwordActual}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="nuevoPassword">Nueva contraseña:</label>
+                                        <input type="password" class="form-control" name="nuevoPassword"
+                                            id="nuevoPassword" th:value="${nuevoPassword}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="especialidad">Especialidad:</label>
+                                        <select class="form-control" id="especialidad" name="especialidad">
+                                            <option th:each="esp : ${listaEspecialidades}" th:value="${esp}"
+                                                th:text="${esp}"
+                                                th:selected="${esp == usuarioProfesional.especialidad}">>
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="descripcionEspecialidad">Descripcion de especialidad:</label>
+                                        <input type="text" class="form-control" id="descripcionEspecialidad"
+                                            name="descripcionEspecialidad"
+                                            th:value="${usuarioProfesional.descripcionEspecialidad}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="dni">Dni:</label>
+                                        <input type="text" class="form-control" id="dni" name="dni"
+                                            th:value="${usuarioProfesional.dni}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="valorConsulta">Valor de consulta:</label>
+                                        <input type="text" class="form-control" id="valorConsulta" name="valorConsulta"
+                                            th:value="${usuarioProfesional.valorConsulta}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="direccion">Direccion:</label>
+                                        <input type="text" class="form-control" id="direccion" name="direccion"
+                                            th:value="${usuarioProfesional.direccion}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="telefono">Telefono:</label>
+                                        <input type="text" class="form-control" id="telefono" name="telefono"
+                                            th:value="${usuarioProfesional.telefono}" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-block">Guardar cambios</button>
+                                    <button type="button" class="btn btn-secondary btn-block"><a
+                                            th:href="@{/profesional/dashboard-profesional}">Cerrar</a></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/popper.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
     <script src="/static/js/main.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            // Inicializa DataTables
-            $('#dtBasicExample').DataTable();
-        });
-
-
-    </script>
 </body>
 
 </html>

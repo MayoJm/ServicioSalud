@@ -2,16 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
-    <title>Turnos Disponibles</title>
+    <title>Disponibilidad Horaria</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/static/css/profesionalDashboard.css">
     <style>
         .blur-background {
@@ -23,9 +19,7 @@
             top: 0;
             left: 0;
             width: 100vw;
-            /* Cambiado a 100vw */
             height: 100vh;
-            /* Cambiado a 100vh */
             z-index: -1;
         }
 
@@ -43,37 +37,37 @@
             <div class="p-4 pt-5">
                 <a th:href="@{/profesional/dashboard-profesional/cambiarImagen}" class="img logo rounded-circle mb-5">
                     <img th:src="@{/profesional/perfil/__${usuarioProfesional.id}__}"
-                        style="width: 120px; height: 120px; border-radius: 50%;" />
+                         style="width: 120px; height: 120px; border-radius: 50%;"/>
                 </a>
                 <ul class="list-unstyled components mb-5">
                     <li class="active">
                         <a href="#perfilSubmenu" data-toggle="collapse" aria-expanded="false"
-                            class="dropdown-toggle">Perfil</a>
+                           class="dropdown-toggle">Perfil</a>
                         <ul class="collapse list-unstyled" id="perfilSubmenu">
                             <li>
                                 <a th:href="@{/profesional/dashboard-profesional/modificar-profesional}"
-                                    onclick="mostrarFormulario()">Editar Perfil</a>
+                                   onclick="mostrarFormulario()">Editar Perfil</a>
                             </li>
                             <li>
                                 <a th:href="@{/profesional/dashboard-profesional/dar-baja-cuenta}"
-                                    onclick="mostrarConfirmacion()">Dar de baja cuenta</a>
+                                   onclick="mostrarConfirmacion()">Dar de baja cuenta</a>
                             </li>
                         </ul>
                         <ul class="collapse list-unstyled" id="verPerfilProfesional">
                             <li>
                                 <a th:href="@{/profesional/dashboard-profesional/verPerfilProfesional}"
-                                    onclick="mostrarFormulario()">Ver Perfil</a>
+                                   onclick="mostrarFormulario()">Ver Perfil</a>
                             </li>
                         </ul>
                     </li>
                     <li>
                         <a href="#turnosSubmenu" data-toggle="collapse" aria-expanded="false"
-                            class="dropdown-toggle">Turnos</a>
+                           class="dropdown-toggle">Turnos</a>
                         <ul class="collapse list-unstyled" id="turnosSubmenu">
                             <li>
                                 <a th:href="@{/profesional/dashboard-profesional/turnos-profesional/disponibles}">Buscar
                                     Turnos disponibles</a>
-
+                                
                             </li>
                             <li>
                                 <a th:href="@{/profesional/dashboard-profesional/turnos-profesional/buscar-paciente}">
@@ -81,10 +75,7 @@
                                 </a>
                             </li>
                             <li>
-
-                                <a
-                                    th:href="@{/profesional/dashboard-profesional/turnos-profesional/establecer-disponibilidad}">Disponibilizar
-                                    Turnos</a>
+                                <a th:href="@{/profesional/dashboard-profesional/turnos-profesional/establecer-disponibilidad}">Disponibilizar Turnos</a>
                             </li>
                         </ul>
                     </li>
@@ -133,68 +124,74 @@
                 </div>
             </div>
 
-            <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
-                <thead>
-                    <tr>
-                        <th>Fecha</th>
-                        <th>Hora</th>
-                        <th>Descripción</th>
-                        <th>Paciente</th>
-                        <th>Profesional</th>
-                        <th>Especialidad</th>
-                        <th>Modificar</th>
-                        <th>Eliminar</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Iterar sobre la lista de turnos y agregar cada uno como una fila en la tabla -->
-                    <tr th:each="turno : ${turnos}">
-                        <td th:text="${turno.fechaFormateada}" id="fecha"></td>
-                        <td th:text="${turno.horaFormateada}" id="hora"></td>
-                        <td th:text="${turno.descripcion}"></td>
-                        <td th:text="${turno.usuarioPaciente.nombre} + ' ' + ${turno.usuarioPaciente.apellido}"></td>
-                        <td th:text="${turno.usuarioProfesional.nombre} + ' ' + ${turno.usuarioProfesional.apellido}">
-                        </td>
-                        <td th:text="${turno.usuarioProfesional.especialidad}"></td>
-                        <td>
-                            <button type="submit" class="btn btn-info btn-sm">
-                                <a
-                                    th:href="@{/profesional/dashboard-profesional/turnos-profesional/disponibles/modificar-turno/{id}(id=${turno.id})}">Modificar
-                                    Turno</a>
-                            </button>
-                        </td>
-                        <td>
+            <div class="container">
+                <h1 class="mt-5">Establecer Disponibilidad</h1>
+                <form action="/profesional/dashboard-profesional/turnos-profesional/establecer-disponibilidad-form"
+                    method="post">
+                    <label>Seleccione la disponibilidad para cada día de la semana:</label>
+                    <br /><br />
+                    <div class="form-row align-items-center">
+                        <div class="col-md-4"><label for="lunes">Lunes:</label></div>
+                        <div class="col-md-4"><input type="time" id="lunes" name="mondayInicio" class="form-control" />
+                        </div>
+                        <div class="col-md-4"><input type="time" name="mondayFin" class="form-control" /></div>
+                    </div>
+                    <div class="form-row align-items-center">
+                        <div class="col-md-4"><label for="martes">Martes:</label></div>
+                        <div class="col-md-4"><input type="time" id="martes" name="tuesdayInicio"
+                                class="form-control" />
+                        </div>
+                        <div class="col-md-4"><input type="time" name="tuesdayFin" class="form-control" /></div>
 
-                            <button type="submit" class="btn btn-info btn-sm">
-                                <a
-                                    th:href="@{/profesional/dashboard-profesional/turnos-profesional/disponibles/cancelar-turno/{id}(id=${turno.id})}">
-                                    Eliminar
-                                </a></button>
+                    </div>
+                    <div class="form-row align-items-center">
+                        <div class="col-md-4"><label for="miercoles">Miércoles:</label></div>
+                        <div class="col-md-4"><input type="time" id="miercoles" name="wednesdayInicio"
+                                class="form-control" /></div>
+                        <div class="col-md-4"><input type="time" name="wednesdayFin" class="form-control" /></div>
 
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                    </div>
+                    <div class="form-row align-items-center">
+                        <div class="col-md-4"><label for="jueves">Jueves:</label></div>
+                        <div class="col-md-4"><input type="time" id="jueves" name="thursdayInicio"
+                                class="form-control" />
+                        </div>
+                        <div class="col-md-4"><input type="time" name="thursdayFin" class="form-control" /></div>
 
+                    </div>
+                    <div class="form-row align-items-center">
+                        <div class="col-md-4"><label for="viernes">Viernes:</label></div>
+                        <div class="col-md-4"><input type="time" id="viernes" name="fridayInicio"
+                                class="form-control" />
+                        </div>
+                        <div class="col-md-4"><input type="time" name="fridayFin" class="form-control" /></div>
+                    </div>
+                    <div class="form-row align-items-center">
+                        <div class="col-md-4"><label for="sabado">Sábado:</label></div>
+                        <div class="col-md-4"><input type="time" id="sabado" name="saturdayInicio"
+                                class="form-control" />
+                        </div>
+                        <div class="col-md-4"><input type="time" name="saturdayFin" class="form-control" /></div>
+
+                    </div>
+                    <div class="form-row align-items-center">
+                        <div class="col-md-4"><label for="domingo">Domingo:</label></div>
+                        <div class="col-md-4"><input type="time" id="domingo" name="sundayInicio"
+                                class="form-control" />
+                        </div>
+                        <div class="col-md-4"><input type="time" name="sundayFin" class="form-control" /></div>
+
+                    </div>
+                    <br /><br />
+                    <input type="submit" value="Guardar Disponibilidad" class="btn btn-primary" />
+                </form>
+            </div>
         </div>
     </div>
     <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/popper.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
     <script src="/static/js/main.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            // Inicializa DataTables
-            $('#dtBasicExample').DataTable();
-        });
-
-
-    </script>
 </body>
 
 </html>
