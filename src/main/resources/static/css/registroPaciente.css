@@ -1,0 +1,77 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: 100vh;
+    flex-wrap: nowrap;
+    font-family: poppins, sans-serif;
+    background-image: url("../img/background.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    width: 100%;
+    backdrop-filter: blur(2px); 
+}
+
+.card {
+    margin-top: -44px;
+    margin-left: -150px; 
+    margin-right: -80px; 
+    background-color: var(--container-color); 
+    backdrop-filter: blur(0px); 
+    border-radius: 70px; 
+    height: 650px; 
+    padding: 2rem 1.5rem 2.5rem;
+    border-radius: 2rem;
+    gap: 1.5rem;
+    text-align: center;
+}
+
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.checkbox-item {
+    flex: 0 0 calc(33.33% - 10px); 
+    margin-bottom: 10px; 
+}
+
+.checkbox-item input[type="checkbox"] {
+    display: none; 
+}
+
+.checkbox-item label {
+    display: block;
+    position: relative;
+    padding-left: 25px; 
+    cursor: pointer;
+}
+
+.checkbox-item label:before {
+    content: "";
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 1px solid #000000; 
+    background-color: #ffffff; 
+}
+
+.checkbox-item input[type="checkbox"]:checked + label:before {
+    background-color: skyblue; 
+    border-color: skyblue; 
+}
+
+.checkbox-item input[type="checkbox"]:checked + label:after {
+    content: "\2713"; 
+    font-size: 12px;
+    color: #fff; 
+    position: absolute;
+    left: 3px;
+    top: 50%;
+    transform: translateY(-50%);
+}

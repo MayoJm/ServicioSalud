@@ -1,0 +1,161 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <title>Buscar Turnos</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/static/css/profesionalDashboard.css">
+    <style>
+        .blur-background {
+            background-image: url(/static/img/background-dashboard.jpg);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            /* Cambiado a 100vw */
+            height: 100vh;
+            /* Cambiado a 100vh */
+            z-index: -1;
+        }
+
+        .wrapper {
+            position: relative;
+            z-index: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="blur-background"></div>
+    <div class="wrapper d-flex align-items-stretch">
+        <nav id="sidebar">
+            <div class="p-4 pt-5">
+                <a href="#" class="img logo rounded-circle mb-5"
+                    style="background-image: url(../static/img/logo.jpg);"></a>
+                <ul class="list-unstyled components mb-5">
+                    <li class="active">
+                        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false"
+                            class="dropdown-toggle">Perfil</a>
+                        <ul class="collapse list-unstyled" id="homeSubmenu">
+                            <li>
+                                <a th:href="@{/paciente/dashboard-paciente/modificar-paciente}"
+                                    onclick="mostrarFormulario()">Editar Perfil</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/paciente/dashboard-paciente/dar-baja-cuenta}"
+                                    onclick="mostrarConfirmacion()">Dar de baja cuenta</a>
+                            </li>
+                        </ul>
+
+                    </li>
+                    <li>
+                        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false"
+                            class="dropdown-toggle">Turnos</a>
+                        <ul class="collapse list-unstyled" id="pageSubmenu">
+                            <li>
+                                <a th:href="@{/paciente/dashboard-paciente/turnos-paciente/buscar-turnos}"
+                                    onclick="buscarTurnosProfesional()">Buscar profesional</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Contacto Admin</a>
+                    </li>
+                </ul>
+
+            </div>
+        </nav>
+
+        <!-- Nav superior  -->
+        <div id="content" class="p-4 p-md-5">
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+
+                    <button type="button" id="sidebarCollapse" class="btn btn-primary">
+                        <i class="fa fa-bars"></i>
+                        <span class="sr-only">Toggle Menu</span>
+                    </button>
+                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item ">
+                                <a class="nav-link ri-home-2-line" th:href="@{/paciente/dashboard-paciente}"></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link ri-logout-box-r-line" href="/logout"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Contenido de pagina  -->
+            <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th>Especialidad</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th class="th-sm">Info</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Iterar sobre la lista de profesionales y agregar cada uno como una fila en la tabla -->
+                    <tr th:each="profesional : ${profesionales}">
+                        <td th:text="${profesional.especialidad}"></td>
+                        <td th:text="${profesional.nombre}"></td>
+                        <td th:text="${profesional.apellido}"></td>
+                        <td>
+                            <a th:href="@{'/paciente/dashboard-paciente/turnos-paciente/calendario?profesionalId=' + ${profesional.id}}"
+                                class="btn btn-info btn-sm">
+                                Info
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/popper.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/main.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Inicializa DataTables
+            $('#dtBasicExample').DataTable();
+        });
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Dar de Baja Cuenta Profesional</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+  <div class="card text-center" style="background-color: #e0f2f1;">
+    <div class="card-body">
+      <h5 class="card-title" style="color: #1565c0;">¿Desea dar de baja su cuenta?</h5>
+      <form th:action="@{/profesional/darBaja}" method="post">
+        <button type="submit" class="btn btn-primary mr-2" style="background-color: #64b5f6; border-color: #64b5f6;">Sí</button>
+        <a th:href="@{/profesional/dashboard-profesional}" class="btn btn-secondary" style="background-color: #fff; color: #1565c0; border-color: #1565c0;">No</a>
+      </form>
+    </div>
+  </div>
+</body>
+
+</html>

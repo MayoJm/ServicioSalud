@@ -1,0 +1,207 @@
+<!Doctype html>
+<html xmlns:th="http://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <title>Modificar Profesional</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/profesionalDashboard.css">
+    <style>
+        .blur-background {
+            background-image: url(/static/img/background-dashboard.jpg);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+        }
+
+        .wrapper {
+            position: relative;
+            z-index: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="blur-background"></div>
+    <div class="wrapper d-flex align-items-stretch">
+        <nav id="sidebar">
+            <div class="p-4 pt-5">
+                <a th:href="@{/profesional/dashboard-profesional/cambiarImagen}" class="img logo rounded-circle mb-5">
+                    <img th:src="@{/profesional/perfil/__${usuarioProfesional.id}__}"
+                        style="width: 120px; height: 120px; border-radius: 50%;" />
+                </a>
+                <ul class="list-unstyled components mb-5">
+                    <li class="active">
+                        <a href="#perfilSubmenu" data-toggle="collapse" aria-expanded="false"
+                            class="dropdown-toggle">Perfil</a>
+                        <ul class="collapse list-unstyled" id="perfilSubmenu">
+                            <li>
+                                <a th:href="@{/profesional/dashboard-profesional/modificar-profesional}"
+                                    onclick="mostrarFormulario()">Editar Perfil</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/profesional/dashboard-profesional/dar-baja-cuenta}"
+                                    onclick="mostrarConfirmacion()">Dar de baja cuenta</a>
+                            </li>
+                        </ul>
+                        <ul class="collapse list-unstyled" id="verPerfilProfesional">
+                            <li>
+                                <a th:href="@{/profesional/dashboard-profesional/verPerfilProfesional}"
+                                    onclick="mostrarFormulario()">Ver Perfil</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#turnosSubmenu" data-toggle="collapse" aria-expanded="false"
+                            class="dropdown-toggle">Turnos</a>
+                        <ul class="collapse list-unstyled" id="turnosSubmenu">
+                            <li>
+                                <a th:href="@{/profesional/dashboard-profesional/turnos-profesional/disponibles}">Buscar
+                                    Turnos disponibles</a>
+
+                            </li>
+                            <li>
+                                <a th:href="@{/profesional/dashboard-profesional/turnos-profesional/buscar-paciente}">
+                                    Crear Turno
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    th:href="@{/profesional/dashboard-profesional/turnos-profesional/establecer-disponibilidad}">Disponibilizar
+                                    Turnos</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a th:href="@{/profesional/dashboard-profesional/mis-pacientes}">Mis Pacientes</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!-- Nav superior  -->
+        <div id="content" class="p-4 p-md-5">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <button type="button" id="sidebarCollapse" class="btn btn-primary">
+                        <i class="fa fa-bars"></i>
+                        <span class="sr-only">Toggle Menu</span>
+                    </button>
+                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item ">
+                                <a class="nav-link ri-home-2-line" th:href="@{/profesional/dashboard-profesional}"></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link ri-logout-box-r-line" href="/logout"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <!-- Contenido de pagina  -->
+            <div class="alert alert-danger" th:if="${error != null}">
+                <div class="text-center">
+                    <h5>Error</h5>
+                    <p class="texto-error" th:text="${error}"></p>
+                </div>
+            </div>
+            <div class="alert alert-success" th:if="${exito != null}">
+                <div class="text-center">
+                    <h5>Exito</h5>
+                    <p class="texto-exito" th:text="${exito}"></p>
+                </div>
+            </div>
+            <div class="container mt-4">
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">Modificar Perfil</h5>
+                                <form method="POST" th:action="@{/profesional/profesionalForm}">
+                                    <div class="form-group">
+                                        <label for="nombre">Nombre:</label>
+                                        <input type="text" class="form-control" id="nombre" name="nombre"
+                                            th:value="${usuarioProfesional.nombre}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="apellido">Apellido:</label>
+                                        <input type="text" class="form-control" name="apellido" id="apellido"
+                                            th:value="${usuarioProfesional.apellido}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="passwordActual">Contraseña actual:</label>
+                                        <input type="password" class="form-control" id="passwordActual"
+                                            name="passwordActual" th:value="${passwordActual}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="nuevoPassword">Nueva contraseña:</label>
+                                        <input type="password" class="form-control" name="nuevoPassword"
+                                            id="nuevoPassword" th:value="${nuevoPassword}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="especialidad">Especialidad:</label>
+                                        <select class="form-control" id="especialidad" name="especialidad">
+                                            <option th:each="esp : ${listaEspecialidades}" th:value="${esp}"
+                                                th:text="${esp}"
+                                                th:selected="${esp == usuarioProfesional.especialidad}">>
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="descripcionEspecialidad">Descripcion de especialidad:</label>
+                                        <input type="text" class="form-control" id="descripcionEspecialidad"
+                                            name="descripcionEspecialidad"
+                                            th:value="${usuarioProfesional.descripcionEspecialidad}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="dni">Dni:</label>
+                                        <input type="text" class="form-control" id="dni" name="dni"
+                                            th:value="${usuarioProfesional.dni}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="valorConsulta">Valor de consulta:</label>
+                                        <input type="text" class="form-control" id="valorConsulta" name="valorConsulta"
+                                            th:value="${usuarioProfesional.valorConsulta}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="direccion">Direccion:</label>
+                                        <input type="text" class="form-control" id="direccion" name="direccion"
+                                            th:value="${usuarioProfesional.direccion}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="telefono">Telefono:</label>
+                                        <input type="text" class="form-control" id="telefono" name="telefono"
+                                            th:value="${usuarioProfesional.telefono}" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-block">Guardar cambios</button>
+                                    <button type="button" class="btn btn-secondary btn-block"><a
+                                            th:href="@{/profesional/dashboard-profesional}">Cerrar</a></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/popper.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/main.js"></script>
+</body>
+
+</html>

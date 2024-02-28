@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subir Imagen de Perfil</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            background-image: url("../img/background.jpg");
+            background-size: cover;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <h3>Seleccione imagen de perfil</h3>
+    <form
+        th:action="${rolUsuario == 'ROLE_PACIENTE' ? '/paciente/dashboard-paciente/cambiarImagen' : (rolUsuario == 'ROLE_PROFESIONAL' ? '/profesional/dashboard-profesional/cambiarImagen' : '/admin/dashboard-admin/cambiarImagen')}"
+        method="post" enctype="multipart/form-data">
+        <div class="custom-file">
+            <input type="file" class="custom-file-input" id="customFile" name="archivo" th:value="${archivo}">
+            <label class="custom-file-label" for="customFile">Seleccione foto</label>
+        </div>
+        <br><br>
+        <button type="sumbit" class="btn btn-primary btn-sm">Subir Imagen</button>
+        <a
+            th:href="${rolUsuario == 'ROLE_PACIENTE' ? '/paciente/dashboard-paciente' : (rolUsuario == 'ROLE_PROFESIONAL' ? '/profesional/dashboard-profesional' : '/admin/dashboard-admin')}"><button
+                type="button" class="btn btn-primary btn-sm">Volver</button></a>
+    </form>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+    </script>
+</body>
+
+</html>
